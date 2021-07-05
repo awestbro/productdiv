@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "noImplicitAny": true,
+        "module": "CommonJS",
+        "target": "es5",
+        "allowJs": true,
+        "typeRoots": [
+            "@types"
+        ],
+        "lib": [
+            "es6",
+            "dom",
+            "es2017"
+        ],
+        "jsx": "react",
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "ts/@types/*"
+            ]
+        }
+    },
+    "include": [
+        "app/**/*"
+    ]
+}
