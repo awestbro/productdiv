@@ -15,13 +15,13 @@ function inIframe() {
     }
 }
 
-function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
+function mountApplication(configuration: ParsedLibraryConfigurationDefinition, cssPath: string) {
     const href = window.location.href;
     document.open();
     document.appendChild(document.createElement('html'));
     document.documentElement.innerHTML = `
         <body>
-            <link rel="stylesheet" href="/app.css">
+            <link rel="stylesheet" href="${cssPath}">
             <div id="productdiv" class="d-flex flex-row w-100 h-100"></div>
         </body>
         `;
@@ -39,8 +39,8 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
 //     });
 // }
 
-export default function ProductDiv(configuration: LibraryConfigurationDefinition) {
+export default function ProductDiv(configuration: LibraryConfigurationDefinition, cssPath: string = '/app.css') {
     if (!inIframe()) {
-        mountApplication(parseLibraryConfiguration(configuration));
+        mountApplication(parseLibraryConfiguration(configuration), cssPath);
     }
 }

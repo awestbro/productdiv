@@ -57,7 +57,7 @@ type ElementEditorProps = LeftNavProps & {
 
 export function ElementEditor(props: ElementEditorProps) {
     const { elementEditorState } = props;
-    if (elementEditorState.match === null) {
+    if (!elementEditorState.match || !elementEditorState.match.node) {
         return <ElementEditorHeader {...props} />
     }
 

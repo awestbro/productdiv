@@ -2,7 +2,7 @@
   "name": "productdiv",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "webpack serve --watch",
     "build": "webpack build --config webpack.config.prod.js",

@@ -48,9 +48,9 @@ export function addTemplateToElement(template: TemplateDefinition, element: Elem
     }
     element.insertAdjacentHTML(placement, template.htmlTemplate);
     if (placement === PlacementType.INNER_APPEND) {
-        return element.firstElementChild;
-    } else if (placement === PlacementType.INNER_PREPEND) {
         return element.lastElementChild;
+    } else if (placement === PlacementType.INNER_PREPEND) {
+        return element.firstElementChild;
     } else if (placement === PlacementType.OUTER_APPEND) {
         return element.nextElementSibling;
     } else {

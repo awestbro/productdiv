@@ -108,7 +108,7 @@ function classDefinitionStringExpander(input: string): string[] {
 
 export function parseLibraryConfiguration(config: LibraryConfigurationDefinition): LibraryConfigurationDefinition {
     let copy = { ...config }
-    console.log('config', config);
+    // console.log('config', config);
     copy.utilityClasses = copy.utilityClasses.map((def) => {
         return {
             ...def,

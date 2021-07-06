@@ -208,10 +208,10 @@ export function TemplateButton(props: TemplateButtonProps) {
 
                     const { placement, element } = drawHoverElement(lastHoverPosition.x, lastHoverPosition.y);
                     const placedElement = addTemplateToElement(template, element, placement);
+                    iframeDocuemnt.body.classList.remove('productdiv-dragging');
                     const tree = redrawComponentTree();
                     setElementEditorState({ match: getTreeMatchFromElement(tree, placedElement) })
                     setElementEditorOpen(true);
-                    iframeDocuemnt.body.classList.remove('productdiv-dragging');
                 }}
             >
                 {template.name}

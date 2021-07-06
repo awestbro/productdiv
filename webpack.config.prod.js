@@ -23,6 +23,10 @@ module.exports = (env, options) => ({
         filename: '[name]',
         publicPath: '/',
         path: dist,
+        library: {
+            name: 'productdiv',
+            type: 'umd',
+        },
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json', '.scss', '.sass'],
