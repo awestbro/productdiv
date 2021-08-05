@@ -9,7 +9,7 @@ ProductDiv configuration information can be found in `/app/lib/configuration/con
 
 Example Configuration:
 
-```
+```js
 {
     components: [
         {
