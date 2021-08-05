@@ -43,6 +43,7 @@ export type TemplateCategoryDefinition = {
 export type TemplateDefinition = {
     name: string;
     htmlTemplate: string;
+    previewWidth?: string;
 }
 
 /**

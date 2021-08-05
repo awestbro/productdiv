@@ -143,7 +143,7 @@ export function TemplateSelector(props: TemplateSelectorProps) {
 type TemplateButtonProps = TemplateSelectorProps & {
     template: TemplateDefinition;
     onTemplateSelect: (t: TemplateDefinition) => any;
-    showTemplatePreview: (s: string) => any,
+    showTemplatePreview: (s: string, w?: string) => any,
     hideTemplatePreview: () => any,
 }
 
@@ -170,7 +170,7 @@ export function TemplateButton(props: TemplateButtonProps) {
                 <div
                     className="btn btn-secondary w-100 mb-2 py-2"
                     onMouseEnter={() => {
-                        showTemplatePreview(template.htmlTemplate);
+                        showTemplatePreview(template.htmlTemplate, template.previewWidth);
                     }}
                     onMouseLeave={() => {
                         hideTemplatePreview();
@@ -191,7 +191,7 @@ export function TemplateButton(props: TemplateButtonProps) {
                 draggable
                 className="btn btn-secondary w-100 mb-2 py-2"
                 onMouseEnter={() => {
-                    showTemplatePreview(template.htmlTemplate);
+                    showTemplatePreview(template.htmlTemplate, template.previewWidth);
                 }}
                 onMouseLeave={() => {
                     hideTemplatePreview();
@@ -276,15 +276,16 @@ export function PlacementTypeSelector(props: PlacementTypeSelectorProps) {
                 <div className="container">
                     <div className="row overflow-auto">
                         {options.map((o, i) => (
-                            <div className="card bg-dark text-light col-sm-12" key={i}>
-                                <div
-                                    className="card-body text-center"
+                            <div className="mb-1" key={i}>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary w-100"
                                     onClick={() => {
                                         onPlacementSelect(o.type);
                                     }}
                                 >
                                     {o.name}
-                                </div>
+                                </button>
                             </div>
                         ))}
                     </div>

@@ -133,10 +133,13 @@ $img-path: '~react-widgets/lib/img';
 
 .rw-popup-container {
     right: -40px;
-    // right: -6px;
     z-index: 1000001;
     position: absolute;
     width: 150px;
+}
+
+.rw-state-focus .rw-popup-container {
+    z-index: 1000001 !important;
 }
 
 .element-editor-select-control {

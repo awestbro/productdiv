@@ -127,16 +127,20 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
         }
     }, [componentTree, iframeDocument])
 
-    function showTemplatePreview(template: string) {
+    function showTemplatePreview(template: string, width?: string) {
         const previewer = iframeDocument.getElementById('productdiv-template-preview');
         highlightElements([]);
         previewer.insertAdjacentHTML('beforeend', template);
+        if (width) {
+            previewer.style.width = width;
+        }
         previewer.style.display = 'block';
     }
 
     function hideTemplatePreview() {
         const previewer = iframeDocument.getElementById('productdiv-template-preview');
         previewer.style.display = 'none';
+        previewer.style.width = '100%';
         while (previewer.firstChild) {
             previewer.removeChild(previewer.firstChild);
         }
@@ -295,6 +299,10 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                     if (node === false) {
                         return;
                     }
+                    if (node === null) {
+                        highlightElements([]);
+                        return;
+                    }
                     if (elementEditorState.match) {
                         highlightElements([node || elementEditorState.match.node]);
                     }
@@ -318,6 +326,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                                 width: calc(100% - 10%);
                                 background-color: inherit;
                                 z-index: 2000;
+                                box-shadow: #a7a7a7 2px 2px 5px 0px;
                             }
                             .productdiv-drop-container::after {
                                 content: "+";

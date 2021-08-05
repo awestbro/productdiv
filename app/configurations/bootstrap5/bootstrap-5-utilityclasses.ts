@@ -260,7 +260,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         controls: [
             {
                 name: 'Display',
-                type: 'selectOne',
+                type: 'selectMany',
                 classes: [
                     'd-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)',
                     'd-(sm|md|lg|xl|xxl)-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)',

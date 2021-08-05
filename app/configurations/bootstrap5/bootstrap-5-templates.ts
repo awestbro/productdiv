@@ -541,6 +541,7 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
+                previewWidth: '500px',
             },
             {
                 name: 'Card Body only',

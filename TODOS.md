@@ -2,10 +2,14 @@ TODOS
 =====
 
 - Configuration
+    - Add headings/ container fluid containers for marketing sections
 
 - Bug
+    - Dropdowns on the right hand side have options cut off
 
 - Features
+    - Add configuration for component documentation
+    - Add quick style macros configuration (background images, parallax, etc)
 
 - Future
     - Advanced Component defintions
@@ -27,3 +31,5 @@ TODOS
     - Left nav extensible actions
     - Template Selector free form HTML option
     - Template selection, click to select, then drag?
+    - Save ProductDiv width to localstorage, possibly include reset size button
+    - Smarter template contols. E.x. if on a row, ability to add and easily manipulate child columns

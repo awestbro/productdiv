@@ -24,7 +24,7 @@ export type LeftNavProps = {
     dropZoneSelector: string,
     templateEditorOpen: boolean,
     setTemplateEditorOpen: (b: boolean) => any,
-    showTemplatePreview: (s: string) => any,
+    showTemplatePreview: (s: string, w?: string) => any,
     hideTemplatePreview: () => any,
     setLeftNavOpen: (b: boolean) => any,
     leftNavOpen: boolean,
@@ -67,6 +67,7 @@ export function LeftNav(props: LeftNavProps) {
                 id="productdiv-leftnav-toggle"
                 className="btn btn-primary"
                 data-productdiv="true"
+                style={{ position: 'absolute', bottom: 15, left: 15, zIndex: 999, fontWeight: 'bold' }}
                 onClick={() => {
                     setLeftNavOpen(true);
                 }}
@@ -113,6 +114,9 @@ export function LeftNav(props: LeftNavProps) {
                     type="button" 
                     className="btn btn-sm btn-secondary me-2"
                     onClick={() => {
+                        setElementEditorState({ match: null });
+                        setElementEditorOpen(false);
+                        redrawHighlightedNode(null);
                         setLeftNavOpen(false);
                     }}
                 >

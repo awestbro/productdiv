@@ -433,7 +433,9 @@ function ElementModifier(props: ElementEditorProps) {
                     className="btn btn-sm btn-secondary"
                     onClick={() => {
                         const clone = element.cloneNode(true) as Element;
-                        clone.id = clone.id + '-1';
+                        if (clone.id) {
+                            clone.id = clone.id + '-1';
+                        }
                         element.after(clone);
                         redrawComponentTree();
                     }}
@@ -473,6 +475,17 @@ function ElementModifier(props: ElementEditorProps) {
                     }}
                 >
                     Copy HTML
+                </button>
+            </div>
+            <div className="my-2 d-flex justify-content-between">
+                <button
+                    type="button"
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => {
+                        copyToClipboard(element.classList.toString());
+                    }}
+                >
+                    Copy Classes
                 </button>
             </div>
             <UtilityClassEditor {...props} />
