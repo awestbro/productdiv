@@ -16,7 +16,7 @@ module.exports = (env, options) => ({
     },
     mode: 'production',
     entry: {
-        'index.js': glob.sync('./vendor/**/*.js').concat(['./app/app.tsx']),
+        'index.js': glob.sync('./vendor/**/*.js').concat(['./app/index.tsx']),
         'bootstrap5-config.js':'./app/configurations/bootstrap5/bootstrap-5-configuration.ts',
     },
     output: {
