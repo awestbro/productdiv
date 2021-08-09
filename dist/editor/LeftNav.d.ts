@@ -1,0 +1,31 @@
+import { drawHoverElement, ElementEditorState } from '../editor/Application';
+import { ParsedLibraryConfigurationDefinition, TemplateCategoryDefinition } from '../lib/configuration/configuration-importer';
+import { NodeTreeMatch } from '../lib/tree/tree-utils';
+export declare type LeftNavProps = {
+    configuration: ParsedLibraryConfigurationDefinition;
+    templateCategories: TemplateCategoryDefinition[];
+    elementEditorState: ElementEditorState;
+    setElementEditorState(s: ElementEditorState): any;
+    treeViewOpen: boolean;
+    setTreeViewOpen(b: boolean): any;
+    elementEditorOpen: boolean;
+    setElementEditorOpen(b: boolean): any;
+    redrawComponentTree(): NodeTreeMatch[];
+    redrawHighlightedNode(node?: Node | false): any;
+    drawHoverElement: typeof drawHoverElement;
+    componentTree: NodeTreeMatch[];
+    dropZoneSelector: string;
+    templateEditorOpen: boolean;
+    setTemplateEditorOpen: (b: boolean) => any;
+    showTemplatePreview: (s: string, w?: string) => any;
+    hideTemplatePreview: () => any;
+    setLeftNavOpen: (b: boolean) => any;
+    leftNavOpen: boolean;
+    lastHoverPosition: {
+        x: number;
+        y: number;
+    };
+    iframeDocument: Document;
+};
+export declare function LeftNav(props: LeftNavProps): JSX.Element;
+export declare function LeftNavMenu(props: LeftNavProps): JSX.Element;
