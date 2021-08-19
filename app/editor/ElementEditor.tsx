@@ -130,38 +130,66 @@ function UtilityClassEditor(props: LeftNavProps) {
     const allUtilityClasses = configuration.utilityClasses;
     const components = configuration.components;
     const [filteredControls, setFilteredControls] = React.useState<UtilityClassDefinition[]>([]);
-    const [matchingControls, setMatchingControls] = React.useState<UtilityClassDefinition[]>([]);
+    const [queryMatchControls, setQueryMatchControls] = React.useState<UtilityClassDefinition[]>([]);
+    const [activeControl, setActiveControl] = React.useState<UtilityClassDefinition>(null);
     const [nonDefaultControls, setNonDefaultControls] = React.useState<UtilityClassDefinition[]>([]);
     const [nonDefaultOpen, setNonDefaultOpen] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         const selectedElement = elementEditorState.match.node as Element;
-        const matching: UtilityClassDefinition[] = [];
+        const queryMatch: UtilityClassDefinition[] = [];
         components.forEach((c) => {
             const selectors = c.selectors || [];
             if (selectors.find((s) => selectedElement.matches(s))) {
                 c.utilityClassMatches.forEach((utilityClassName) => {
-                    const matchingUc = allUtilityClasses.find((uc) => uc.section === utilityClassName);
-                    if (matchingUc) {
-                        matching.push(matchingUc);
+                    const queryMatchUc = allUtilityClasses.find((uc) => uc.section === utilityClassName);
+                    if (queryMatchUc) {
+                        queryMatch.push(queryMatchUc);
                     }
                 });
             }
         });
-        const filtered: UtilityClassDefinition[] = differenceBy(allUtilityClasses, matching, 'section');
+        const filtered: UtilityClassDefinition[] = differenceBy(allUtilityClasses, queryMatch, 'section');
         const filteredDefault = filtered.filter((uc) => uc.showDefault);
         const nonDefault = filtered.filter((uc) => !uc.showDefault);
+        // Active controls
+        const activeControl: UtilityClassControl[] = [];
+        const activeClasses = domTokenListToArray(selectedElement.classList);
+        allUtilityClasses.forEach((utilityClassDefinition) => {
+            const controls = utilityClassDefinition.controls;
+            controls.forEach((control) => {
+                const classes = control.classes || [];
+                if (classes.some((r) => activeClasses.includes(r))) {
+                    activeControl.push(control);
+                }
+            })
+        });
+        if (activeControl.length > 0) {
+            setActiveControl({
+                section: 'Active',
+                controls: activeControl,
+            });
+        } else {
+            setActiveControl(null);
+        }
+
         setFilteredControls(filteredDefault);
-        setMatchingControls(matching);
+        setQueryMatchControls(queryMatch);
         setNonDefaultControls(nonDefault);
     }, [elementEditorState.match])
 
     return (
         <React.Fragment>
             <hr />
-            {matchingControls.length > 0 && (
+            {activeControl !== null && (
                 <React.Fragment>
-                    <UtilityClassFormControlGrid controls={matchingControls} {...props} />
+                    <UtilityClassFormControlGrid controls={[activeControl]} {...props} />
+                    <hr />
+                </React.Fragment>
+            )}
+            {queryMatchControls.length > 0 && (
+                <React.Fragment>
+                    <UtilityClassFormControlGrid controls={queryMatchControls} {...props} />
                     <hr />
                 </React.Fragment>
             )}
