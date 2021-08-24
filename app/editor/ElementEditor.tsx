@@ -560,7 +560,6 @@ function wrapElement(doc: Document, toWrap: Element, wrapperId: string) {
 function unwrapElement(doc: Document, wrapperId: string): Element | null {
     const wrapper = doc.getElementById(wrapperId);
     if (wrapper) {
-        // console.log({wrapper});
         const nodes = wrapper.childNodes;
         let focusNode = null;
         nodes.forEach((node, i) => {
@@ -602,16 +601,16 @@ function InnerHTMLEditor(props: LeftNavProps) {
     }, [elementEditorState])
 
     const triggerTreeChange = throttle(() => {
-        // if (element.nodeName === 'BODY') {
-        //     return;
-        // }
+        if (element.nodeName === 'BODY') {
+            return;
+        }
         redrawComponentTree();
     }, 200);
 
     return (
         <React.Fragment>
             <div className="d-flex justify-content-between align-items-center mb-2">
-                <p className="mb-0">Inner HTML Editor</p>
+                <p className="mb-0">HTML Editor</p>
                 <button 
                     type="button" 
                     className={classnames("btn btn-sm", { 'btn-secondary': !textWrap, 'btn-primary': textWrap })}
@@ -631,7 +630,22 @@ function InnerHTMLEditor(props: LeftNavProps) {
                 }}
                 onBeforeChange={(editor, data, value) => {
                     setHTML(value);
-                    wrapperRef.current.innerHTML = value;
+                    // setting innerHTML with a body tag removes the body tag
+                    // This step just copies manually entered attributes over to the iframeDocument's body node.
+                    if (element.tagName === 'BODY') {
+                        const doc = new DOMParser().parseFromString(value, "text/html");
+                        const hopefullyBody = wrapperRef.current.children[0];
+                        if (hopefullyBody.tagName === 'BODY') {
+                            for (let attr of Array.from(hopefullyBody.attributes)) {
+                                hopefullyBody.attributes.removeNamedItem(attr.nodeName);
+                            }
+                            for (let attr of Array.from(doc.body.attributes)) {
+                                hopefullyBody.setAttribute(attr.nodeName, attr.nodeValue);
+                            }
+                        }
+                    } else {
+                        wrapperRef.current.innerHTML = value;
+                    }
                     triggerTreeChange();
                 }}
                 onBlur={(e) => {
