@@ -15,8 +15,8 @@ import * as throttle from 'lodash/throttle';
 import { highlightElements } from "../lib/dom/canvas";
 import { LeftNavProps } from "./LeftNav";
 import { UtilityClassControl, UtilityClassDefinition } from '../lib/configuration/configuration-importer';
-import { domTokenListToArray } from '../selector';
-import { getParentMatch } from '../lib/tree/tree-utils';
+import { domTokenListToArray, nodeListToArray } from '../selector';
+import { getParentMatch, getTreeMatchFromElement } from '../lib/tree/tree-utils';
 import { AttributeEditor } from './AttributeEditor';
 
 export function addClassDefinition(element: Element, classString: string) {
@@ -548,24 +548,64 @@ function TextEditor(props: LeftNavProps) {
     );
 }
 
-function InnerHTMLEditor(props: LeftNavProps) {
-    const { elementEditorState, redrawComponentTree, redrawHighlightedNode } = props;
-    const element = elementEditorState.match.node as Element;
-    const [text, setHTML] = React.useState(html_beautify(element.innerHTML));
-    const [wrap, _setWrap] = React.useState<boolean>(localStorage.getItem('productdiv-editorwrap') === 'true' || false);
+function wrapElement(doc: Document, toWrap: Element, wrapperId: string) {
+    const wrapper = doc.createElement('div');
+    wrapper.id = wrapperId;
+    const parent = toWrap.parentNode;
+    parent.insertBefore(wrapper, toWrap);
+    wrapper.appendChild(toWrap);
+    return wrapper;
+};
 
-    function setWrap(b: boolean) {
+function unwrapElement(doc: Document, wrapperId: string): Element | null {
+    const wrapper = doc.getElementById(wrapperId);
+    if (wrapper) {
+        // console.log({wrapper});
+        const nodes = wrapper.childNodes;
+        let focusNode = null;
+        nodes.forEach((node, i) => {
+            const unwrapped = wrapper.parentNode.insertBefore(node, wrapper);
+            if (i === 0) {
+                focusNode = unwrapped;
+            }
+        });
+        wrapper.remove();
+        return focusNode;
+    }
+    return null;
+}
+
+function InnerHTMLEditor(props: LeftNavProps) {
+    const { elementEditorState, redrawComponentTree, redrawHighlightedNode, iframeDocument, setElementEditorState } = props;
+    const element = elementEditorState.match.node as Element;
+    const [wrapper, _setWrapper] = React.useState<Element>(null);
+    const [text, setHTML] = React.useState('');
+    const [textWrap, _setTextWrap] = React.useState<boolean>(localStorage.getItem('productdiv-editorwrap') === 'true' || false);
+
+    const wrapperRef = React.useRef(wrapper);
+    const setWrapper = (v: Element) => {
+        wrapperRef.current = v;
+        _setWrapper(v);
+    }
+
+    function setTextWrap(b: boolean) {
         localStorage.setItem('productdiv-editorwrap', `${b}`);
-        _setWrap(b);
+        _setTextWrap(b);
     }
 
     React.useEffect(() => {
-        setHTML(html_beautify(element.innerHTML));
+        setWrapper(wrapElement(iframeDocument, element, 'productdiv-currently-editing'));
+        setHTML(html_beautify(wrapperRef.current.innerHTML));
+        return () => {
+            unwrapElement(iframeDocument, 'productdiv-currently-editing');
+        }
     }, [elementEditorState])
 
     const triggerTreeChange = throttle(() => {
+        // if (element.nodeName === 'BODY') {
+        //     return;
+        // }
         redrawComponentTree();
-        redrawHighlightedNode();
     }, 200);
 
     return (
@@ -574,9 +614,9 @@ function InnerHTMLEditor(props: LeftNavProps) {
                 <p className="mb-0">Inner HTML Editor</p>
                 <button 
                     type="button" 
-                    className={classnames("btn btn-sm", { 'btn-secondary': !wrap, 'btn-primary': wrap })}
+                    className={classnames("btn btn-sm", { 'btn-secondary': !textWrap, 'btn-primary': textWrap })}
                     onClick={() => {
-                        setWrap(!wrap)
+                        setTextWrap(!textWrap)
                     }}
                 >
                     Wrap
@@ -587,12 +627,18 @@ function InnerHTMLEditor(props: LeftNavProps) {
                 options={{
                     mode: 'htmlmixed',
                     theme: 'oceanic-next',
-                    lineWrapping: wrap,
+                    lineWrapping: textWrap,
                 }}
                 onBeforeChange={(editor, data, value) => {
                     setHTML(value);
-                    element.innerHTML = value;
+                    wrapperRef.current.innerHTML = value;
                     triggerTreeChange();
+                }}
+                onBlur={(e) => {
+                    const unwrappedNode = unwrapElement(iframeDocument, 'productdiv-currently-editing');
+                    const tree = redrawComponentTree();
+                    setElementEditorState({ match: getTreeMatchFromElement(tree, unwrappedNode) });
+                    redrawHighlightedNode(unwrappedNode);
                 }}
             />
         </React.Fragment>

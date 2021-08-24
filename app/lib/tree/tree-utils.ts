@@ -17,7 +17,9 @@ function removeIgnoredTreeMatches(doc: Document, matches: NodeTreeMatch[], treeV
 function removeIgnoredElementMatches(matches: NodeTreeMatch[], treeViewIgnoredElements: Element[]): NodeTreeMatch[] {
     const newMatches: NodeTreeMatch[] = [];
     matches.forEach((match) => {
-        if (!treeViewIgnoredElements.includes((match.node as Element))) {
+        if ((match.node as Element).id === 'productdiv-currently-editing') {
+            newMatches.push(...removeIgnoredElementMatches(match.children, treeViewIgnoredElements));
+        } else if (!treeViewIgnoredElements.includes((match.node as Element))) {
             newMatches.push({
                 ...match,
                 children: removeIgnoredElementMatches(match.children, treeViewIgnoredElements),
