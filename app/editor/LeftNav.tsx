@@ -9,6 +9,7 @@ import { TemplateSelector } from './TemplateSelector';
 import { copyElementToClipboard } from './ElementEditor';
 
 export type LeftNavProps = {
+    getComponentTree(doc: Document, treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[],
     configuration: ParsedLibraryConfigurationDefinition,
     templateCategories: TemplateCategoryDefinition[],
     elementEditorState: ElementEditorState,

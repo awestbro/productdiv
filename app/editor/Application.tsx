@@ -273,6 +273,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
     return (
         <React.Fragment>
             <LeftNav
+                getComponentTree={getComponentTree}
                 leftNavOpen={leftNavOpen}
                 setLeftNavOpen={setLeftNavOpen}
                 iframeDocument={iframeDocument}

@@ -2,6 +2,7 @@ import { drawHoverElement, ElementEditorState } from '../editor/Application';
 import { ParsedLibraryConfigurationDefinition, TemplateCategoryDefinition } from '../lib/configuration/configuration-importer';
 import { NodeTreeMatch } from '../lib/tree/tree-utils';
 export declare type LeftNavProps = {
+    getComponentTree(doc: Document, treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[];
     configuration: ParsedLibraryConfigurationDefinition;
     templateCategories: TemplateCategoryDefinition[];
     elementEditorState: ElementEditorState;

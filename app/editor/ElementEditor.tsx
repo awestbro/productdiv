@@ -548,44 +548,64 @@ function TextEditor(props: LeftNavProps) {
     );
 }
 
-function wrapElement(doc: Document, toWrap: Element, wrapperId: string) {
-    const wrapper = doc.createElement('div');
-    wrapper.id = wrapperId;
-    const parent = toWrap.parentNode;
-    parent.insertBefore(wrapper, toWrap);
-    wrapper.appendChild(toWrap);
-    return wrapper;
-};
-
-function unwrapElement(doc: Document, wrapperId: string): Element | null {
-    const wrapper = doc.getElementById(wrapperId);
-    if (wrapper) {
-        const nodes = wrapper.childNodes;
-        let focusNode = null;
-        nodes.forEach((node, i) => {
-            const unwrapped = wrapper.parentNode.insertBefore(node, wrapper);
-            if (i === 0) {
-                focusNode = unwrapped;
-            }
-        });
-        wrapper.remove();
-        return focusNode;
+function findPositionRelativeToParent(element: Element): number {
+    const parent = element.parentNode;
+    let position = 0;
+    for (let i = 0; i < parent.childNodes.length; i++) {
+        if (parent.childNodes[i] === element) {
+            position = i;
+        }
     }
-    return null;
+    return position;
 }
 
+function htmlStringToNodeList(html: string): NodeListOf<ChildNode> {
+    let doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.childNodes;
+}
+
+function replaceParentElementChildren(parentElement: Element, oldChildNode: Element | null, newChildNodes: NodeListOf<ChildNode>, trackedNodes: ChildNode[]) {
+    let returnNode: ChildNode = null;
+    let trackedChildrenNodes: ChildNode[] = [];
+    
+    [...nodeListToArray(newChildNodes)].forEach((node: ChildNode, i: number) => {
+        let insertedNode;
+        if (oldChildNode) {
+            insertedNode = parentElement.insertBefore(node, oldChildNode);
+        } else {
+            insertedNode = parentElement.appendChild(node);
+        }
+        if (returnNode === null && insertedNode.nodeType === ChildNodeType.Element) {
+            returnNode = insertedNode;
+        }
+        trackedChildrenNodes.push(insertedNode);
+    });
+
+    trackedNodes.forEach((node) => node.remove());
+    if (oldChildNode) {
+        oldChildNode.remove();
+    }
+
+    return {
+        returnNode,
+        trackedChildrenNodes,
+    };
+}
+
+/**
+ * Changing body doesn't work
+ * Wrapping an element with another doesn't work
+ */
 function InnerHTMLEditor(props: LeftNavProps) {
-    const { elementEditorState, redrawComponentTree, redrawHighlightedNode, iframeDocument, setElementEditorState } = props;
-    const element = elementEditorState.match.node as Element;
-    const [wrapper, _setWrapper] = React.useState<Element>(null);
+    const { elementEditorState, redrawHighlightedNode, iframeDocument, setElementEditorState, componentTree, configuration, getComponentTree, redrawComponentTree } = props;
+    
     const [text, setHTML] = React.useState('');
     const [textWrap, _setTextWrap] = React.useState<boolean>(localStorage.getItem('productdiv-editorwrap') === 'true' || false);
 
-    const wrapperRef = React.useRef(wrapper);
-    const setWrapper = (v: Element) => {
-        wrapperRef.current = v;
-        _setWrapper(v);
-    }
+    const element = React.useRef<Element>();
+    const parentElementRef = React.useRef<Element>();
+    const parentPositionRef = React.useRef(0);
+    const editingElementsRef = React.useRef<ChildNode[]>([]);
 
     function setTextWrap(b: boolean) {
         localStorage.setItem('productdiv-editorwrap', `${b}`);
@@ -593,19 +613,14 @@ function InnerHTMLEditor(props: LeftNavProps) {
     }
 
     React.useEffect(() => {
-        setWrapper(wrapElement(iframeDocument, element, 'productdiv-currently-editing'));
-        setHTML(html_beautify(wrapperRef.current.innerHTML));
+        element.current = (elementEditorState.match.node as Element);
+        parentElementRef.current = element.current.parentElement;
+        parentPositionRef.current = findPositionRelativeToParent(element.current);
+        setHTML(html_beautify(element.current.outerHTML));
         return () => {
-            unwrapElement(iframeDocument, 'productdiv-currently-editing');
+            parentPositionRef.current = 0;
         }
-    }, [elementEditorState])
-
-    const triggerTreeChange = throttle(() => {
-        if (element.nodeName === 'BODY') {
-            return;
-        }
-        redrawComponentTree();
-    }, 200);
+    }, [elementEditorState, componentTree]);
 
     return (
         <React.Fragment>
@@ -630,29 +645,39 @@ function InnerHTMLEditor(props: LeftNavProps) {
                 }}
                 onBeforeChange={(editor, data, value) => {
                     setHTML(value);
-                    // setting innerHTML with a body tag removes the body tag
-                    // This step just copies manually entered attributes over to the iframeDocument's body node.
-                    if (element.tagName === 'BODY') {
+                    const editingBody = element.current.nodeName === 'BODY';
+                    if (editingBody) {
                         const doc = new DOMParser().parseFromString(value, "text/html");
-                        const hopefullyBody = wrapperRef.current.children[0];
-                        if (hopefullyBody.tagName === 'BODY') {
-                            for (let attr of Array.from(hopefullyBody.attributes)) {
-                                hopefullyBody.attributes.removeNamedItem(attr.nodeName);
+                        const iframeBody = iframeDocument.body;
+                        // sometimes setAttribute complains if blank attributes exist
+                        try {
+                            for (let attr of Array.from(iframeBody.attributes)) {
+                                iframeBody.attributes.removeNamedItem(attr.nodeName);
                             }
                             for (let attr of Array.from(doc.body.attributes)) {
-                                hopefullyBody.setAttribute(attr.nodeName, attr.nodeValue);
+                                iframeBody.setAttribute(attr.nodeName, attr.nodeValue);
                             }
+                        } catch (e) { }
+                        // If productdiv elements still available, set body changes, else don't allow commits
+                        if (doc.querySelectorAll('[data-productdiv]').length >= 4) {
+                            iframeBody.innerHTML = doc.body.innerHTML;
                         }
+                        redrawHighlightedNode(iframeBody);
                     } else {
-                        wrapperRef.current.innerHTML = value;
+                        const newNodes = htmlStringToNodeList(value);
+                        const { trackedChildrenNodes, returnNode } = replaceParentElementChildren((element.current.parentNode as Element), element.current, newNodes, editingElementsRef.current);
+                        editingElementsRef.current = trackedChildrenNodes;
+                        element.current = (returnNode as Element);
+                        redrawHighlightedNode(returnNode);
                     }
-                    triggerTreeChange();
                 }}
                 onBlur={(e) => {
-                    const unwrappedNode = unwrapElement(iframeDocument, 'productdiv-currently-editing');
-                    const tree = redrawComponentTree();
-                    setElementEditorState({ match: getTreeMatchFromElement(tree, unwrappedNode) });
-                    redrawHighlightedNode(unwrappedNode);
+                    const editedNode = element.current;
+                    editingElementsRef.current = [];
+                    const tree = getComponentTree(iframeDocument, configuration.treeViewIgnoreQuerySelectors);
+                    setElementEditorState({ match: getTreeMatchFromElement(tree, editedNode) });
+                    redrawComponentTree();
+                    redrawHighlightedNode(editedNode);
                 }}
             />
         </React.Fragment>
