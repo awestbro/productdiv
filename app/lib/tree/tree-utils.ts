@@ -42,7 +42,6 @@ function matchNodesToComponentTree(nodes: Node[]): NodeTreeMatch[] {
         const type = `${node.nodeType}`;
         if (node.nodeType === ChildNodeType.Element) {
             if ((node as Element).hasAttribute('data-productdiv-ignore')) {
-                console.log('ignore')
                 return null;
             }
             return {

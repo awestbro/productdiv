@@ -10,6 +10,8 @@ export declare function drawHoverElement(clientX: number, clientY: number, dropZ
     element: Element;
     placement: import("../lib/dom/canvas").PlacementType;
 };
+export declare function getLeftNavOpenState(): boolean;
+export declare function setLeftNavOpenState(state: boolean): void;
 export declare function Application(props: {
     pageSource: string;
     configuration: ParsedLibraryConfigurationDefinition;

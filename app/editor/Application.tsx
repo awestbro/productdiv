@@ -71,16 +71,18 @@ function setTreeOpenState(state: boolean) {
     setLocalStateBoolean('productdiv-tree-state', state);
 }
 
-function getLeftNavOpenState() {
+export function getLeftNavOpenState() {
     return getLocalStateBoolean('productdiv-open-state');
 }
 
-function setLeftNavOpenState(state: boolean) {
+export function setLeftNavOpenState(state: boolean) {
     setLocalStateBoolean('productdiv-open-state', state);
 }
 
 const iframeDocumentId = 'productdiv-iframe';
 const dropZoneSelector = '.productdiv-drop-container';
+
+let hasIframeMounted = false;
 
 export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition }) {
     const { pageSource, configuration } = props;
@@ -312,49 +314,57 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
             <iframe 
                 onLoad={() => {
                     const iframe = getIframeDocument();
-                    createCanvas(iframe);
-                    setIframeDocument(iframe)
-                    iframe.body.insertAdjacentHTML('beforeend', `
-                        <div id="productdiv-template-preview" data-productdiv="true"></div>
-                        <style data-productdiv="true">
-                            #productdiv-template-preview {
-                                display: none;
-                                position: fixed;
-                                top: 0;
-                                left: 0;
-                                margin: 5% 5%;
-                                padding: 5% 5%;
-                                width: calc(100% - 10%);
-                                background-color: inherit;
-                                z-index: 2000;
-                                box-shadow: #a7a7a7 2px 2px 5px 0px;
-                            }
-                            .productdiv-drop-container::after {
-                                content: "+";
-                                text-align: center;
-                                color: black;
-                            }
-                            .productdiv-drop-container {
-                                min-height: 50px;
-                                min-width: 50px;
-                                width: 100%;
-                                height: 100%;
-                                background-color: #c6e3c6;
-                                border: 1px dotted #5c6064;
-                                text-align: center;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                            }
-                            * {
-                                user-select: none !important;
-                            }
-                            .productdiv-dragging * {
-                                border: 10px solid #1a53d461 !important;
-                                border-radius: 0px !important;
-                            }
-                        </style>
-                    `);
+                    if (!hasIframeMounted) {
+                        createCanvas(iframe);
+                        setIframeDocument(iframe)
+                        iframe.body.insertAdjacentHTML('beforeend', `
+                            <div id="productdiv-template-preview" data-productdiv="true"></div>
+                            <style data-productdiv="true">
+                                #productdiv-template-preview {
+                                    display: none;
+                                    position: fixed;
+                                    top: 0;
+                                    left: 0;
+                                    margin: 5% 5%;
+                                    padding: 5% 5%;
+                                    width: calc(100% - 10%);
+                                    background-color: inherit;
+                                    z-index: 2000;
+                                    box-shadow: #a7a7a7 2px 2px 5px 0px;
+                                }
+                                .productdiv-drop-container::after {
+                                    content: "+";
+                                    text-align: center;
+                                    color: black;
+                                }
+                                .productdiv-drop-container {
+                                    min-height: 50px;
+                                    min-width: 50px;
+                                    width: 100%;
+                                    height: 100%;
+                                    background-color: #c6e3c6;
+                                    border: 1px dotted #5c6064;
+                                    text-align: center;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                }
+                                * {
+                                    user-select: none !important;
+                                }
+                                .productdiv-dragging * {
+                                    border: 10px solid #1a53d461 !important;
+                                    border-radius: 0px !important;
+                                }
+                            </style>
+                        `);
+                        hasIframeMounted = true;
+                    } else {
+                        const d = getIframeElement();
+                        if (d.contentDocument.location.href !== document.location.href) {
+                            window.location.href = d.contentDocument.location.href;
+                        }
+                    }
                 }} 
                 id={iframeDocumentId} 
                 style={{width: '100%', height: '100%', border: 'none'}}

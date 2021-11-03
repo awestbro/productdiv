@@ -33,12 +33,6 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition, c
     );
 }
 
-// if (!inIframe()) {
-//     document.addEventListener('DOMContentLoaded', () => {
-//         ProductDiv(BootstrapComponents);
-//     });
-// }
-
 export default function ProductDiv(configuration: LibraryConfigurationDefinition, cssPath: string = '/app.css') {
     if (!inIframe()) {
         mountApplication(parseLibraryConfiguration(configuration), cssPath);

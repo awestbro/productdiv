@@ -10,7 +10,6 @@ TODOS
 - Features
     - Add configuration for component documentation
     - Add quick style macros configuration (background images, parallax, etc)
-    - Add text wrap icon instead of "Wrap" for element editor
 
 - Future
     - Advanced Component defintions
