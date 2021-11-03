@@ -6,11 +6,15 @@ TODOS
 
 - Bug
     - Dropdowns on the right hand side have options cut off
+    - Currently edited element not included in Copy HTML
+    - Editing img attributes in html editor deletes node (added height)
 
 - Features
+    - iFrame messes with navigation. Unwrap iframe when not in editor mode
     - Add configuration for component documentation
     - Add quick style macros configuration (background images, parallax, etc)
     - Add text wrap icon instead of "Wrap" for element editor
+    - Add paste classes button to ElementEditor
 
 - Future
     - Advanced Component defintions

@@ -115,6 +115,7 @@ export function LeftNav(props: LeftNavProps) {
                     type="button" 
                     className="btn btn-sm btn-secondary me-2"
                     onClick={() => {
+                        console.log('Bottom Toggle Close');
                         setElementEditorState({ match: null });
                         setElementEditorOpen(false);
                         redrawHighlightedNode(null);

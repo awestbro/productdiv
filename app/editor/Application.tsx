@@ -71,19 +71,19 @@ function setTreeOpenState(state: boolean) {
     setLocalStateBoolean('productdiv-tree-state', state);
 }
 
-function getLeftNavOpenState() {
+export function getLeftNavOpenState() {
     return getLocalStateBoolean('productdiv-open-state');
 }
 
-function setLeftNavOpenState(state: boolean) {
+export function setLeftNavOpenState(state: boolean) {
     setLocalStateBoolean('productdiv-open-state', state);
 }
 
 const iframeDocumentId = 'productdiv-iframe';
 const dropZoneSelector = '.productdiv-drop-container';
 
-export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition }) {
-    const { pageSource, configuration } = props;
+export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition, onLeftNavClose: (doc: Document) => void }) {
+    const { pageSource, configuration, onLeftNavClose } = props;
     const [componentTree, setComponentTree] = React.useState<NodeTreeMatch[]>(null);
     const [treeViewOpen, setTreeViewStateOpen] = React.useState(getTreeOpenState());
     const [leftNavOpen, setLeftNavStateOpen] = React.useState(getLeftNavOpenState());
@@ -100,6 +100,12 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
     function setLeftNavOpen(v: boolean) {
         setLeftNavStateOpen(v);
         setLeftNavOpenState(v);
+        if (v === false) {
+            document.querySelectorAll('[data-productdiv]').forEach((e) => {
+                e.remove();
+            });
+            onLeftNavClose(iframeDocument);
+        }
     }
 
     const [iframeDocument, setIframeDocument] = React.useState<Document>();
@@ -109,6 +115,15 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
         setComponentTree(tree);
         return tree;
     }
+
+    // React.useEffect(() => {
+    //     return () => {
+    //         console.log('Unmount App');
+    //         // document.querySelectorAll('[data-productdiv]').forEach((e) => {
+    //         //     e.remove();
+    //         // });
+    //     }
+    // }, [])
 
     // Only runs once by setting second arg to []
     React.useEffect(() => {
@@ -152,6 +167,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
     const [currentHoveredMatch, setCurrentHoveredMatch] = React.useState<NodeTreeMatch>(null);
 
     function documentOnClick(event: MouseEvent) {
+        console.log('doc click');
         event.preventDefault();
         
         if (!elementEditorState.match) {
@@ -269,6 +285,19 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
             iframeWindow.removeEventListener('resize', onResize);
         }
     }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument, leftNavOpen]);
+    
+    React.useEffect(() => {
+        if (iframeDocument) {
+            const iframeWindow = getIframeWindow();
+            iframeDocument.removeEventListener('click', documentOnClick);
+            iframeDocument.removeEventListener('scroll', onScroll);
+            iframeDocument.removeEventListener('dragover', onDragOver);
+            iframeDocument.removeEventListener('dragleave', onDragLeave);
+            iframeDocument.removeEventListener('mousemove', onMouseMove);
+            iframeDocument.removeEventListener('mouseleave', onMouseLeave);
+            iframeWindow.removeEventListener('resize', onResize);
+        }
+    }, []);
 
     return (
         <React.Fragment>
@@ -358,7 +387,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                 }} 
                 id={iframeDocumentId} 
                 style={{width: '100%', height: '100%', border: 'none'}}
-                src={pageSource} 
+                src={pageSource}
             />
             <div style={{ flexShrink: 0 }} className={classnames({ 'd-none': !treeViewOpen })}>
                 <TreeView
