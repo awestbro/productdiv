@@ -20,13 +20,12 @@ export declare type LeftNavProps = {
     setTemplateEditorOpen: (b: boolean) => any;
     showTemplatePreview: (s: string, w?: string) => any;
     hideTemplatePreview: () => any;
-    setLeftNavOpen: (b: boolean) => any;
-    leftNavOpen: boolean;
     lastHoverPosition: {
         x: number;
         y: number;
     };
     iframeDocument: Document;
+    onLeftNavClose: () => any;
 };
 export declare function LeftNav(props: LeftNavProps): JSX.Element;
 export declare function LeftNavMenu(props: LeftNavProps): JSX.Element;
