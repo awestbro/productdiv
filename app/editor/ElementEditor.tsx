@@ -10,13 +10,16 @@ import * as differenceBy from 'lodash/differenceBy';
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import 'codemirror/mode/htmlmixed/htmlmixed';
 
-
 import { highlightElements } from "../lib/dom/canvas";
 import { LeftNavProps } from "./LeftNav";
 import { UtilityClassControl, UtilityClassDefinition } from '../lib/configuration/configuration-importer';
 import { domTokenListToArray, nodeListToArray } from '../selector';
 import { getParentMatch, getTreeMatchFromElement } from '../lib/tree/tree-utils';
 import { AttributeEditor } from './AttributeEditor';
+
+const beautify_opts = {
+    "max_preserve_newlines": 1,
+}
 
 export function addClassDefinition(element: Element, classString: string) {
     if (!classString) {
@@ -31,10 +34,14 @@ export function removeClassDefinition(element: Element, classString: string) {
     element.classList.remove(...classesToAdd);
 }
 
-export function copyElementToClipboard(element: Element) {
+export function sanitizeHtmlToString(element: Element) {
     const copy = (element.cloneNode(true) as Element);
     copy.querySelectorAll('[data-productdiv="true"]').forEach(e => e.remove());
-    copyToClipboard(html_beautify(copy.outerHTML));
+    return html_beautify(copy.outerHTML, beautify_opts);
+}
+
+export function copyElementToClipboard(element: Element) {
+    copyToClipboard(sanitizeHtmlToString(element));
 }
 
 function copyToClipboard(val: string) {
@@ -558,7 +565,7 @@ function findPositionRelativeToParent(element: Element): number {
     return position;
 }
 
-function htmlStringToNodeList(html: string): NodeListOf<ChildNode> {
+export function htmlStringToNodeList(html: string): NodeListOf<ChildNode> {
     let doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.childNodes;
 }
@@ -635,7 +642,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
         element.current = (elementEditorState.match.node as Element);
         parentElementRef.current = element.current.parentElement;
         parentPositionRef.current = findPositionRelativeToParent(element.current);
-        setHTML(html_beautify(element.current.outerHTML));
+        setHTML(html_beautify(element.current.outerHTML, beautify_opts));
         return () => {
             parentPositionRef.current = 0;
         }

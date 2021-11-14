@@ -71,24 +71,15 @@ function setTreeOpenState(state: boolean) {
     setLocalStateBoolean('productdiv-tree-state', state);
 }
 
-export function getLeftNavOpenState() {
-    return getLocalStateBoolean('productdiv-open-state');
-}
-
-export function setLeftNavOpenState(state: boolean) {
-    setLocalStateBoolean('productdiv-open-state', state);
-}
-
 const iframeDocumentId = 'productdiv-iframe';
 const dropZoneSelector = '.productdiv-drop-container';
 
 let hasIframeMounted = false;
 
-export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition }) {
-    const { pageSource, configuration } = props;
+export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition, onLeftNavClose: (d: Document) => any }) {
+    const { pageSource, configuration, onLeftNavClose } = props;
     const [componentTree, setComponentTree] = React.useState<NodeTreeMatch[]>(null);
     const [treeViewOpen, setTreeViewStateOpen] = React.useState(getTreeOpenState());
-    const [leftNavOpen, setLeftNavStateOpen] = React.useState(getLeftNavOpenState());
     const [elementEditorOpen, setElementEditorOpen] = React.useState(false);
     const [templateEditorOpen, setTemplateEditorOpen] = React.useState<boolean>(false);
     const [elementEditorState, setElementEditorState] = React.useState<ElementEditorState>({ match: null });
@@ -99,11 +90,6 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
         setTreeViewStateOpen(v);
     }
 
-    function setLeftNavOpen(v: boolean) {
-        setLeftNavStateOpen(v);
-        setLeftNavOpenState(v);
-    }
-
     const [iframeDocument, setIframeDocument] = React.useState<Document>();
 
     function redrawComponentTree(treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[] {
@@ -111,6 +97,13 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
         setComponentTree(tree);
         return tree;
     }
+
+    // cleanup state on unmount
+    React.useEffect(() => {
+        return () => {
+            hasIframeMounted = false;
+        }
+    }, []);
 
     // Only runs once by setting second arg to []
     React.useEffect(() => {
@@ -242,7 +235,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
     }
 
     React.useEffect(() => {
-        if (iframeDocument && leftNavOpen) {
+        if (iframeDocument) {
             const iframeWindow = getIframeWindow();
             iframeDocument.addEventListener('click', documentOnClick);
             iframeDocument.addEventListener('scroll', onScroll);
@@ -260,24 +253,13 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                 iframeDocument.removeEventListener('mouseleave', onMouseLeave);
                 iframeWindow.removeEventListener('resize', onResize);
             }
-        } else if (iframeDocument && !leftNavOpen) {
-            const iframeWindow = getIframeWindow();
-            iframeDocument.removeEventListener('click', documentOnClick);
-            iframeDocument.removeEventListener('scroll', onScroll);
-            iframeDocument.removeEventListener('dragover', onDragOver);
-            iframeDocument.removeEventListener('dragleave', onDragLeave);
-            iframeDocument.removeEventListener('mousemove', onMouseMove);
-            iframeDocument.removeEventListener('mouseleave', onMouseLeave);
-            iframeWindow.removeEventListener('resize', onResize);
         }
-    }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument, leftNavOpen]);
+    }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument]);
 
     return (
         <React.Fragment>
             <LeftNav
                 getComponentTree={getComponentTree}
-                leftNavOpen={leftNavOpen}
-                setLeftNavOpen={setLeftNavOpen}
                 iframeDocument={iframeDocument}
                 showTemplatePreview={showTemplatePreview}
                 hideTemplatePreview={hideTemplatePreview}
@@ -310,6 +292,7 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                         highlightElements([node || elementEditorState.match.node]);
                     }
                 }}
+                onLeftNavClose={() => onLeftNavClose(iframeDocument)}
             />
             <iframe 
                 onLoad={() => {
@@ -359,16 +342,11 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                             </style>
                         `);
                         hasIframeMounted = true;
-                    } else {
-                        const d = getIframeElement();
-                        if (d.contentDocument.location.href !== document.location.href) {
-                            window.location.href = d.contentDocument.location.href;
-                        }
                     }
                 }} 
                 id={iframeDocumentId} 
                 style={{width: '100%', height: '100%', border: 'none'}}
-                src={pageSource} 
+                srcDoc={pageSource.replace('"', '\"')} 
             />
             <div style={{ flexShrink: 0 }} className={classnames({ 'd-none': !treeViewOpen })}>
                 <TreeView

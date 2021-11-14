@@ -27,13 +27,12 @@ export type LeftNavProps = {
     setTemplateEditorOpen: (b: boolean) => any,
     showTemplatePreview: (s: string, w?: string) => any,
     hideTemplatePreview: () => any,
-    setLeftNavOpen: (b: boolean) => any,
-    leftNavOpen: boolean,
     lastHoverPosition: {
         x: number,
         y: number,
     }
     iframeDocument: Document,
+    onLeftNavClose: () => any;
 }
 
 export function LeftNav(props: LeftNavProps) {
@@ -55,28 +54,10 @@ export function LeftNav(props: LeftNavProps) {
         setTreeViewOpen,
         treeViewOpen,
         redrawHighlightedNode,
-        leftNavOpen,
-        setLeftNavOpen,
+        onLeftNavClose,
     } = props;
 
     let selectedComponent;
-
-    if (!leftNavOpen) {
-        return (
-            <button 
-                type="button"
-                id="productdiv-leftnav-toggle"
-                className="btn btn-primary"
-                data-productdiv="true"
-                style={{ position: 'absolute', bottom: 15, left: 15, zIndex: 999, fontWeight: 'bold' }}
-                onClick={() => {
-                    setLeftNavOpen(true);
-                }}
-            >
-                PD
-            </button>
-        )
-    }
 
     if (templateEditorOpen) {
         selectedComponent = (
@@ -118,7 +99,7 @@ export function LeftNav(props: LeftNavProps) {
                         setElementEditorState({ match: null });
                         setElementEditorOpen(false);
                         redrawHighlightedNode(null);
-                        setLeftNavOpen(false);
+                        onLeftNavClose();
                     }}
                 >
                     PD
