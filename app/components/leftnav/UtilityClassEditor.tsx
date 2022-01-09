@@ -133,7 +133,7 @@ function UtilityClassFormControlGrid(
     openDefault?: boolean;
   } & LeftNavProps
 ) {
-  const { controls, openDefault } = props;
+  const { controls } = props;
   return (
     <React.Fragment>
       {controls.map((u) => (

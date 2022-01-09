@@ -49,7 +49,7 @@ export function addTemplateToElement(
   }
   if (placement === PlacementType.REPLACE) {
     const html = template.htmlTemplate.trim(); // Never return a text node of whitespace as the result
-    let t = document.createElement("template");
+    const t = document.createElement("template");
     t.innerHTML = html;
     const newElem = t.content.firstChild;
     element.parentElement.replaceChild(newElem, element);
@@ -89,6 +89,6 @@ export function findPositionRelativeToParent(element: Element): number {
  * @returns list of child nodes from input string
  */
 export function htmlStringToNodeList(html: string): NodeListOf<ChildNode> {
-  let doc = new DOMParser().parseFromString(html, "text/html");
+  const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.childNodes;
 }

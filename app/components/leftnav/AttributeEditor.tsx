@@ -3,11 +3,6 @@ import { LeftNavProps } from "./LeftNav";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import "codemirror/mode/css/css";
 
-type SimpleAttribute = {
-  name: string;
-  value: string;
-};
-
 function attributeMapToStringMap(m: NamedNodeMap): { [key: string]: string } {
   let i = 0;
   const r = [];

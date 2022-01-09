@@ -21,8 +21,8 @@ export function removeClassDefinition(element: Element, classString: string) {
 export function UtilityClassFormControl(props: {
   element: Element;
   control: UtilityClassControl;
-  redrawComponentTree: any;
-  redrawHighlightedNode: any;
+  redrawComponentTree: () => void;
+  redrawHighlightedNode: () => void;
 }) {
   const { control } = props;
   if (control.type === "selectOne") {
@@ -36,8 +36,8 @@ export function UtilityClassFormControl(props: {
 function SelectControl(props: {
   control: UtilityClassControl;
   element: Element;
-  redrawComponentTree: any;
-  redrawHighlightedNode: any;
+  redrawComponentTree: () => void;
+  redrawHighlightedNode: () => void;
 }) {
   const { control, element, redrawComponentTree, redrawHighlightedNode } =
     props;
@@ -89,7 +89,7 @@ function SelectControl(props: {
     <div className="element-editor-select-control">
       <div>{control.name}</div>
       <DropdownList
-        onSelect={(v: any) => {
+        onSelect={(v: string) => {
           classOptions.forEach((c) => {
             if (c !== "") {
               removeClassDefinition(element, c);
@@ -108,6 +108,7 @@ function SelectControl(props: {
         value={value}
         onChange={(v) => setValue(v)}
         // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         optionComponent={(props: any) => (
           <ListOption
             {...props}
@@ -123,8 +124,8 @@ function SelectControl(props: {
 function MultiSelectControl(props: {
   control: UtilityClassControl;
   element: Element;
-  redrawComponentTree: any;
-  redrawHighlightedNode: any;
+  redrawComponentTree: () => void;
+  redrawHighlightedNode: () => void;
 }) {
   const { control, element, redrawComponentTree, redrawHighlightedNode } =
     props;
@@ -192,6 +193,7 @@ function MultiSelectControl(props: {
           setValue(v);
         }}
         // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         optionComponent={(props: any) => (
           <ListOption
             {...props}

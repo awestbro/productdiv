@@ -8,7 +8,7 @@ import { AttributeEditor } from "./AttributeEditor";
 import { ElementHtmlEditor } from "./ElementHtmlEditor";
 
 export type ElementEditorProps = LeftNavProps & {
-  setTemplateEditorOpen: (b: boolean) => any;
+  setTemplateEditorOpen: (b: boolean) => void;
 };
 
 export function ElementEditor(props: ElementEditorProps) {

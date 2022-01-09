@@ -196,13 +196,15 @@ function InnerHTMLEditor(props: LeftNavProps) {
             const iframeBody = iframeDocument.body;
             // sometimes setAttribute complains if blank attributes exist
             try {
-              for (let attr of Array.from(iframeBody.attributes)) {
+              for (const attr of Array.from(iframeBody.attributes)) {
                 iframeBody.attributes.removeNamedItem(attr.nodeName);
               }
-              for (let attr of Array.from(doc.body.attributes)) {
+              for (const attr of Array.from(doc.body.attributes)) {
                 iframeBody.setAttribute(attr.nodeName, attr.nodeValue);
               }
-            } catch (e) {}
+            } catch (e) {
+              // no-op
+            }
             // If productdiv elements still available, set body changes, else don't allow commits
             if (doc.querySelectorAll("[data-productdiv]").length >= 4) {
               iframeBody.innerHTML = doc.body.innerHTML;
@@ -222,7 +224,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
             redrawHighlightedNode(returnNode);
           }
         }}
-        onBlur={(e) => {
+        onBlur={() => {
           const editedNode = element.current;
           editingElementsRef.current = [];
           const tree = getComponentTree(
@@ -247,9 +249,9 @@ function replaceParentElementChildren(
   trackedNodes: ChildNode[]
 ) {
   let returnNode: ChildNode = null;
-  let trackedChildrenNodes: ChildNode[] = [];
+  const trackedChildrenNodes: ChildNode[] = [];
 
-  [...nodeListToArray(newChildNodes)].forEach((node: ChildNode, i: number) => {
+  [...nodeListToArray(newChildNodes)].forEach((node: ChildNode) => {
     let insertedNode;
     if (oldChildNode) {
       insertedNode = parentElement.insertBefore(node, oldChildNode);

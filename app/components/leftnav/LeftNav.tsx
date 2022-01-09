@@ -20,26 +20,26 @@ export type LeftNavProps = {
   configuration: ParsedLibraryConfigurationDefinition;
   templateCategories: TemplateCategoryDefinition[];
   elementEditorState: ElementEditorState;
-  setElementEditorState(s: ElementEditorState): any;
+  setElementEditorState(s: ElementEditorState): void;
   treeViewOpen: boolean;
-  setTreeViewOpen(b: boolean): any;
+  setTreeViewOpen(b: boolean): void;
   elementEditorOpen: boolean;
-  setElementEditorOpen(b: boolean): any;
+  setElementEditorOpen(b: boolean): void;
   redrawComponentTree(): NodeTreeMatch[];
-  redrawHighlightedNode(node?: Node | false): any;
+  redrawHighlightedNode(node?: Node | false): void;
   drawHoverElement: typeof drawHoverElement;
   componentTree: NodeTreeMatch[];
   dropZoneSelector: string;
   templateEditorOpen: boolean;
-  setTemplateEditorOpen: (b: boolean) => any;
-  showTemplatePreview: (s: string, w?: string) => any;
-  hideTemplatePreview: () => any;
+  setTemplateEditorOpen: (b: boolean) => void;
+  showTemplatePreview: (s: string, w?: string) => void;
+  hideTemplatePreview: () => void;
   lastHoverPosition: {
     x: number;
     y: number;
   };
   iframeDocument: Document;
-  onLeftNavClose: () => any;
+  onLeftNavClose: () => void;
 };
 
 export function LeftNav(props: LeftNavProps) {

@@ -15,7 +15,7 @@ export function copyElementToClipboard(element: Element) {
 }
 
 export function copyToClipboard(val: string) {
-  var dummy = document.createElement("textarea");
+  const dummy = document.createElement("textarea");
   // to avoid breaking page when copying more words
   // cant copy when adding below this code
   // dummy.style.display = 'none'

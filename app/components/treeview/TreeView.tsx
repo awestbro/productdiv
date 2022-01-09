@@ -11,9 +11,9 @@ import { ElementEditorState } from "../Application";
 
 type TreeViewProps = {
   componentTree?: NodeTreeMatch[];
-  setElementEditorOpen(b: boolean): any;
-  setTreeViewOpen(b: boolean): any;
-  setElementEditorState(n: NodeTreeMatch): any;
+  setElementEditorOpen(b: boolean): void;
+  setTreeViewOpen(b: boolean): void;
+  setElementEditorState(n: NodeTreeMatch): void;
   elementEditorState: ElementEditorState;
 };
 
@@ -47,9 +47,9 @@ export function TreeView(props: TreeViewProps) {
 
 type TreeItemViewProps = {
   componentTree?: NodeTreeMatch[];
-  setElementEditorOpen(b: boolean): any;
-  setElementEditorState(n: NodeTreeMatch): any;
-  elementEditorState: any;
+  setElementEditorOpen(b: boolean): void;
+  setElementEditorState(n: NodeTreeMatch): void;
+  elementEditorState: ElementEditorState;
 };
 
 function TreeItemView(props: TreeItemViewProps) {
@@ -80,9 +80,9 @@ function getTreeItemArrow(match: NodeTreeMatch, collapsed: boolean) {
 
 export type TreeItemProps = {
   match: NodeTreeMatch;
-  setElementEditorOpen(b: boolean): any;
-  setElementEditorState(n: NodeTreeMatch): any;
-  elementEditorState: any;
+  setElementEditorOpen(b: boolean): void;
+  setElementEditorState(n: NodeTreeMatch): void;
+  elementEditorState: ElementEditorState;
 };
 
 function TreeItem(props: TreeItemProps) {

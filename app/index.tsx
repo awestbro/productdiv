@@ -60,7 +60,7 @@ function mountApplication(
 
 async function mountProductDiv(
   configuration: ParsedLibraryConfigurationDefinition,
-  cssPath: string = "/app.css",
+  cssPath = "/app.css",
   html: string
 ) {
   document.open();
@@ -98,7 +98,7 @@ async function mountProductDiv(
 
 export default function ProductDiv(
   configuration: LibraryConfigurationDefinition,
-  cssPath: string = "/app.css"
+  cssPath = "/app.css"
 ) {
   if (!inIframe()) {
     mountApplication(parseLibraryConfiguration(configuration), cssPath);
