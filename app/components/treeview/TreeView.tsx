@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as classnames from 'classnames';
-import { NodeTreeMatch } from "../lib/tree/tree-utils";
-import { highlightElements } from "../lib/dom/canvas";
-import { isElementHidden, scrollIntoView } from "../lib/dom/dom-utilities";
-import { ChildNodeType } from "../enum/child-node-type";
-import { ElementEditorState } from "./Application";
+import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
+import { highlightElements } from "../../utilities/dom/canvas";
+import { isElementHidden, scrollIntoView } from "../../utilities/dom/dom-utilities";
+import { ChildNodeType } from "../../utilities/child-node-type";
+import { ElementEditorState } from "../Application";
 
 type TreeViewProps = {
     componentTree?: NodeTreeMatch[],

@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { getEditorMountPoint } from './selector';
-import { Application } from "./editor/Application";
-import { LibraryConfigurationDefinition, ParsedLibraryConfigurationDefinition, parseLibraryConfiguration } from './lib/configuration/configuration-importer';
+import { getEditorMountPoint } from './utilities/selector';
+import { Application } from "./components/Application";
+import { LibraryConfigurationDefinition, ParsedLibraryConfigurationDefinition, parseLibraryConfiguration } from './utilities/configuration/configuration-importer';
 
 import "./theme.scss";
-import { htmlStringToNodeList, sanitizeHtmlToString } from "./editor/ElementEditor";
+import { htmlStringToNodeList } from "./components/leftnav/ElementEditor";
+import { sanitizeHtmlToString } from "./utilities/clipboard";
 
 function inIframe() {
     try {

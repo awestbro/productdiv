@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { TreeView } from './TreeView';
-import { createComponentTree, getTreeMatchFromElement, NodeTreeMatch } from '../lib/tree/tree-utils';
-import { LeftNav } from './LeftNav';
-import { highlightElements } from '../lib/dom/canvas';
-import { getDocumentHeightAndWidth, drawPlacementHover, setCanvasWidthAndHeight, createCanvas } from '../lib/dom/canvas';
+import { TreeView } from './treeview/TreeView';
+import { createComponentTree, getTreeMatchFromElement, NodeTreeMatch } from '../utilities/tree/tree-utils';
+import { LeftNav } from './leftnav/LeftNav';
+import { highlightElements } from '../utilities/dom/canvas';
+import { getDocumentHeightAndWidth, drawPlacementHover, setCanvasWidthAndHeight, createCanvas } from '../utilities/dom/canvas';
 import classnames from 'classnames';
 // @ts-ignore
 import * as throttle from 'lodash/throttle';
-import { ParsedLibraryConfigurationDefinition } from '../lib/configuration/configuration-importer';
+import { ParsedLibraryConfigurationDefinition } from '../utilities/configuration/configuration-importer';
 
 
 export type ElementEditorState = {

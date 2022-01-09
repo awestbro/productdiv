@@ -1,4 +1,4 @@
-import { ChildNodeType } from "../../enum/child-node-type";
+import { ChildNodeType } from "../child-node-type";
 import { TemplateDefinition } from "../configuration/configuration-importer";
 import { PlacementType } from "./canvas";
 

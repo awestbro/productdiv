@@ -3,11 +3,11 @@ import Fuse from 'fuse.js';
 // @ts-ignore
 import * as flatten from 'lodash/flatten';
 
-import { addTemplateToElement } from '../lib/dom/dom-utilities';
-import { TemplateCategoryDefinition, TemplateDefinition } from "../lib/configuration/configuration-importer";
-import { getTreeMatchFromElement, NodeTreeMatch } from "../lib/tree/tree-utils";
-import { drawHoverElement, ElementEditorState } from "./Application";
-import { PlacementType } from '../lib/dom/canvas';
+import { addTemplateToElement } from '../../utilities/dom/dom-utilities';
+import { TemplateCategoryDefinition, TemplateDefinition } from "../../utilities/configuration/configuration-importer";
+import { getTreeMatchFromElement, NodeTreeMatch } from "../../utilities/tree/tree-utils";
+import { drawHoverElement, ElementEditorState } from "../Application";
+import { PlacementType } from '../../utilities/dom/canvas';
 
 type TemplateSelectorProps = {
     iframeDocuemnt: Document,

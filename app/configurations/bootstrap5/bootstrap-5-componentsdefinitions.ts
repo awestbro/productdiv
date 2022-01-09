@@ -1,4 +1,4 @@
-import { ComponentDefinition } from '../../lib/configuration/configuration-importer';
+import { ComponentDefinition } from '../../utilities/configuration/configuration-importer';
 
 export const components: ComponentDefinition[] = [
     {

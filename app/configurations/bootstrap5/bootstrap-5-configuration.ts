@@ -1,4 +1,4 @@
-import { LibraryConfigurationDefinition } from '../../lib/configuration/configuration-importer';
+import { LibraryConfigurationDefinition } from '../../utilities/configuration/configuration-importer';
 import { utilityClasses } from './bootstrap-5-utilityclasses';
 import { components } from './bootstrap-5-componentsdefinitions';
 import { templateCategories } from './bootstrap-5-templates';

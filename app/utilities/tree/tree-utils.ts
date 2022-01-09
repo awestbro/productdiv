@@ -1,5 +1,5 @@
-import { ChildNodeType } from "../../enum/child-node-type";
-import { domTokenListToArray, nodeListToArray } from "../../selector";
+import { ChildNodeType } from "../child-node-type";
+import { domTokenListToArray, nodeListToArray } from "../selector";
 
 export function createComponentTree(doc: Document, rootElement: Element, treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[] {
     const matchNodes = matchNodesToComponentTree([rootElement]);

@@ -1,5 +1,5 @@
-import { getIframeDocument } from "../../editor/Application";
-import { ChildNodeType } from "../../enum/child-node-type";
+import { getIframeDocument } from "../../components/Application";
+import { ChildNodeType } from "../child-node-type";
 
 export function getDocumentHeightAndWidth(d: Document) {
     // const body = document.body;

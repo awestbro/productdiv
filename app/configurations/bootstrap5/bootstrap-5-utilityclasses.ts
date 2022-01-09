@@ -1,4 +1,4 @@
-import { UtilityClassDefinition } from '../../lib/configuration/configuration-importer';
+import { UtilityClassDefinition } from '../../utilities/configuration/configuration-importer';
 
 const themeColors = 'primary|secondary|success|danger|warning|info|light|dark';
 const themeBreakpoints = 'sm|md|lg|xl|xxl';
