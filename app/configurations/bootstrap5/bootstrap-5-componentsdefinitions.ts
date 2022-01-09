@@ -33,6 +33,7 @@ export const components: ComponentDefinition[] = [
             'p',
             'b',
             'i',
+            'span',
         ],
         utilityClassMatches: [
             'Text',

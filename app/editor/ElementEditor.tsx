@@ -189,13 +189,13 @@ function UtilityClassEditor(props: LeftNavProps) {
             <hr />
             {activeControl !== null && (
                 <React.Fragment>
-                    <UtilityClassFormControlGrid controls={[activeControl]} {...props} />
+                    <UtilityClassFormControlGrid controls={[activeControl]} openDefault={true} {...props} />
                     <hr />
                 </React.Fragment>
             )}
             {queryMatchControls.length > 0 && (
                 <React.Fragment>
-                    <UtilityClassFormControlGrid controls={queryMatchControls} {...props} />
+                    <UtilityClassFormControlGrid controls={queryMatchControls} openDefault={true} {...props} />
                     <hr />
                 </React.Fragment>
             )}
@@ -226,44 +226,54 @@ function UtilityClassEditor(props: LeftNavProps) {
     )
 }
 
-function UtilityClassFormControlGrid(props: { controls: UtilityClassDefinition[] } & LeftNavProps) {
-    const { controls, elementEditorState } = props;
+function UtilityClassFormControlGrid(props: { controls: UtilityClassDefinition[], openDefault?: boolean } & LeftNavProps) {
+    const { controls, openDefault } = props;
     return (
         <React.Fragment>
-            {controls.map((u) => {
-                return (
-                    <div className="mb-3" key={u.section}>
-                        <UtilityClassHeader utilityClassDefinition={u} />
-                        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'flex-end' }}>
-                            {u.controls.map((control) => (
-                                <UtilityClassFormControl
-                                    key={control.name}
-                                    element={elementEditorState.match.node as Element}
-                                    control={control}
-                                    redrawComponentTree={props.redrawComponentTree}
-                                    redrawHighlightedNode={props.redrawHighlightedNode}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )
-            })}
+            {controls.map((u) => <UtilityClassListItem key={u.section} utilityClassDefinition={u} {...props} />)}
         </React.Fragment>
     )
 }
 
-function UtilityClassHeader(props: { utilityClassDefinition: UtilityClassDefinition }) {
+function UtilityClassListItem(props: { utilityClassDefinition: UtilityClassDefinition, openDefault?: boolean } & LeftNavProps) {
+    const { utilityClassDefinition, elementEditorState, openDefault } = props;
+    const [open, setOpenState] = React.useState(openDefault || false);
+    return (
+        <div className="mb-3" key={utilityClassDefinition.section}>
+            <UtilityClassHeader open={open} toggleOpen={() => setOpenState(!open)} utilityClassDefinition={utilityClassDefinition} />
+            {open ? (
+                <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'flex-end' }}>
+                    {utilityClassDefinition.controls.map((control) => (
+                        <UtilityClassFormControl
+                            key={control.name}
+                            element={elementEditorState.match.node as Element}
+                            control={control}
+                            redrawComponentTree={props.redrawComponentTree}
+                            redrawHighlightedNode={props.redrawHighlightedNode}
+                        />
+                    ))}
+                </div>
+            ) : null}
+        </div>
+    )
+}
+
+function UtilityClassHeader(props: { utilityClassDefinition: UtilityClassDefinition, open: boolean, toggleOpen: () => void }) {
     const u = props.utilityClassDefinition;
+    const { open, toggleOpen } = props;
     return (
         <div className="d-flex justify-content-between align-items-center mb-1 mt-2">
             <h4 className="text-decoration-underline mb-0">{u.section}</h4>
-            {u.documentationLink ? (
-                <a href={u.documentationLink} target="__blank" className="btn btn-secondary btn-sm">
-                    ?
-                </a>
-            ) : 
-                <div />
-            }
+            <div>
+                {u.documentationLink ? (
+                    <a href={u.documentationLink} target="__blank" className="btn btn-secondary btn-sm me-2">
+                        ?
+                    </a>
+                ) : 
+                    <div />
+                }
+                <button type="button" onClick={toggleOpen} className="btn btn-secondary btn-sm">{open ? 'v' : '>'}</button>
+            </div>
         </div>
     );
 }
@@ -341,6 +351,7 @@ function SelectControl(props: { control: UtilityClassControl, element: Element, 
                     props.redrawHighlightedNode();
                 }}
                 data={classOptions}
+                filter="contains"
                 defaultValue={value}
                 value={value}
                 onChange={(v) => setValue(v)}
@@ -404,6 +415,7 @@ function MultiSelectControl(props: { control: UtilityClassControl, element: Elem
                 data={classOptions}
                 defaultValue={value}
                 value={value}
+                filter="contains"
                 onChange={(v) => {
                     classOptions.forEach((c) => {
                         if (c !== "") {

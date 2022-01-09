@@ -1,5 +1,8 @@
 import { UtilityClassDefinition } from '../../lib/configuration/configuration-importer';
 
+const themeColors = 'primary|secondary|success|danger|warning|info|light|dark';
+const themeBreakpoints = 'sm|md|lg|xl|xxl';
+
 export const utilityClasses: UtilityClassDefinition[] = [
     {
         section: 'Margin',
@@ -11,49 +14,49 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'ms-(0|1|2|3|4|5|auto)',
-                    'ms-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `ms-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'End',
                 type: 'selectMany',
                 classes: [
                     'me-(0|1|2|3|4|5|auto)',
-                    'me-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `me-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Top',
                 type: 'selectMany',
                 classes: [
                     'mt-(0|1|2|3|4|5|auto)',
-                    'mt-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `mt-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Bottom',
                 type: 'selectMany',
                 classes: [
                     'mb-(0|1|2|3|4|5|auto)',
-                    'mb-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `mb-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'All',
                 type: 'selectMany',
                 classes: [
                     'm-(0|1|2|3|4|5|auto)',
-                    'm-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `m-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Vertical',
                 type: 'selectMany',
                 classes: [
                     'my-(0|1|2|3|4|5|auto)',
-                    'my-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `my-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Horizontal',
                 type: 'selectMany',
                 classes: [
                     'mx-(0|1|2|3|4|5|auto)',
-                    'mx-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `mx-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }
         ]
@@ -68,49 +71,49 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'ps-(0|1|2|3|4|5|auto)',
-                    'ps-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `ps-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'End',
                 type: 'selectMany',
                 classes: [
                     'pe-(0|1|2|3|4|5|auto)',
-                    'pe-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `pe-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Top',
                 type: 'selectMany',
                 classes: [
                     'pt-(0|1|2|3|4|5|auto)',
-                    'pt-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `pt-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Bottom',
                 type: 'selectMany',
                 classes: [
                     'pb-(0|1|2|3|4|5|auto)',
-                    'pb-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `pb-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'All',
                 type: 'selectMany',
                 classes: [
                     'p-(0|1|2|3|4|5|auto)',
-                    'p-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `p-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Vertical',
                 type: 'selectMany',
                 classes: [
                     'py-(0|1|2|3|4|5|auto)',
-                    'py-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `py-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }, {
                 name: 'Horizontal',
                 type: 'selectMany',
                 classes: [
                     'px-(0|1|2|3|4|5|auto)',
-                    'px-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|auto)',
+                    `px-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
                 ]
             }
         ]
@@ -125,7 +128,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 classes: [
                     'text-justify',
                     'text-(start|center|end)',
-                    'text-(sm|md|lg|xl|xxl)-(start|center|end)',
+                    `text-(${themeBreakpoints})-(start|center|end)`,
                 ]
             },
             {
@@ -146,7 +149,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Color',
                 type: 'selectOne',
                 classes: [
-                    'text-(primary|secondary|success|danger|warning|info|light|dark|muted|white|body|white-50|black-50)',
+                    `text-(${themeColors}|muted|white|body|white-50|black-50)`,
                 ]
             },
             {
@@ -154,13 +157,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectOne',
                 classes: [
                     'text-(lowercase|uppercase|capitalize)',
-                ]
-            },
-            {
-                name: 'Size',
-                type: 'selectOne',
-                classes: [
-                    'fs-(1|2|3|4|5|6)',
                 ]
             },
             {
@@ -190,6 +186,13 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectOne',
                 classes: [
                     'display-(1|2|3|4|5|6)',
+                ]
+            },
+            {
+                name: 'Size',
+                type: 'selectOne',
+                classes: [
+                    'fs-(1|2|3|4|5|6)',
                 ]
             },
             {
@@ -226,7 +229,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Background',
                 type: 'selectOne',
                 classes: [
-                    'bg-(primary|secondary|success|danger|warning|info|light|dark|white|body|transparent)',
+                    `bg-(${themeColors}|white|body|transparent)`,
                 ]
             },
             {
@@ -240,8 +243,15 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Font',
                 type: 'selectOne',
                 classes: [
-                    'text-(primary|secondary|success|danger|warning|info|light|dark|muted|white|black-50|white-50)',
+                    `text-(${themeColors}|muted|white|black-50|white-50)`,
                 ]
+            },
+            {
+                name: 'Opacity',
+                type: 'selectMany',
+                classes: [
+                    'opacity-(0|25|50|75|100)',
+                ],
             },
             {
                 name: 'Box Shadow',
@@ -263,14 +273,14 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'd-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)',
-                    'd-(sm|md|lg|xl|xxl)-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)',
+                    `d-(${themeBreakpoints})-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)`,
                 ]
             },
             {
                 name: 'Display Responsive',
                 type: 'selectMany',
                 classes: [
-                    'd-(sm|md|lg|xl|xxl)-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)',
+                    `d-(${themeBreakpoints})-(none|inline|inline-block|block|grid|table|table-cell|table-row|flex|inline-flex)`,
                 ]
             },
             {
@@ -324,7 +334,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Color',
                 type: 'selectOne',
                 classes: [
-                    'border-(primary|secondary|success|danger|warning|info|light|dark|white)',
+                    `border-(${themeColors}|white)`,
                 ]
             },
             {
@@ -339,7 +349,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'rounded',
-                    'rounded-(1|2|3|4|5)',
+                    'rounded-(0|1|2|3)',
                     'rounded-(top|end|bottom|start|circle|pill)',
                 ]
             },
@@ -368,7 +378,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Float Responsive',
                 type: 'selectMany',
                 classes: [
-                    'float-(sm|md|lg|xl|xxl)-(start|end|none)',
+                    `float-(${themeBreakpoints})-(start|end|none)`,
                 ]
             },
         ]
@@ -486,13 +496,13 @@ export const utilityClasses: UtilityClassDefinition[] = [
         showDefault: true,
         controls: [
             {
-                name: 'Display',
+                name: 'Flex Type',
                 type: 'selectMany',
                 classes: [
                     'd-flex',
                     'd-inline-flex',
-                    'd-(sm|md|lg|xl|xxl)-flex',
-                    'd-(sm|md|lg|xl|xxl)-inline-flex',
+                    `d-(${themeBreakpoints})-flex`,
+                    `d-(${themeBreakpoints})-inline-flex`,
                 ],
             },
             {
@@ -500,7 +510,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'flex-(row|row-reverse|column|column-reverse)',
-                    'flex-(sm|md|lg|xl|xxl)-(row|row-reverse|column|column-reverse)',
+                    `flex-(${themeBreakpoints})-(row|row-reverse|column|column-reverse)`,
                 ],
             },
             {
@@ -508,7 +518,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'justify-content-(start|end|center|between|around)',
-                    'justify-content-(sm|md|lg|xl|xxl)-(start|end|center|between|around)',
+                    `justify-content-(${themeBreakpoints})-(start|end|center|between|around)`,
                 ],
             },
             {
@@ -516,7 +526,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'align-items-(start|end|center|baseline|stretch)',
-                    'align-items-(sm|md|lg|xl|xxl)-(start|end|center|baseline|stretch)',
+                    `align-items-(${themeBreakpoints})-(start|end|center|baseline|stretch)`,
                 ],
             },
             {
@@ -524,7 +534,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'align-content-(start|end|center|around|stretch)',
-                    'align-content-(sm|md|lg|xl|xxl)-(start|end|center|around|stretch)',
+                    `align-content-(${themeBreakpoints})-(start|end|center|around|stretch)`,
                 ],
             },
             {
@@ -532,7 +542,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'flex-(nowrap|wrap|wrap-reverse)',
-                    'flex-(sm|md|lg|xl|xxl)-(nowrap|wrap|wrap-reverse)',
+                    `flex-(${themeBreakpoints})-(nowrap|wrap|wrap-reverse)`,
                 ],
             },
         ]
@@ -546,7 +556,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'align-self-(start|end|center|baseline|stretch)',
-                    'align-self-(sm|md|lg|xl|xxl)-(start|end|center|baseline|stretch)',
+                    `align-self-(${themeBreakpoints})-(start|end|center|baseline|stretch)`,
                 ]
             },
             {
@@ -554,7 +564,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'order-(0|1|2|3|4|5|6|7|8|9|10|11)',
-                    'order-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5|6|7|8|9|10|11)',
+                    `order-(${themeBreakpoints})-(0|1|2|3|4|5|6|7|8|9|10|11)`,
                 ]
             },
             {
@@ -562,7 +572,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'flex-fill',
-                    'flex-fill-(sm|md|lg|xl|xxl)',
+                    `flex-fill-(${themeBreakpoints})`,
                 ]
             },
             {
@@ -570,7 +580,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'flex-(grow|shrink)-(0|1)',
-                    'flex-(sm|md|lg|xl|xxl)-(grow|shrink)-(0|1)',
+                    `flex-(${themeBreakpoints})-(grow|shrink)-(0|1)`,
                 ]
             },
         ]
@@ -590,8 +600,8 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Type',
                 type: 'selectOne',
                 classes: [
-                    'btn-(primary|secondary|success|danger|warning|info|light|dark|link)',
-                    'btn-outline-(primary|secondary|success|danger|warning|info|light|dark)',
+                    `btn-(${themeColors}|link)`,
+                    `btn-outline-(${themeColors})`,
                 ]
             },
             {
@@ -618,7 +628,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Color',
                 type: 'selectOne',
                 classes: [
-                    'link-(primary|secondary|success|danger|warning|info|light|dark)',
+                    `link-(${themeColors})`
                 ]
             },
             {
@@ -653,7 +663,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Expand',
                 type: 'selectOne',
                 classes: [
-                    'navbar-expand-(sm|md|lg|xl|xxl)',
+                    `navbar-expand-(${themeBreakpoints})`,
                 ]
             },
         ]
@@ -668,7 +678,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 classes: [
                     'container',
                     'container-fluid',
-                    'container-(sm|md|lg|xl|xxl)'
+                    `container-(${themeBreakpoints})`,
                 ]
             }
         ],
@@ -689,7 +699,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'row-cols-(auto|2|3|4|5|6)',
-                    'row-cols-(sm|md|lg|xl|xxl)-(auto|2|3|4|5|6)',
+                    `row-cols-(${themeBreakpoints})-(auto|2|3|4|5|6)`,
                 ]
             },
             {
@@ -705,9 +715,9 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Gutters Responsive',
                 type: 'selectMany',
                 classes: [
-                    'g-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5)',
-                    'gx-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5)',
-                    'gy-(sm|md|lg|xl|xxl)-(0|1|2|3|4|5)',
+                    `g-(${themeBreakpoints})-(0|1|2|3|4|5)`,
+                    `gx-(${themeBreakpoints})-(0|1|2|3|4|5)`,
+                    `gy-(${themeBreakpoints})-(0|1|2|3|4|5)`,
                 ]
             },
         ],
@@ -722,7 +732,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 classes: [
                     'col',
                     'col-(auto|1|2|3|4|5|6|7|8|9|10|11)',
-                    'col-(sm|md|lg|xl|xxl)-(auto|1|2|3|4|5|6|7|8|9|10|11)',
+                    `col-(${themeBreakpoints})-(auto|1|2|3|4|5|6|7|8|9|10|11)`,
                 ]
             },
             {
@@ -737,7 +747,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 type: 'selectMany',
                 classes: [
                     'offset-(1|2|3|4|5|6|7|8|9|10|11)',
-                    'offset-(sm|md|lg|xl|xxl)-(1|2|3|4|5|6|7|8|9|10|11)',
+                    `offset-(${themeBreakpoints})-(1|2|3|4|5|6|7|8|9|10|11)`,
                 ]
             },
         ],
@@ -801,7 +811,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Color',
                 type: 'selectOne',
                 classes: [
-                    'table-(active|primary|secondary|success|danger|warning|info|light|dark)',
+                    `table-(active|${themeColors})`,
                 ]
             },
             {
@@ -839,7 +849,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Style',
                 type: 'selectOne',
                 classes: [
-                    'table-(active|primary|secondary|success|danger|warning|info|light|dark)',
+                    `table-(active|${themeColors})`,
                 ]
             },
         ],
@@ -872,7 +882,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Type',
                 type: 'selectOne',
                 classes: [
-                    'alert-(primary|secondary|success|danger|warning|info|light|dark)',
+                    `alert-(${themeColors})`
                 ]
             },
             {
@@ -966,7 +976,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 name: 'Color',
                 type: 'selectOne',
                 classes: [
-                    'list-group-item-(primary|secondary|success|danger|warning|info|light|dark)',
+                    `list-group-item-(${themeColors})`
                 ]
             },
         ],
@@ -1072,5 +1082,5 @@ export const utilityClasses: UtilityClassDefinition[] = [
                 ]
             },
         ],
-    }
+    },
 ]
