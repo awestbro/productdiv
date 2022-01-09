@@ -82,6 +82,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
           <UtilityClassFormControlGrid
             controls={[activeControl]}
             openDefault={true}
+            keyPrefix="active-"
             {...props}
           />
           <hr />
@@ -92,12 +93,17 @@ export function UtilityClassEditor(props: LeftNavProps) {
           <UtilityClassFormControlGrid
             controls={queryMatchControls}
             openDefault={true}
+            keyPrefix="match-"
             {...props}
           />
           <hr />
         </React.Fragment>
       )}
-      <UtilityClassFormControlGrid controls={filteredControls} {...props} />
+      <UtilityClassFormControlGrid
+        keyPrefix="filtered-"
+        controls={filteredControls}
+        {...props}
+      />
       {nonDefaultControls.length > 0 && (
         <React.Fragment>
           <div className="d-flex justify-content-between align-items-center my-3">
@@ -116,6 +122,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
             <React.Fragment>
               <hr />
               <UtilityClassFormControlGrid
+                keyPrefix="nondefault-"
                 controls={nonDefaultControls}
                 {...props}
               />
@@ -131,14 +138,15 @@ function UtilityClassFormControlGrid(
   props: {
     controls: UtilityClassDefinition[];
     openDefault?: boolean;
+    keyPrefix?: string;
   } & LeftNavProps
 ) {
-  const { controls } = props;
+  const { controls, keyPrefix = "" } = props;
   return (
     <React.Fragment>
       {controls.map((u) => (
         <UtilityClassListItem
-          key={u.section}
+          key={keyPrefix + u.section}
           utilityClassDefinition={u}
           {...props}
         />
