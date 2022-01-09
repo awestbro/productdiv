@@ -17,6 +17,7 @@ function attributeMapToStringMap(m: NamedNodeMap): { [key: string]: string; } {
         i++;
     }
     return r.reduce((acc, v) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         acc[v.nodeName] = v.nodeValue;
         return acc;
