@@ -1,29 +1,19 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist",
-        "noImplicitAny": true,
-        "module": "CommonJS",
-        "target": "es5",
-        "allowJs": true,
-        "typeRoots": [
-            "@types"
-        ],
-        "lib": [
-            "es6",
-            "dom",
-            "es2017"
-        ],
-        "jsx": "react",
-        "baseUrl": "./",
-        "paths": {
-            "*": [
-                "ts/@types/*"
-            ]
-        },
-        "sourceMap": true,
-        "declaration": true,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "module": "CommonJS",
+    "target": "es5",
+    "allowJs": true,
+    "typeRoots": ["@types"],
+    "lib": ["es6", "dom", "es2017"],
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["ts/@types/*"]
     },
-    "include": [
-        "app/**/*"
-    ]
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": ["app/**/*"]
 }

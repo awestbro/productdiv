@@ -1,7 +1,6 @@
-ProductDiv
-==========
+# ProductDiv
 
-An open-source visual user-interface builder using your own css! 
+An open-source visual user-interface builder using your own css!
 
 ## Configuration
 
@@ -36,7 +35,7 @@ Example Configuration:
             controls: [
                 {
                     name: string,
-                    type: 'selectOne' | 'selectMany', 
+                    type: 'selectOne' | 'selectMany',
                     classes?: string[], // List of classes. Can use short-hand to expand to multiple e.x. mt-(1|2|3) = mt-1, mt-2, mt-3
                 }
             ]

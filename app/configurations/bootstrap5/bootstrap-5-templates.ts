@@ -1,29 +1,29 @@
-import { TemplateCategoryDefinition } from '../../utilities/configuration/configuration-importer';
+import { TemplateCategoryDefinition } from "../../utilities/configuration/configuration-importer";
 
 export const templateCategories: TemplateCategoryDefinition[] = [
-    {
-        name: 'Content',
-        templates: [
-            {
-                name: 'Paragraph',
-                htmlTemplate: `
+  {
+    name: "Content",
+    templates: [
+      {
+        name: "Paragraph",
+        htmlTemplate: `
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consectetur commodo consequat. In condimentum fermentum augue, sit amet iaculis ante sagittis non. Fusce fringilla lacus id condimentum hendrerit. Cras posuere mi et tellus cursus mattis. Suspendisse pellentesque iaculis lectus a sagittis. Phasellus egestas orci lorem, eu vulputate nisi tempus sed. Fusce aliquet odio quis efficitur feugiat. Donec in nisl tincidunt erat euismod blandit. In semper, tortor non commodo sagittis, orci diam placerat lacus, at sodales diam metus tempor mauris.</p>
-                `
-            },
-            {
-                name: 'Block Quote',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Block Quote",
+        htmlTemplate: `
                 <div class="text-center">
                     <blockquote class="blockquote">
                         <p class="">"A well-known quote, contained in a blockquote element."</p>
                     </blockquote>
                     <p>- Someone famous in <cite title="Source Title" class="fw-bold">Source Title</cite></p>
                 </div>
-                `
-            },
-            {
-                name: 'Unstyled List',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Unstyled List",
+        htmlTemplate: `
                 <ul class="list-unstyled">
                     <li>This is a list.</li>
                     <li>It appears completely unstyled.</li>
@@ -38,11 +38,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </li>
                     <li>This may still come in handy in some situations.</li>
                 </ul>
-                `
-            },
-            {
-                name: 'Table',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Table",
+        htmlTemplate: `
                 <table class="table">
                     <thead>
                         <tr>
@@ -73,11 +73,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </tr>
                     </tbody>
                 </table>
-                `
-            },
-            {
-                name: 'Table Responsive',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Table Responsive",
+        htmlTemplate: `
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -110,56 +110,56 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </tbody>
                     </table>
                 </div>
-                `
-            },
-            {
-                name: 'Inline Code',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Inline Code",
+        htmlTemplate: `
                 <code>Inline</code>
-                `
-            },
-            {
-                name: 'Code Block',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Code Block",
+        htmlTemplate: `
                 <pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
                 &lt;p&gt;And another line of sample text here...&lt;/p&gt;
                 </code></pre>
-                `
-            },
-            {
-                name: 'Variable',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Variable",
+        htmlTemplate: `
                 <var>y</var> = <var>m</var><var>x</var> + <var>b</var>
-                `
-            },
-            {
-                name: 'User Input',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "User Input",
+        htmlTemplate: `
                 <kbd>cd</kbd>
-                `
-            },
-            {
-                name: 'Sample output',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Sample output",
+        htmlTemplate: `
                 <samp>This text is meant to be treated as sample output from a computer program.</samp>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Layout',
-        templates: [
-            {
-                name: 'Section Container',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Layout",
+    templates: [
+      {
+        name: "Section Container",
+        htmlTemplate: `
                 <section class="container">
                     <div class="productdiv-drop-container"></div>
                 </section>
-                `
-            },
-            {
-                name: 'Row Two Column',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Row Two Column",
+        htmlTemplate: `
                 <div class="row">
                     <div class="col-sm-6">
                     <div class="productdiv-drop-container"></div>
@@ -168,11 +168,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     <div class="productdiv-drop-container"></div>
                     </div>
                 </div>
-                `
-            },
-            {
-                name: 'Row Three Column',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Row Three Column",
+        htmlTemplate: `
                 <div class="row">
                     <div class="col-sm-4">
                     <div class="productdiv-drop-container"></div>
@@ -184,11 +184,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     <div class="productdiv-drop-container"></div>
                     </div>
                 </div>
-                `
-            },
-            {
-                name: 'Jumbotron',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Jumbotron",
+        htmlTemplate: `
                 <div class="jumbotron">
                     <div class="container">
                         <h1 class="display-3">Hello, world!</h1>
@@ -196,16 +196,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <p><a class="btn btn-primary btn-lg" href="https://getbootstrap.com/" role="button">Learn more »</a></p>
                     </div>
                 </div>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Components',
-        templates: [
-            {
-                name: 'Pricing Cards',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Components",
+    templates: [
+      {
+        name: "Pricing Cards",
+        htmlTemplate: `
                 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
                     <div class="col">
                         <div class="card mb-4 rounded-3 shadow-sm">
@@ -259,59 +259,59 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </div>
                     </div>
                 </div>
-                `
-            }
-        ]
-    },
-    {
-        name: 'Form',
-        templates: [
-            {
-                name: 'Form Element',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Form",
+    templates: [
+      {
+        name: "Form Element",
+        htmlTemplate: `
                 <form class="py-3">
                 </form>
-                `
-            },
-            {
-                name: 'Email Field',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Email Field",
+        htmlTemplate: `
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
                 </div> 
-                `
-            },
-            {
-                name: 'Password Field',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Password Field",
+        htmlTemplate: `
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password</label>
                     <input type="password" class="form-control" id="inputPassword">
                 </div>
-                `
-            },
-            {
-                name: 'Textarea',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Textarea",
+        htmlTemplate: `
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-                `
-            },
-            {
-                name: 'File Select',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "File Select",
+        htmlTemplate: `
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Default file input example</label>
                     <input class="form-control" type="file" id="formFile">
                 </div>
-                `
-            },
-            {
-                name: 'Select',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Select",
+        htmlTemplate: `
                 <div class="mb-3">
                     <label for="select" class="form-label">Select</label>
                     <select id="select" class="form-select" aria-label="Default select example">
@@ -321,22 +321,22 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <option value="3">Three</option>
                     </select>
                 </div>
-                `
-            },
-            {
-                name: 'Checkbox',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Checkbox",
+        htmlTemplate: `
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         Default checkbox
                     </label>
                 </div>
-                `
-            },
-            {
-                name: 'Radio Options',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Radio Options",
+        htmlTemplate: `
                 <div class="mb-3">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
@@ -351,11 +351,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </label>
                     </div>
                 </div>
-                `
-            },
-            {
-                name: 'Login Form',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Login Form",
+        htmlTemplate: `
                 <form>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -372,58 +372,58 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-                `
-            },
-        ],
-    },
-    {
-        name: "Images",
-        templates: [
-            {
-                name: 'Responsive Image',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Images",
+    templates: [
+      {
+        name: "Responsive Image",
+        htmlTemplate: `
                 <img src="https://via.placeholder.com/468x60?text=Responsive" class="img-fluid" alt="...">
-                `
-            },
-            {
-                name: 'Image Thumbnail',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Image Thumbnail",
+        htmlTemplate: `
                 <img src="https://via.placeholder.com/200?text=200" class="img-thumbnail" alt="...">
-                `
-            },
-            {
-                name: 'Figure Image with Caption',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Figure Image with Caption",
+        htmlTemplate: `
                 <figure class="figure">
                     <img src="https://via.placeholder.com/300x200?text=300x200" class="figure-img img-fluid rounded" alt="...">
                     <figcaption class="figure-caption">A caption for the above image.</figcaption>
                 </figure>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Alerts',
-        templates: [
-            {
-                name: 'Alert',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Alerts",
+    templates: [
+      {
+        name: "Alert",
+        htmlTemplate: `
                 <div class="alert alert-primary" role="alert">
                     A simple primary alert—check it out!
                 </div>
                 `,
-            },
-            {
-                name: 'Alert with link',
-                htmlTemplate: `
+      },
+      {
+        name: "Alert with link",
+        htmlTemplate: `
                 <div class="alert alert-primary" role="alert">
                     A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
                 </div>
                 `,
-            },
-            {
-                name: 'Alert with body',
-                htmlTemplate: `
+      },
+      {
+        name: "Alert with body",
+        htmlTemplate: `
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Well done!</h4>
                     <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
@@ -431,49 +431,49 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
                 </div>
                 `,
-            },
-            {
-                name: 'Alert dismissable (requires JS)',
-                htmlTemplate: `
+      },
+      {
+        name: "Alert dismissable (requires JS)",
+        htmlTemplate: `
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Holy guacamole!</strong> You should check in on some of those fields below.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 `,
-            },
-        ]
-    },
-    {
-        name: 'Badges',
-        templates: [
-            {
-                name: 'Badge',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Badges",
+    templates: [
+      {
+        name: "Badge",
+        htmlTemplate: `
                 <span class="badge bg-secondary">New</span>
                 `,
-            },
-            {
-                name: 'Pill Badge',
-                htmlTemplate: `
+      },
+      {
+        name: "Pill Badge",
+        htmlTemplate: `
                 <span class="badge rounded-pill bg-primary">Primary</span>
                 `,
-            },
-            {
-                name: 'Notification Badge',
-                htmlTemplate: `
+      },
+      {
+        name: "Notification Badge",
+        htmlTemplate: `
                 <button type="button" class="btn btn-primary">
                     Notifications <span class="badge bg-secondary">4</span>
                 </button>
                 `,
-            },
-        ]
-    },
-    {
-        name: 'Breadcrumb',
-        templates: [
-            {
-                name: 'Breadcrumb Nav',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Breadcrumb",
+    templates: [
+      {
+        name: "Breadcrumb Nav",
+        htmlTemplate: `
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -482,56 +482,56 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </ol>
                 </nav>
                 `,
-            },
-            {
-                name: 'Breadcrumb Item',
-                htmlTemplate: `
+      },
+      {
+        name: "Breadcrumb Item",
+        htmlTemplate: `
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 `,
-            },
-        ]
-    },
-    {
-        name: 'Buttons',
-        templates: [
-            {
-                name: 'Button',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Buttons",
+    templates: [
+      {
+        name: "Button",
+        htmlTemplate: `
                 <button type="button" class="btn btn-primary">Primary</button>
                 `,
-            },
-            {
-                name: 'Button Outlined',
-                htmlTemplate: `
+      },
+      {
+        name: "Button Outlined",
+        htmlTemplate: `
                 <button type="button" class="btn btn-outline-primary">Primary</button>
                 `,
-            },
-            {
-                name: 'Button Group',
-                htmlTemplate: `
+      },
+      {
+        name: "Button Group",
+        htmlTemplate: `
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-secondary">Left</button>
                     <button type="button" class="btn btn-secondary">Middle</button>
                     <button type="button" class="btn btn-secondary">Right</button>
                 </div>
                 `,
-            },
-            {
-                name: 'Button Alert',
-                htmlTemplate: `
+      },
+      {
+        name: "Button Alert",
+        htmlTemplate: `
                 <button type="button" class="btn btn-primary position-relative">
                     Mails <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
                 </button>
                 `,
-            },
-        ]
-    },
-    {
-        name: 'Cards',
-        templates: [
-            {
-                name: 'Card with Image',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Cards",
+    templates: [
+      {
+        name: "Card with Image",
+        htmlTemplate: `
                 <div class="card">
                     <img src="https://via.placeholder.com/300x200?text=300x200" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -541,21 +541,21 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-                previewWidth: '500px',
-            },
-            {
-                name: 'Card Body only',
-                htmlTemplate: `
+        previewWidth: "500px",
+      },
+      {
+        name: "Card Body only",
+        htmlTemplate: `
                 <div class="card">
                     <div class="card-body">
                         This is some text within a card body.
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Card with title, text, links',
-                htmlTemplate: `
+      },
+      {
+        name: "Card with title, text, links",
+        htmlTemplate: `
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
@@ -566,10 +566,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Card List Group',
-                htmlTemplate: `
+      },
+      {
+        name: "Card List Group",
+        htmlTemplate: `
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">An item</li>
@@ -578,10 +578,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </ul>
                 </div>
                 `,
-            },
-            {
-                name: 'Card with Header',
-                htmlTemplate: `
+      },
+      {
+        name: "Card with Header",
+        htmlTemplate: `
                 <div class="card">
                     <div class="card-header">
                         Featured
@@ -593,10 +593,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Navigation Card',
-                htmlTemplate: `
+      },
+      {
+        name: "Navigation Card",
+        htmlTemplate: `
                 <div class="card text-center">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -618,10 +618,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Card Image Overlay',
-                htmlTemplate: `
+      },
+      {
+        name: "Card Image Overlay",
+        htmlTemplate: `
                 <div class="card bg-dark text-white">
                     <img src="https://via.placeholder.com/300x200?text=300x200" class="card-img" alt="...">
                     <div class="card-img-overlay">
@@ -631,10 +631,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Horizontal Card',
-                htmlTemplate: `
+      },
+      {
+        name: "Horizontal Card",
+        htmlTemplate: `
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -650,15 +650,15 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-        ]
-    },
-    {
-        name: 'Carousel',
-        templates: [
-            {
-                name: 'Carousel (requires JS)',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Carousel",
+    templates: [
+      {
+        name: "Carousel (requires JS)",
+        htmlTemplate: `
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -681,15 +681,15 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </button>
                 </div>
                 `,
-            },
-        ],
-    },
-    {
-        name: 'Collapse',
-        templates: [
-            {
-                name: 'Collapse Button',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Collapse",
+    templates: [
+      {
+        name: "Collapse Button",
+        htmlTemplate: `
                 <p>
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Collapse Button
@@ -701,10 +701,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-            {
-                name: 'Accordian',
-                htmlTemplate: `
+      },
+      {
+        name: "Accordian",
+        htmlTemplate: `
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
@@ -744,15 +744,15 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     </div>
                 </div>
                 `,
-            },
-        ],
-    },
-    {
-        name: 'Dropdown',
-        templates: [
-            {
-                name: 'Dropdown',
-                htmlTemplate: `
+      },
+    ],
+  },
+  {
+    name: "Dropdown",
+    templates: [
+      {
+        name: "Dropdown",
+        htmlTemplate: `
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown button
@@ -763,11 +763,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </div>
-                `
-            },
-            {
-                name: 'Split Button Dropdown',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Split Button Dropdown",
+        htmlTemplate: `
                 <div class="btn-group">
                     <button type="button" class="btn btn-danger">Action</button>
                     <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
@@ -781,16 +781,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <li><a class="dropdown-item" href="#">Separated link</a></li>
                     </ul>
                 </div>
-                `
-            },
-        ]
-    },
-    {
-        name: 'List Group',
-        templates: [
-            {
-                name: 'List Group',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "List Group",
+    templates: [
+      {
+        name: "List Group",
+        htmlTemplate: `
                 <ul class="list-group">
                     <li class="list-group-item">An item</li>
                     <li class="list-group-item">A second item</li>
@@ -798,11 +798,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                     <li class="list-group-item">A fourth item</li>
                     <li class="list-group-item">And a fifth one</li>
                 </ul>
-                `
-            },
-            {
-                name: 'List Group Content',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "List Group Content",
+        htmlTemplate: `
                 <ol class="list-group list-group-numbered">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
@@ -826,16 +826,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <span class="badge bg-primary rounded-pill">14</span>
                     </li>
                 </ol>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Modal',
-        templates: [
-            {
-                name: 'Modal (requires JS)',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Modal",
+    templates: [
+      {
+        name: "Modal (requires JS)",
+        htmlTemplate: `
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Launch demo modal
                 </button>
@@ -857,16 +857,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </div>
                     </div>
                 </div>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Navs & tabs',
-        templates: [
-            {
-                name: 'Nav',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Navs & tabs",
+    templates: [
+      {
+        name: "Nav",
+        htmlTemplate: `
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Active</a>
@@ -881,16 +881,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Navbar',
-        templates: [
-            {
-                name: 'Navbar',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Navbar",
+    templates: [
+      {
+        name: "Navbar",
+        htmlTemplate: `
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container">
                         <a class="navbar-brand" href="#">Navbar</a>
@@ -927,11 +927,11 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </div>
                     </div>
                 </nav>
-                `
-            },
-            {
-                name: 'Navbar Simple',
-                htmlTemplate: `
+                `,
+      },
+      {
+        name: "Navbar Simple",
+        htmlTemplate: `
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container">
                         <a class="navbar-brand" href="#">Navbar</a>
@@ -950,16 +950,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </div>
                     </div>
                 </nav>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Offcanvas',
-        templates: [
-            {
-                name: 'Offcanvas',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Offcanvas",
+    templates: [
+      {
+        name: "Offcanvas",
+        htmlTemplate: `
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas">
                     Offcanvas trigger
                 </button>
@@ -975,16 +975,16 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         </div>
                     </div>
                 </div>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Pagination',
-        templates: [
-            {
-                name: 'Basic Pagination',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Pagination",
+    templates: [
+      {
+        name: "Basic Pagination",
+        htmlTemplate: `
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -994,21 +994,21 @@ export const templateCategories: TemplateCategoryDefinition[] = [
                         <li class="page-item"><a class="page-link" href="#">Next</a></li>
                     </ul>
                 </nav>
-                `
-            },
-        ]
-    },
-    {
-        name: 'Progress Bar',
-        templates: [
-            {
-                name: 'Progress',
-                htmlTemplate: `
+                `,
+      },
+    ],
+  },
+  {
+    name: "Progress Bar",
+    templates: [
+      {
+        name: "Progress",
+        htmlTemplate: `
                 <div class="progress">
                     <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                `
-            },
-        ]
-    },
-]
+                `,
+      },
+    ],
+  },
+];

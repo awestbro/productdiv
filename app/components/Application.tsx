@@ -1,306 +1,365 @@
-import * as React from 'react';
-import { TreeView } from './treeview/TreeView';
-import { createComponentTree, getTreeMatchFromElement, NodeTreeMatch } from '../utilities/tree/tree-utils';
-import { LeftNav } from './leftnav/LeftNav';
-import { highlightElements } from '../utilities/dom/canvas';
-import { getDocumentHeightAndWidth, drawPlacementHover, setCanvasWidthAndHeight, createCanvas } from '../utilities/dom/canvas';
-import classnames from 'classnames';
+import * as React from "react";
+import { TreeView } from "./treeview/TreeView";
+import {
+  createComponentTree,
+  getTreeMatchFromElement,
+  NodeTreeMatch,
+} from "../utilities/tree/tree-utils";
+import { LeftNav } from "./leftnav/LeftNav";
+import { highlightElements } from "../utilities/dom/canvas";
+import {
+  getDocumentHeightAndWidth,
+  drawPlacementHover,
+  setCanvasWidthAndHeight,
+  createCanvas,
+} from "../utilities/dom/canvas";
+import classnames from "classnames";
 // @ts-ignore
-import * as throttle from 'lodash/throttle';
-import { ParsedLibraryConfigurationDefinition } from '../utilities/configuration/configuration-importer';
-
+import * as throttle from "lodash/throttle";
+import { ParsedLibraryConfigurationDefinition } from "../utilities/configuration/configuration-importer";
 
 export type ElementEditorState = {
-    match?: NodeTreeMatch;
-}
+  match?: NodeTreeMatch;
+};
 
 export function getIframeElement(): any {
-    return document.getElementById('productdiv-iframe');
+  return document.getElementById("productdiv-iframe");
 }
 
 export function getIframeDocument(): Document {
-    const iframe: any = getIframeElement();
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    return iframeDocument;
+  const iframe: any = getIframeElement();
+  const iframeDocument =
+    iframe.contentDocument || iframe.contentWindow.document;
+  return iframeDocument;
 }
 
 export function getIframeWindow() {
-    const iframe: any = getIframeElement();
-    return iframe.contentWindow;
+  const iframe: any = getIframeElement();
+  return iframe.contentWindow;
 }
 
-function getComponentTree(doc: Document, treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[] {
-    return createComponentTree(doc, getIframeDocument().body, treeViewIgnoreQuerySelectors);
+function getComponentTree(
+  doc: Document,
+  treeViewIgnoreQuerySelectors: string[]
+): NodeTreeMatch[] {
+  return createComponentTree(
+    doc,
+    getIframeDocument().body,
+    treeViewIgnoreQuerySelectors
+  );
 }
 
-export function drawHoverElement(clientX: number, clientY: number, dropZoneSelector?: string) {
-    const iframeDocument = getIframeDocument();
-    const { height, width } = getDocumentHeightAndWidth(iframeDocument);
-    const canvas: HTMLCanvasElement = (iframeDocument.getElementById('productdiv-canvas') as HTMLCanvasElement);
-    const ctx = canvas.getContext('2d');
-    let element = iframeDocument.elementFromPoint(clientX, clientY);
-    if (element.nodeName === 'HTML' || element.nodeName === 'HEAD') {
-        element = iframeDocument.body;
-    }
-    ctx.clearRect(0, 0, width, height);
-    setCanvasWidthAndHeight(iframeDocument, canvas);
-    const placement = drawPlacementHover(clientX, clientY, ctx, element, dropZoneSelector);
-    return {
-        element,
-        placement,
-    }
+export function drawHoverElement(
+  clientX: number,
+  clientY: number,
+  dropZoneSelector?: string
+) {
+  const iframeDocument = getIframeDocument();
+  const { height, width } = getDocumentHeightAndWidth(iframeDocument);
+  const canvas: HTMLCanvasElement = iframeDocument.getElementById(
+    "productdiv-canvas"
+  ) as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d");
+  let element = iframeDocument.elementFromPoint(clientX, clientY);
+  if (element.nodeName === "HTML" || element.nodeName === "HEAD") {
+    element = iframeDocument.body;
+  }
+  ctx.clearRect(0, 0, width, height);
+  setCanvasWidthAndHeight(iframeDocument, canvas);
+  const placement = drawPlacementHover(
+    clientX,
+    clientY,
+    ctx,
+    element,
+    dropZoneSelector
+  );
+  return {
+    element,
+    placement,
+  };
 }
 
 function getLocalStateBoolean(name: string) {
-    const s = window.localStorage.getItem(name);
-    if (s === "false") {
-        return false;
-    }
-    return true;
+  const s = window.localStorage.getItem(name);
+  if (s === "false") {
+    return false;
+  }
+  return true;
 }
 
 function setLocalStateBoolean(name: string, value: boolean) {
-    window.localStorage.setItem(name, `${value}`);
+  window.localStorage.setItem(name, `${value}`);
 }
 
 function getTreeOpenState() {
-    return getLocalStateBoolean('productdiv-tree-state');
+  return getLocalStateBoolean("productdiv-tree-state");
 }
 
 function setTreeOpenState(state: boolean) {
-    setLocalStateBoolean('productdiv-tree-state', state);
+  setLocalStateBoolean("productdiv-tree-state", state);
 }
 
-const iframeDocumentId = 'productdiv-iframe';
-const dropZoneSelector = '.productdiv-drop-container';
+const iframeDocumentId = "productdiv-iframe";
+const dropZoneSelector = ".productdiv-drop-container";
 
 let hasIframeMounted = false;
 
-export function Application(props: { pageSource: string, configuration: ParsedLibraryConfigurationDefinition, onLeftNavClose: (d: Document) => any }) {
-    const { pageSource, configuration, onLeftNavClose } = props;
-    const [componentTree, setComponentTree] = React.useState<NodeTreeMatch[]>(null);
-    const [treeViewOpen, setTreeViewStateOpen] = React.useState(getTreeOpenState());
-    const [elementEditorOpen, setElementEditorOpen] = React.useState(false);
-    const [templateEditorOpen, setTemplateEditorOpen] = React.useState<boolean>(false);
-    const [elementEditorState, setElementEditorState] = React.useState<ElementEditorState>({ match: null });
-    const [lastHoverPosition, setLastHoverPosition] = React.useState<{x: number, y: number}>({ x: 0, y: 0 });
+export function Application(props: {
+  pageSource: string;
+  configuration: ParsedLibraryConfigurationDefinition;
+  onLeftNavClose: (d: Document) => any;
+}) {
+  const { pageSource, configuration, onLeftNavClose } = props;
+  const [componentTree, setComponentTree] =
+    React.useState<NodeTreeMatch[]>(null);
+  const [treeViewOpen, setTreeViewStateOpen] = React.useState(
+    getTreeOpenState()
+  );
+  const [elementEditorOpen, setElementEditorOpen] = React.useState(false);
+  const [templateEditorOpen, setTemplateEditorOpen] =
+    React.useState<boolean>(false);
+  const [elementEditorState, setElementEditorState] =
+    React.useState<ElementEditorState>({ match: null });
+  const [lastHoverPosition, setLastHoverPosition] = React.useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
 
-    function setTreeViewOpen(v: boolean) {
-        setTreeOpenState(v);
-        setTreeViewStateOpen(v);
+  function setTreeViewOpen(v: boolean) {
+    setTreeOpenState(v);
+    setTreeViewStateOpen(v);
+  }
+
+  const [iframeDocument, setIframeDocument] = React.useState<Document>();
+
+  function redrawComponentTree(
+    treeViewIgnoreQuerySelectors: string[]
+  ): NodeTreeMatch[] {
+    const tree = getComponentTree(iframeDocument, treeViewIgnoreQuerySelectors);
+    setComponentTree(tree);
+    return tree;
+  }
+
+  // cleanup state on unmount
+  React.useEffect(() => {
+    return () => {
+      hasIframeMounted = false;
+    };
+  }, []);
+
+  // Only runs once by setting second arg to []
+  React.useEffect(() => {
+    if (iframeDocument) {
+      redrawComponentTree(configuration.treeViewIgnoreQuerySelectors);
     }
+  }, [iframeDocument]);
 
-    const [iframeDocument, setIframeDocument] = React.useState<Document>();
-
-    function redrawComponentTree(treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[] {
-        const tree = getComponentTree(iframeDocument, treeViewIgnoreQuerySelectors);
-        setComponentTree(tree);
-        return tree;
-    }
-
-    // cleanup state on unmount
-    React.useEffect(() => {
-        return () => {
-            hasIframeMounted = false;
-        }
-    }, []);
-
-    // Only runs once by setting second arg to []
-    React.useEffect(() => {
-        if (iframeDocument) {
-            redrawComponentTree(configuration.treeViewIgnoreQuerySelectors);
-        }
-    }, [iframeDocument]);
-
-    React.useEffect(() => {
-        if (iframeDocument) {
-            if (elementEditorState.match) {
-                highlightElements([elementEditorState.match.node]);
-            } else {
-                highlightElements([]);
-            }
-        }
-    }, [componentTree, iframeDocument])
-
-    function showTemplatePreview(template: string, width?: string) {
-        const previewer = iframeDocument.getElementById('productdiv-template-preview');
+  React.useEffect(() => {
+    if (iframeDocument) {
+      if (elementEditorState.match) {
+        highlightElements([elementEditorState.match.node]);
+      } else {
         highlightElements([]);
-        previewer.insertAdjacentHTML('beforeend', template);
-        if (width) {
-            previewer.style.width = width;
-        }
-        previewer.style.display = 'block';
+      }
     }
+  }, [componentTree, iframeDocument]);
 
-    function hideTemplatePreview() {
-        const previewer = iframeDocument.getElementById('productdiv-template-preview');
-        previewer.style.display = 'none';
-        previewer.style.width = '100%';
-        while (previewer.firstChild) {
-            previewer.removeChild(previewer.firstChild);
-        }
-        if (elementEditorState.match?.node) {
-            highlightElements([elementEditorState.match.node]);
-        }
+  function showTemplatePreview(template: string, width?: string) {
+    const previewer = iframeDocument.getElementById(
+      "productdiv-template-preview"
+    );
+    highlightElements([]);
+    previewer.insertAdjacentHTML("beforeend", template);
+    if (width) {
+      previewer.style.width = width;
     }
-    
-    const [currentHoveredMatch, setCurrentHoveredMatch] = React.useState<NodeTreeMatch>(null);
+    previewer.style.display = "block";
+  }
 
-    function documentOnClick(event: MouseEvent) {
-        event.preventDefault();
-        
-        if (!elementEditorState.match) {
-            setElementEditorState({ match: currentHoveredMatch });
-            if ((currentHoveredMatch.node as Element).matches(dropZoneSelector)) {
-                setTemplateEditorOpen(true);
-            }
-            setElementEditorOpen(true);
-            highlightElements([currentHoveredMatch.node])
-        } else {
-            setElementEditorState({ match: null });
-            setElementEditorOpen(false);
-            setTemplateEditorOpen(false);
-            highlightElements([]);
-        }
+  function hideTemplatePreview() {
+    const previewer = iframeDocument.getElementById(
+      "productdiv-template-preview"
+    );
+    previewer.style.display = "none";
+    previewer.style.width = "100%";
+    while (previewer.firstChild) {
+      previewer.removeChild(previewer.firstChild);
     }
-    
-    let scrollTimer: any = null;
-
-    function onScroll() {
-        highlightElements([]);
-        if (scrollTimer != null) {
-            clearTimeout(scrollTimer);
-        }
-        scrollTimer = setTimeout(() => {
-            if (elementEditorState.match?.node) {
-                highlightElements([elementEditorState.match.node]);
-            }
-        }, 50);
+    if (elementEditorState.match?.node) {
+      highlightElements([elementEditorState.match.node]);
     }
+  }
 
-    let resizeTimer: any = null;
+  const [currentHoveredMatch, setCurrentHoveredMatch] =
+    React.useState<NodeTreeMatch>(null);
 
-    function onResize() {
-        highlightElements([]);
-        if (resizeTimer != null) {
-            clearTimeout(resizeTimer);
-        }
-        resizeTimer = setTimeout(() => {
-            if (elementEditorState.match?.node) {
-                highlightElements([elementEditorState.match.node]);
-            }
-        }, 50);
+  function documentOnClick(event: MouseEvent) {
+    event.preventDefault();
+
+    if (!elementEditorState.match) {
+      setElementEditorState({ match: currentHoveredMatch });
+      if ((currentHoveredMatch.node as Element).matches(dropZoneSelector)) {
+        setTemplateEditorOpen(true);
+      }
+      setElementEditorOpen(true);
+      highlightElements([currentHoveredMatch.node]);
+    } else {
+      setElementEditorState({ match: null });
+      setElementEditorOpen(false);
+      setTemplateEditorOpen(false);
+      highlightElements([]);
     }
+  }
 
-    const dragoverEvent = throttle((e) => {
-        drawHoverElement(e.clientX, e.clientY, dropZoneSelector);
-        setLastHoverPosition({ x: e.clientX, y: e.clientY });
-    }, 100, { leading: true, trailing: false });
+  let scrollTimer: any = null;
 
-    const onDragOver = (e: DragEvent) => {
-        e.preventDefault();
-        dragoverEvent(e);
+  function onScroll() {
+    highlightElements([]);
+    if (scrollTimer != null) {
+      clearTimeout(scrollTimer);
     }
-
-    const onDragLeave = (e: DragEvent) => {
-        e.preventDefault();
-        setLastHoverPosition({ x: 0, y: 0 });
-        highlightElements([]);
-    }
-
-    const onMouseMove = throttle((e: MouseEvent) => {
-        const elementOver = iframeDocument.elementFromPoint(e.clientX, e.clientY);
-        const treeMatch = getTreeMatchFromElement(componentTree || [], elementOver);
-        if (!treeMatch) {
-            return;
-        }
-        if (elementEditorState.match == treeMatch) {
-            return;
-        }
-        setCurrentHoveredMatch(treeMatch);
-        if (!elementEditorState.match) {
-            highlightElements([treeMatch.node]);
-        }
+    scrollTimer = setTimeout(() => {
+      if (elementEditorState.match?.node) {
+        highlightElements([elementEditorState.match.node]);
+      }
     }, 50);
+  }
 
-    const onMouseLeave = (e: MouseEvent) => {
-        e.preventDefault();
-        setTimeout(() => {
-            if (elementEditorState.match) {
-                highlightElements([elementEditorState.match.node])
-            } else {
-                highlightElements([])
-            }
-        }, 50);
+  let resizeTimer: any = null;
+
+  function onResize() {
+    highlightElements([]);
+    if (resizeTimer != null) {
+      clearTimeout(resizeTimer);
     }
+    resizeTimer = setTimeout(() => {
+      if (elementEditorState.match?.node) {
+        highlightElements([elementEditorState.match.node]);
+      }
+    }, 50);
+  }
 
-    React.useEffect(() => {
-        if (iframeDocument) {
-            const iframeWindow = getIframeWindow();
-            iframeDocument.addEventListener('click', documentOnClick);
-            iframeDocument.addEventListener('scroll', onScroll);
-            iframeDocument.addEventListener('dragover', onDragOver);
-            iframeDocument.addEventListener('dragleave', onDragLeave);
-            iframeDocument.addEventListener('mousemove', onMouseMove);
-            iframeDocument.addEventListener('mouseleave', onMouseLeave);
-            iframeWindow.addEventListener('resize', onResize);
-            return () => {
-                iframeDocument.removeEventListener('click', documentOnClick);
-                iframeDocument.removeEventListener('scroll', onScroll);
-                iframeDocument.removeEventListener('dragover', onDragOver);
-                iframeDocument.removeEventListener('dragleave', onDragLeave);
-                iframeDocument.removeEventListener('mousemove', onMouseMove);
-                iframeDocument.removeEventListener('mouseleave', onMouseLeave);
-                iframeWindow.removeEventListener('resize', onResize);
-            }
+  const dragoverEvent = throttle(
+    (e) => {
+      drawHoverElement(e.clientX, e.clientY, dropZoneSelector);
+      setLastHoverPosition({ x: e.clientX, y: e.clientY });
+    },
+    100,
+    { leading: true, trailing: false }
+  );
+
+  const onDragOver = (e: DragEvent) => {
+    e.preventDefault();
+    dragoverEvent(e);
+  };
+
+  const onDragLeave = (e: DragEvent) => {
+    e.preventDefault();
+    setLastHoverPosition({ x: 0, y: 0 });
+    highlightElements([]);
+  };
+
+  const onMouseMove = throttle((e: MouseEvent) => {
+    const elementOver = iframeDocument.elementFromPoint(e.clientX, e.clientY);
+    const treeMatch = getTreeMatchFromElement(componentTree || [], elementOver);
+    if (!treeMatch) {
+      return;
+    }
+    if (elementEditorState.match == treeMatch) {
+      return;
+    }
+    setCurrentHoveredMatch(treeMatch);
+    if (!elementEditorState.match) {
+      highlightElements([treeMatch.node]);
+    }
+  }, 50);
+
+  const onMouseLeave = (e: MouseEvent) => {
+    e.preventDefault();
+    setTimeout(() => {
+      if (elementEditorState.match) {
+        highlightElements([elementEditorState.match.node]);
+      } else {
+        highlightElements([]);
+      }
+    }, 50);
+  };
+
+  React.useEffect(() => {
+    if (iframeDocument) {
+      const iframeWindow = getIframeWindow();
+      iframeDocument.addEventListener("click", documentOnClick);
+      iframeDocument.addEventListener("scroll", onScroll);
+      iframeDocument.addEventListener("dragover", onDragOver);
+      iframeDocument.addEventListener("dragleave", onDragLeave);
+      iframeDocument.addEventListener("mousemove", onMouseMove);
+      iframeDocument.addEventListener("mouseleave", onMouseLeave);
+      iframeWindow.addEventListener("resize", onResize);
+      return () => {
+        iframeDocument.removeEventListener("click", documentOnClick);
+        iframeDocument.removeEventListener("scroll", onScroll);
+        iframeDocument.removeEventListener("dragover", onDragOver);
+        iframeDocument.removeEventListener("dragleave", onDragLeave);
+        iframeDocument.removeEventListener("mousemove", onMouseMove);
+        iframeDocument.removeEventListener("mouseleave", onMouseLeave);
+        iframeWindow.removeEventListener("resize", onResize);
+      };
+    }
+  }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument]);
+
+  return (
+    <React.Fragment>
+      <LeftNav
+        getComponentTree={getComponentTree}
+        iframeDocument={iframeDocument}
+        showTemplatePreview={showTemplatePreview}
+        hideTemplatePreview={hideTemplatePreview}
+        templateEditorOpen={templateEditorOpen}
+        setTemplateEditorOpen={setTemplateEditorOpen}
+        dropZoneSelector={dropZoneSelector}
+        drawHoverElement={(x: number, y: number, s?: string) =>
+          drawHoverElement(x, y, s || dropZoneSelector)
         }
-    }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument]);
-
-    return (
-        <React.Fragment>
-            <LeftNav
-                getComponentTree={getComponentTree}
-                iframeDocument={iframeDocument}
-                showTemplatePreview={showTemplatePreview}
-                hideTemplatePreview={hideTemplatePreview}
-                templateEditorOpen={templateEditorOpen}
-                setTemplateEditorOpen={setTemplateEditorOpen}
-                dropZoneSelector={dropZoneSelector}
-                drawHoverElement={(x: number, y:number, s?: string) => drawHoverElement(x, y, s || dropZoneSelector)}
-                lastHoverPosition={lastHoverPosition}
-                configuration={configuration}
-                elementEditorOpen={elementEditorOpen}
-                setElementEditorOpen={setElementEditorOpen}
-                templateCategories={configuration.templateCategories}
-                elementEditorState={elementEditorState}
-                setElementEditorState={(s: ElementEditorState) => setElementEditorState(s)}
-                treeViewOpen={treeViewOpen}
-                setTreeViewOpen={setTreeViewOpen}
-                componentTree={componentTree}
-                redrawComponentTree={() => {
-                    return redrawComponentTree(configuration.treeViewIgnoreQuerySelectors);
-                }}
-                redrawHighlightedNode={(node?: Node | false) => {
-                    if (node === false) {
-                        return;
-                    }
-                    if (node === null) {
-                        highlightElements([]);
-                        return;
-                    }
-                    if (elementEditorState.match) {
-                        highlightElements([node || elementEditorState.match.node]);
-                    }
-                }}
-                onLeftNavClose={() => onLeftNavClose(iframeDocument)}
-            />
-            <iframe 
-                onLoad={() => {
-                    const iframe = getIframeDocument();
-                    if (!hasIframeMounted) {
-                        createCanvas(iframe);
-                        setIframeDocument(iframe)
-                        iframe.body.insertAdjacentHTML('beforeend', `
+        lastHoverPosition={lastHoverPosition}
+        configuration={configuration}
+        elementEditorOpen={elementEditorOpen}
+        setElementEditorOpen={setElementEditorOpen}
+        templateCategories={configuration.templateCategories}
+        elementEditorState={elementEditorState}
+        setElementEditorState={(s: ElementEditorState) =>
+          setElementEditorState(s)
+        }
+        treeViewOpen={treeViewOpen}
+        setTreeViewOpen={setTreeViewOpen}
+        componentTree={componentTree}
+        redrawComponentTree={() => {
+          return redrawComponentTree(
+            configuration.treeViewIgnoreQuerySelectors
+          );
+        }}
+        redrawHighlightedNode={(node?: Node | false) => {
+          if (node === false) {
+            return;
+          }
+          if (node === null) {
+            highlightElements([]);
+            return;
+          }
+          if (elementEditorState.match) {
+            highlightElements([node || elementEditorState.match.node]);
+          }
+        }}
+        onLeftNavClose={() => onLeftNavClose(iframeDocument)}
+      />
+      <iframe
+        onLoad={() => {
+          const iframe = getIframeDocument();
+          if (!hasIframeMounted) {
+            createCanvas(iframe);
+            setIframeDocument(iframe);
+            iframe.body.insertAdjacentHTML(
+              "beforeend",
+              `
                             <div id="productdiv-template-preview" data-productdiv="true"></div>
                             <style data-productdiv="true">
                                 #productdiv-template-preview {
@@ -340,23 +399,29 @@ export function Application(props: { pageSource: string, configuration: ParsedLi
                                     border-radius: 0px !important;
                                 }
                             </style>
-                        `);
-                        hasIframeMounted = true;
-                    }
-                }} 
-                id={iframeDocumentId} 
-                style={{width: '100%', height: '100%', border: 'none'}}
-                srcDoc={pageSource.replace('"', '\"')} 
-            />
-            <div style={{ flexShrink: 0 }} className={classnames({ 'd-none': !treeViewOpen })}>
-                <TreeView
-                    setTreeViewOpen={setTreeViewOpen}
-                    elementEditorState={elementEditorState}
-                    setElementEditorOpen={setElementEditorOpen}
-                    setElementEditorState={(s: NodeTreeMatch) => setElementEditorState({ match: s })}
-                    componentTree={componentTree}
-                />
-            </div>
-        </React.Fragment>
-    );
+                        `
+            );
+            hasIframeMounted = true;
+          }
+        }}
+        id={iframeDocumentId}
+        style={{ width: "100%", height: "100%", border: "none" }}
+        srcDoc={pageSource.replace('"', '"')}
+      />
+      <div
+        style={{ flexShrink: 0 }}
+        className={classnames({ "d-none": !treeViewOpen })}
+      >
+        <TreeView
+          setTreeViewOpen={setTreeViewOpen}
+          elementEditorState={elementEditorState}
+          setElementEditorOpen={setElementEditorOpen}
+          setElementEditorState={(s: NodeTreeMatch) =>
+            setElementEditorState({ match: s })
+          }
+          componentTree={componentTree}
+        />
+      </div>
+    </React.Fragment>
+  );
 }
