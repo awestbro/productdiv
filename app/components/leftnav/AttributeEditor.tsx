@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LeftNavProps } from './LeftNav';
-import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/mode/css/css';
 
 

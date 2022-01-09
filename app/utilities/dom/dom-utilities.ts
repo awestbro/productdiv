@@ -57,3 +57,29 @@ export function addTemplateToElement(template: TemplateDefinition, element: Elem
         return element.previousElementSibling;
     }
 }
+
+/**
+ * 
+ * @param element 
+ * @returns 0-based index of current element in relation to its parent element
+ */
+ export function findPositionRelativeToParent(element: Element): number {
+    const parent = element.parentNode;
+    let position = 0;
+    for (let i = 0; i < parent.childNodes.length; i++) {
+        if (parent.childNodes[i] === element) {
+            position = i;
+        }
+    }
+    return position;
+}
+
+/**
+ * 
+ * @param html string
+ * @returns list of child nodes from input string
+ */
+export function htmlStringToNodeList(html: string): NodeListOf<ChildNode> {
+    let doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.childNodes;
+}

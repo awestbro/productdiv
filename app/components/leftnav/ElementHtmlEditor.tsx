@@ -6,12 +6,14 @@ import { html_beautify } from 'js-beautify';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 
 import { getParentMatch, getTreeMatchFromElement } from '../../utilities/tree/tree-utils';
-import { ElementEditorProps, findPositionRelativeToParent, htmlStringToNodeList, UtilityClassEditor } from './ElementEditor';
+import { ElementEditorProps } from './ElementEditor';
 import { LeftNavProps } from './LeftNav';
 import { nodeListToArray } from '../../utilities/selector';
 import { ChildNodeType } from '../../utilities/child-node-type';
 import { TextOverflowIcon, TextWrapIcon } from '../common/Icons';
 import { copyElementToClipboard, copyToClipboard, html_beautify_opts } from '../../utilities/clipboard';
+import { UtilityClassEditor } from './UtilityClassEditor';
+import { findPositionRelativeToParent, htmlStringToNodeList } from '../../utilities/dom/dom-utilities';
 
 export function ElementHtmlEditor(props: ElementEditorProps) {
     const {

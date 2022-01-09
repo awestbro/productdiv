@@ -6,8 +6,8 @@ import { Application } from "./components/Application";
 import { LibraryConfigurationDefinition, ParsedLibraryConfigurationDefinition, parseLibraryConfiguration } from './utilities/configuration/configuration-importer';
 
 import "./theme.scss";
-import { htmlStringToNodeList } from "./components/leftnav/ElementEditor";
 import { sanitizeHtmlToString } from "./utilities/clipboard";
+import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 
 function inIframe() {
     try {
