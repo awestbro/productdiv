@@ -116,7 +116,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".302">
+    <g fill="#758fec" fillOpacity=".302">
       <use
         x="274.780972"
         y="57.099984"
@@ -127,7 +127,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".302">
+    <g fill="#758fec" fillOpacity=".302">
       <use
         x="316.311441"
         y="57.099984"
@@ -138,7 +138,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".302">
+    <g fill="#758fec" fillOpacity=".302">
       <use
         x="334.245052"
         y="57.099984"
@@ -149,7 +149,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".502">
+    <g fill="#758fec" fillOpacity=".502">
       <use
         x="271.093462"
         y="57.099984"
@@ -160,7 +160,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".502">
+    <g fill="#758fec" fillOpacity=".502">
       <use
         x="312.62393"
         y="57.099984"
@@ -171,7 +171,7 @@ export const ProductDivLogoLarge = () => (
         xmlnsXlink="http://www.w3.org/1999/xlink"
       />
     </g>
-    <g fill="#758fec" fill-opacity=".502">
+    <g fill="#758fec" fillOpacity=".502">
       <use
         x="330.557541"
         y="57.099984"
@@ -249,27 +249,17 @@ export const TextOverflowIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="48" height="48" fill="white" fill-opacity="0.01" />
-    <path d="M8 10V38" stroke="black" stroke-width="4" stroke-linecap="round" />
-    <path d="M24 4V16" stroke="black" stroke-width="4" stroke-linecap="round" />
-    <path
-      d="M16 24H42"
-      stroke="black"
-      stroke-width="4"
-      stroke-linecap="round"
-    />
+    <rect width="48" height="48" fill="white" fillOpacity="0.01" />
+    <path d="M8 10V38" stroke="black" strokeWidth="4" strokeLinecap="round" />
+    <path d="M24 4V16" stroke="black" strokeWidth="4" strokeLinecap="round" />
+    <path d="M16 24H42" stroke="black" strokeWidth="4" strokeLinecap="round" />
     <path
       d="M37.0561 19.0113L42.0929 24.0255L37.0561 29.123"
       stroke="black"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
-    <path
-      d="M24 32V44"
-      stroke="black"
-      stroke-width="4"
-      stroke-linecap="round"
-    />
+    <path d="M24 32V44" stroke="black" strokeWidth="4" strokeLinecap="round" />
   </svg>
 );

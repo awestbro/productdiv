@@ -1,6 +1,6 @@
 import * as React from "react";
+import classNames from "classnames";
 import { ChildNodeType } from "../../utilities/child-node-type";
-import * as classnames from "classnames";
 
 import { highlightElements } from "../../utilities/dom/canvas";
 import { LeftNavProps } from "./LeftNav";
@@ -47,7 +47,7 @@ export function ElementEditor(props: ElementEditorProps) {
           <ul className="nav nav-pills">
             <li className="nav-item">
               <a
-                className={classnames("nav-link", { active: dropdownOpen[0] })}
+                className={classNames("nav-link", { active: dropdownOpen[0] })}
                 onClick={() => toggleShownMenu(0)}
                 href="#"
               >
@@ -56,7 +56,7 @@ export function ElementEditor(props: ElementEditorProps) {
             </li>
             <li className="nav-item">
               <a
-                className={classnames("nav-link", { active: dropdownOpen[2] })}
+                className={classNames("nav-link", { active: dropdownOpen[2] })}
                 onClick={() => toggleShownMenu(2)}
                 href="#"
               >

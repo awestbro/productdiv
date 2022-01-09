@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as classnames from "classnames";
+import classNames from "classnames";
 import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
 import { highlightElements } from "../../utilities/dom/canvas";
 import {
@@ -124,7 +124,7 @@ function TreeItem(props: TreeItemProps) {
             highlightElements([]);
           }
         }}
-        className={classnames(
+        className={classNames(
           `text-nowrap productdiv-treeitem productdiv-treeitem-${match.type}`,
           { active: treeItemActive }
         )}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as classnames from "classnames";
+import classNames from "classnames";
 
 import { drawHoverElement, ElementEditorState } from "../Application";
 import { ElementEditor } from "./ElementEditor";
@@ -137,7 +137,7 @@ export function LeftNav(props: LeftNavProps) {
         </a>
         <button
           title="Toggle Tree"
-          className={classnames("btn btn-sm", {
+          className={classNames("btn btn-sm", {
             "btn-secondary": !treeViewOpen,
             "btn-primary": treeViewOpen,
           })}

@@ -1,9 +1,10 @@
 import * as React from "react";
-import * as classnames from "classnames";
-import { Controlled as CodeMirror } from "react-codemirror2";
+import classNames from "classnames";
+import CodeMirror, { Extension } from "@uiw/react-codemirror";
+import { html } from "@codemirror/lang-html";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView } from "@codemirror/view";
 import { html_beautify } from "js-beautify";
-
-import "codemirror/mode/htmlmixed/htmlmixed";
 
 import {
   getParentMatch,
@@ -74,7 +75,7 @@ export function ElementHtmlEditor(props: ElementEditorProps) {
         </button>
         <button
           type="button"
-          className={classnames("btn btn-sm btn-outline-danger", {
+          className={classNames("btn btn-sm btn-outline-danger", {
             disabled: element.nodeName === "BODY",
           })}
           onClick={() => {
@@ -166,6 +167,11 @@ function InnerHTMLEditor(props: LeftNavProps) {
     };
   }, [elementEditorState, componentTree]);
 
+  const extensions: Extension[] = [html()];
+  if (textWrap) {
+    extensions.push(EditorView.lineWrapping);
+  }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between align-items-center mb-2">
@@ -173,7 +179,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
         <button
           type="button"
           title="Toggle Text Wrap"
-          className={classnames("btn btn-sm btn-primary")}
+          className={classNames("btn btn-sm btn-primary")}
           onClick={() => {
             setTextWrap(!textWrap);
           }}
@@ -182,13 +188,11 @@ function InnerHTMLEditor(props: LeftNavProps) {
         </button>
       </div>
       <CodeMirror
+        theme={oneDark}
         value={text}
-        options={{
-          mode: "htmlmixed",
-          theme: "oceanic-next",
-          lineWrapping: textWrap,
-        }}
-        onBeforeChange={(editor, data, value) => {
+        height="200px"
+        extensions={extensions}
+        onChange={(value: string) => {
           setHTML(value);
           const editingBody = element.current.nodeName === "BODY";
           if (editingBody) {

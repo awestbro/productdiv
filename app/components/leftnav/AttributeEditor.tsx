@@ -1,7 +1,9 @@
 import * as React from "react";
 import { LeftNavProps } from "./LeftNav";
-import { Controlled as CodeMirror } from "react-codemirror2";
-import "codemirror/mode/css/css";
+import CodeMirror from "@uiw/react-codemirror";
+import { css } from "@codemirror/lang-css";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView } from "@codemirror/view";
 
 function attributeMapToStringMap(m: NamedNodeMap): { [key: string]: string } {
   let i = 0;
@@ -146,12 +148,12 @@ export function AttributeEditor(props: LeftNavProps) {
             </label>
             <CodeMirror
               value={styleString}
+              theme={oneDark}
+              extensions={[css(), EditorView.lineWrapping]}
               options={{
-                mode: "css",
-                theme: "oceanic-next",
                 lineWrapping: false,
               }}
-              onBeforeChange={(editor, data, value) => {
+              onChange={(value: string) => {
                 onAttributeValueChange("style", value.replace("\n", " "));
                 setStyleString(value);
               }}
