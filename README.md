@@ -2,6 +2,13 @@
 
 An open-source visual user-interface builder using your own css!
 
+## Development
+
+```
+npm i
+npm run dev
+```
+
 ## Configuration
 
 ProductDiv configuration information can be found in `/app/lib/configuration/configuration-importer.ts` under the `LibraryConfigurationDefinition` type.

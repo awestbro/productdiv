@@ -95,7 +95,7 @@ function matchNodesToComponentTree(nodes: Node[]): NodeTreeMatch[] {
 export function nodePrettyName(node: Node): string {
   if (node.nodeType === ChildNodeType.Element) {
     const n = node as Element;
-    let id = n.id ? `#${n.id}` : "";
+    const id = n.id ? `#${n.id}` : "";
     if (n.classList.length > 0) {
       const classString = domTokenListToArray(n.classList).reduce(
         (acc: string, curr: string) => `${acc}.${curr}`,

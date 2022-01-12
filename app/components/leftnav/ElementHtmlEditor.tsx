@@ -151,6 +151,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
   const parentElementRef = React.useRef<Element>();
   const parentPositionRef = React.useRef(0);
   const editingElementsRef = React.useRef<ChildNode[]>([]);
+  const blurLock = React.useRef<boolean>(false);
 
   function setTextWrap(b: boolean) {
     localStorage.setItem("productdiv-editorwrap", `${b}`);
@@ -158,6 +159,15 @@ function InnerHTMLEditor(props: LeftNavProps) {
   }
 
   React.useEffect(() => {
+    /**
+     * blurLock is used to prevent updates to DOM after blur has been called
+     * This prevents the HTML from being rerendered and calling onChange of CodeMirror
+     * which results in nodes not being up to date causing highlighting and editing to fail
+     */
+    if (blurLock.current == true) {
+      blurLock.current = false;
+      return () => null;
+    }
     element.current = elementEditorState.match.node as Element;
     parentElementRef.current = element.current.parentElement;
     parentPositionRef.current = findPositionRelativeToParent(element.current);
@@ -193,6 +203,9 @@ function InnerHTMLEditor(props: LeftNavProps) {
         height="200px"
         extensions={extensions}
         onChange={(value: string) => {
+          if (text == value) {
+            return;
+          }
           setHTML(value);
           const editingBody = element.current.nodeName === "BODY";
           if (editingBody) {
@@ -215,10 +228,11 @@ function InnerHTMLEditor(props: LeftNavProps) {
             }
             redrawHighlightedNode(iframeBody);
           } else {
+            blurLock.current = true;
             const newNodes = htmlStringToNodeList(value);
             const { trackedChildrenNodes, returnNode } =
               replaceParentElementChildren(
-                element.current.parentNode as Element,
+                parentElementRef.current as Element,
                 element.current,
                 newNodes,
                 editingElementsRef.current
@@ -235,10 +249,10 @@ function InnerHTMLEditor(props: LeftNavProps) {
             iframeDocument,
             configuration.treeViewIgnoreQuerySelectors
           );
+          redrawComponentTree();
           setElementEditorState({
             match: getTreeMatchFromElement(tree, editedNode),
           });
-          redrawComponentTree();
           redrawHighlightedNode(editedNode);
         }}
       />
@@ -275,6 +289,11 @@ function replaceParentElementChildren(
   if (oldChildNode) {
     oldChildNode.remove();
   }
+
+  returnNode =
+    parentElement.children[
+      Array.prototype.indexOf.call(parentElement.children, returnNode)
+    ];
 
   return {
     returnNode,
