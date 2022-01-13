@@ -133,6 +133,13 @@ function MultiSelectControl(props: {
   const classList = domTokenListToArray(element.classList);
   const [restoreClass, _setRestoreClass] = React.useState("");
   const [redraw, setRedraw] = React.useState(0);
+  /**
+   * hoverEnabled is used to temporarily disable the hover function while a class is added
+   * to an element. This prevents an issue when adding a class to an element, and hovering over the
+   * next option immediately adds the preview class, which is then sent to the tree update, giving
+   * the HTML editor incorrect values
+   */
+  const [hoverEnabled, setHoverEnabled] = React.useState(true);
 
   const foundClasses = classList.filter((c: string) =>
     classOptions.includes(c)
@@ -178,6 +185,7 @@ function MultiSelectControl(props: {
         value={value}
         filter="contains"
         onChange={(v) => {
+          setHoverEnabled(false);
           classOptions.forEach((c) => {
             if (c !== "") {
               removeClassDefinition(element, c);
@@ -191,14 +199,21 @@ function MultiSelectControl(props: {
           redrawComponentTree();
           redrawHighlightedNode();
           setValue(v);
+          setTimeout(() => {
+            setHoverEnabled(true);
+          }, 250);
         }}
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         optionComponent={(props: any) => (
           <ListOption
             {...props}
-            onMouseEnter={() => onMouseEnter(props.dataItem)}
-            onMouseLeave={() => onMouseLeave(props.dataItem)}
+            onMouseEnter={() =>
+              hoverEnabled ? onMouseEnter(props.dataItem) : null
+            }
+            onMouseLeave={() =>
+              hoverEnabled ? onMouseLeave(props.dataItem) : null
+            }
           />
         )}
       />

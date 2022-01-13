@@ -3,7 +3,7 @@ import classNames from "classnames";
 import CodeMirror, { Extension } from "@uiw/react-codemirror";
 import { html } from "@codemirror/lang-html";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { EditorView } from "@codemirror/view";
+import { EditorView, ViewUpdate } from "@codemirror/view";
 import { html_beautify } from "js-beautify";
 
 import {
@@ -151,7 +151,6 @@ function InnerHTMLEditor(props: LeftNavProps) {
   const parentElementRef = React.useRef<Element>();
   const parentPositionRef = React.useRef(0);
   const editingElementsRef = React.useRef<ChildNode[]>([]);
-  const blurLock = React.useRef<boolean>(false);
 
   function setTextWrap(b: boolean) {
     localStorage.setItem("productdiv-editorwrap", `${b}`);
@@ -159,15 +158,6 @@ function InnerHTMLEditor(props: LeftNavProps) {
   }
 
   React.useEffect(() => {
-    /**
-     * blurLock is used to prevent updates to DOM after blur has been called
-     * This prevents the HTML from being rerendered and calling onChange of CodeMirror
-     * which results in nodes not being up to date causing highlighting and editing to fail
-     */
-    if (blurLock.current == true) {
-      blurLock.current = false;
-      return () => null;
-    }
     element.current = elementEditorState.match.node as Element;
     parentElementRef.current = element.current.parentElement;
     parentPositionRef.current = findPositionRelativeToParent(element.current);
@@ -202,7 +192,14 @@ function InnerHTMLEditor(props: LeftNavProps) {
         value={text}
         height="200px"
         extensions={extensions}
-        onChange={(value: string) => {
+        onChange={(value: string, viewUpdate: ViewUpdate) => {
+          /**
+           * As it so happens, calling setState after this component is mounted triggers
+           * this function. This is undesirable, so if we don't have focus, dont run this logic.
+           */
+          if (!viewUpdate.view.hasFocus) {
+            return;
+          }
           if (text == value) {
             return;
           }
@@ -228,7 +225,6 @@ function InnerHTMLEditor(props: LeftNavProps) {
             }
             redrawHighlightedNode(iframeBody);
           } else {
-            blurLock.current = true;
             const newNodes = htmlStringToNodeList(value);
             const { trackedChildrenNodes, returnNode } =
               replaceParentElementChildren(

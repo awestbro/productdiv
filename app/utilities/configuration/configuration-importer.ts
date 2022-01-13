@@ -1,5 +1,3 @@
-import * as yaml from "js-yaml";
-
 export type LibraryConfigurationDefinition = {
   components: ComponentDefinition[];
   templateCategories: TemplateCategoryDefinition[];
@@ -111,7 +109,7 @@ function classDefinitionStringExpander(input: string): string[] {
 export function parseLibraryConfiguration(
   config: LibraryConfigurationDefinition
 ): LibraryConfigurationDefinition {
-  let copy = { ...config };
+  const copy = { ...config };
   // console.log('config', config);
   copy.utilityClasses = copy.utilityClasses.map((def) => {
     return {

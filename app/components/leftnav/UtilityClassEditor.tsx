@@ -79,7 +79,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
       <hr />
       {activeControl !== null && (
         <React.Fragment>
-          <UtilityClassFormControlGrid
+          <UtilityClassSectionList
             controls={[activeControl]}
             openDefault={true}
             keyPrefix="active-"
@@ -90,7 +90,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
       )}
       {queryMatchControls.length > 0 && (
         <React.Fragment>
-          <UtilityClassFormControlGrid
+          <UtilityClassSectionList
             controls={queryMatchControls}
             openDefault={true}
             keyPrefix="match-"
@@ -99,7 +99,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
           <hr />
         </React.Fragment>
       )}
-      <UtilityClassFormControlGrid
+      <UtilityClassSectionList
         keyPrefix="filtered-"
         controls={filteredControls}
         {...props}
@@ -121,7 +121,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
           {nonDefaultOpen && (
             <React.Fragment>
               <hr />
-              <UtilityClassFormControlGrid
+              <UtilityClassSectionList
                 keyPrefix="nondefault-"
                 controls={nonDefaultControls}
                 {...props}
@@ -134,7 +134,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
   );
 }
 
-function UtilityClassFormControlGrid(
+function UtilityClassSectionList(
   props: {
     controls: UtilityClassDefinition[];
     openDefault?: boolean;
@@ -159,12 +159,17 @@ function UtilityClassListItem(
   props: {
     utilityClassDefinition: UtilityClassDefinition;
     openDefault?: boolean;
+    keyPrefix?: string;
   } & LeftNavProps
 ) {
-  const { utilityClassDefinition, elementEditorState, openDefault } = props;
+  const { utilityClassDefinition, elementEditorState, openDefault, keyPrefix } =
+    props;
   const [open, setOpenState] = React.useState(openDefault || false);
   return (
-    <div className="mb-3" key={utilityClassDefinition.section}>
+    <div
+      className="mb-3"
+      key={`${keyPrefix}-${utilityClassDefinition.section}`}
+    >
       <UtilityClassHeader
         open={open}
         toggleOpen={() => setOpenState(!open)}
