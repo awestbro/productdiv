@@ -11,6 +11,7 @@ const dist = path.resolve(__dirname, "dist");
 
 module.exports = () => ({
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({ cache: true, parallel: true, sourceMap: false }),
       new CssMinimizerPlugin({}),
@@ -54,11 +55,6 @@ module.exports = () => ({
         use: {
           loader: "babel-loader",
         },
-      },
-      {
-        test: /\.js$/,
-        enforce: "pre",
-        use: ["source-map-loader"],
       },
       {
         test: /\.(s[ac]ss)$/,

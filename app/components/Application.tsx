@@ -56,7 +56,7 @@ export function drawHoverElement(
   dropZoneSelector?: string
 ) {
   const iframeDocument = getIframeDocument();
-  const { height, width } = getDocumentHeightAndWidth(iframeDocument);
+  const { height, width } = getDocumentHeightAndWidth();
   const canvas: HTMLCanvasElement = iframeDocument.getElementById(
     "productdiv-canvas"
   ) as HTMLCanvasElement;
@@ -66,7 +66,7 @@ export function drawHoverElement(
     element = iframeDocument.body;
   }
   ctx.clearRect(0, 0, width, height);
-  setCanvasWidthAndHeight(iframeDocument, canvas);
+  setCanvasWidthAndHeight(canvas);
   const placement = drawPlacementHover(
     clientX,
     clientY,

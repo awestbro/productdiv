@@ -3199,6 +3199,11 @@
   dependencies:
     "flat-cache" "^3.0.4"
 
+"filesize@^3.6.1":
+  "integrity" "sha512-7KjR1vv6qnicaPMi1iiTcI85CyYwRO/PSFCu6SvqL8jN2Wjt/NIYQTFtFs7fSDCYOstUkEWIQGFUg5YZQfjlcg=="
+  "resolved" "https://registry.npmjs.org/filesize/-/filesize-3.6.1.tgz"
+  "version" "3.6.1"
+
 "fill-range@^7.0.1":
   "integrity" "sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ=="
   "resolved" "https://registry.npmjs.org/fill-range/-/fill-range-7.0.1.tgz"
@@ -3622,6 +3627,11 @@
   "integrity" "sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw=="
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   "version" "2.1.0"
+
+"humanize@0.0.9":
+  "integrity" "sha1-GZT/rs3+nEQe0r2sdFK3u0yeQaQ="
+  "resolved" "https://registry.npmjs.org/humanize/-/humanize-0.0.9.tgz"
+  "version" "0.0.9"
 
 "iconv-lite@^0.6.2":
   "integrity" "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="
@@ -6281,6 +6291,15 @@
   "version" "1.7.3"
   dependencies:
     "minimalistic-assert" "^1.0.0"
+
+"webpack-bundle-size-analyzer@^3.1.0":
+  "integrity" "sha512-8WlTT6uuCxZgZYNnCB0pRGukWRGH+Owg+HsqQUe1Zexakdno1eDYO+lE7ihBo9G0aCCZCJa8JWjYr9eLYfZrBA=="
+  "resolved" "https://registry.npmjs.org/webpack-bundle-size-analyzer/-/webpack-bundle-size-analyzer-3.1.0.tgz"
+  "version" "3.1.0"
+  dependencies:
+    "commander" "^2.19.0"
+    "filesize" "^3.6.1"
+    "humanize" "0.0.9"
 
 "webpack-cli@^4.4.0", "webpack-cli@4.x.x":
   "integrity" "sha512-JYRFVuyFpzDxMDB+v/nanUdQYcZtqFPGzmlW4s+UkPMFhSpfRNmf1z4AwYcHJVdvEFAM7FFCQdNTpsBYhDLusQ=="

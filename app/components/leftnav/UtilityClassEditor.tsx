@@ -1,4 +1,5 @@
-import { differenceBy } from "lodash";
+// @ts-ignore
+import * as differenceBy from "lodash/differenceBy";
 import * as React from "react";
 import {
   UtilityClassControl,

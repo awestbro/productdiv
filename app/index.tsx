@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { render, unmountComponentAtNode } from "react-dom";
 
 import { getEditorMountPoint } from "./utilities/selector";
 import { Application } from "./components/Application";
@@ -32,7 +32,7 @@ function mountApplication(
     const node = htmlStringToNodeList('<div id="productdiv"></div>')[0];
     mount = document.body.appendChild(node) as HTMLElement;
   }
-  ReactDOM.render(
+  render(
     <div style={{ position: "fixed", bottom: 10, left: 10 }}>
       <button
         type="button"
@@ -46,7 +46,7 @@ function mountApplication(
           borderRadius: "0.25rem",
         }}
         onClick={() => {
-          ReactDOM.unmountComponentAtNode(mount);
+          unmountComponentAtNode(mount);
           htmlSnapshot = document.documentElement.innerHTML;
           mountProductDiv(configuration, cssPath, htmlSnapshot);
         }}
@@ -76,13 +76,13 @@ async function mountProductDiv(
   document.close();
 
   document.addEventListener("DOMContentLoaded", () => {
-    ReactDOM.render(
+    render(
       <Application
         pageSource={html}
         configuration={configuration}
         onLeftNavClose={(iframeDocument: Document) => {
           const str = sanitizeHtmlToString(iframeDocument.documentElement);
-          ReactDOM.unmountComponentAtNode(getEditorMountPoint());
+          unmountComponentAtNode(getEditorMountPoint());
           document.open();
           document.write(str);
           document.close();

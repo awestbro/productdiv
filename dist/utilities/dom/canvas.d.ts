@@ -1,4 +1,4 @@
-export declare function getDocumentHeightAndWidth(d: Document): {
+export declare function getDocumentHeightAndWidth(): {
     height: number;
     width: number;
 };
@@ -6,7 +6,7 @@ export declare function createCanvas(doc: Document): {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
 };
-export declare function setCanvasWidthAndHeight(doc: Document, canvas: HTMLCanvasElement): void;
+export declare function setCanvasWidthAndHeight(canvas: HTMLCanvasElement): void;
 export declare function pxToNumber(px: string): number;
 export declare function getElementsRelativeCoordinates(element: Element): {
     top: number;

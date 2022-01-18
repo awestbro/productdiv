@@ -1,14 +1,14 @@
 {
   "name": "productdiv",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack serve",
-    "build": "webpack build --config webpack.config.prod.js",
-    "test": "echo \"Ayy lmao tests\"",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "prettier": "prettier --write . "
+    "prettier": "prettier --write . ",
+    "analyze": "webpack --json | webpack-bundle-size-analyzer"
   },
   "author": "",
   "license": "ISC",
@@ -47,6 +47,7 @@
     "typescript": "^3.9.10",
     "url-loader": "^4.1.1",
     "webpack": "^5.18.0",
+    "webpack-bundle-size-analyzer": "^3.1.0",
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^4.0.0-beta.0"
   },
