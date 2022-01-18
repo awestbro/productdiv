@@ -1,19 +1,16 @@
 import { getIframeDocument } from "../../components/Application";
 import { ChildNodeType } from "../child-node-type";
 
-export function getDocumentHeightAndWidth(d: Document) {
-  // const body = document.body;
-  // const html = document.documentElement;
-
+export function getDocumentHeightAndWidth() {
   const height = window.innerHeight; //Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
   const width = window.innerWidth; // document.body.offsetWidth;
   return { height, width };
 }
 
 export function createCanvas(doc: Document) {
-  var canvas = doc.createElement("canvas"); //Create a canvas element
+  const canvas = doc.createElement("canvas"); //Create a canvas element
   //Set canvas width/height
-  setCanvasWidthAndHeight(doc, canvas);
+  setCanvasWidthAndHeight(canvas);
   //Position canvas
   canvas.id = "productdiv-canvas";
   canvas.style.position = "fixed";
@@ -28,11 +25,8 @@ export function createCanvas(doc: Document) {
   return { canvas, context: context };
 }
 
-export function setCanvasWidthAndHeight(
-  doc: Document,
-  canvas: HTMLCanvasElement
-) {
-  const { height, width } = getDocumentHeightAndWidth(doc);
+export function setCanvasWidthAndHeight(canvas: HTMLCanvasElement) {
+  const { height, width } = getDocumentHeightAndWidth();
   canvas.style.width = `${width}`;
   canvas.style.height = `${height}`;
   canvas.width = width;
@@ -44,7 +38,7 @@ export function pxToNumber(px: string) {
 }
 
 export function getElementsRelativeCoordinates(element: Element) {
-  let { top, left, right, bottom, width, height } =
+  const { top, left, right, bottom, width, height } =
     element.getBoundingClientRect();
 
   // top = top - window.scrollY;
@@ -66,7 +60,7 @@ export function drawMarginAndPadding(
 ) {
   const style = getComputedStyle(element);
   // console.log('style: ', style);
-  let { top, left, right, bottom, width, height } =
+  const { top, left, right, bottom, width, height } =
     getElementsRelativeCoordinates(element);
   const {
     marginTop,
@@ -248,34 +242,6 @@ export function drawPlacementType(
 ) {
   const { top, left, bottom, right, width, height } =
     element.getBoundingClientRect();
-  const style = getComputedStyle(element);
-  const {
-    marginTop,
-    marginBottom,
-    marginLeft,
-    marginRight,
-    paddingTop,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-    borderBottomWidth,
-    borderTopWidth,
-    borderLeftWidth,
-    borderRightWidth,
-  } = style;
-
-  const numMarginTop = pxToNumber(marginTop);
-  const numMarginBottom = pxToNumber(marginBottom);
-  const numMarginLeft = pxToNumber(marginLeft);
-  const numMarginRight = pxToNumber(marginRight);
-  const numPaddingTop = pxToNumber(paddingTop);
-  const numPaddingBottom = pxToNumber(paddingBottom);
-  const numPaddingLeft = pxToNumber(paddingLeft);
-  const numPaddingRight = pxToNumber(paddingRight);
-  const numBorderTop = pxToNumber(borderTopWidth);
-  const numBorderBottom = pxToNumber(borderBottomWidth);
-  const numBorderLeft = pxToNumber(borderLeftWidth);
-  const numBorderRight = pxToNumber(borderRightWidth);
 
   if (placementType === PlacementType.REPLACE) {
     ctx.fillStyle = "#0000ff1a";
@@ -284,12 +250,7 @@ export function drawPlacementType(
     return;
   }
 
-  const smallSide = width > height ? height : width;
-  // let borderSize = smallSide * .2;
-  // if (width > 40 && height > 40) {
-  //     borderSize = 15;
-  // }
-  let borderSize = 10;
+  const borderSize = 10;
 
   const innerTop = top + borderSize;
   const innerLeft = left + borderSize;
@@ -371,13 +332,13 @@ export function drawPlacementType(
 
 export function highlightElements(nodes: Node[]) {
   const iframeDocument = getIframeDocument();
-  const { height, width } = getDocumentHeightAndWidth(iframeDocument);
+  const { height, width } = getDocumentHeightAndWidth();
   const canvas: HTMLCanvasElement = iframeDocument.getElementById(
     "productdiv-canvas"
   ) as HTMLCanvasElement;
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, width, height);
-  setCanvasWidthAndHeight(iframeDocument, canvas);
+  setCanvasWidthAndHeight(canvas);
   nodes.forEach((node) => {
     if (node.nodeType === ChildNodeType.Element) {
       drawMarginAndPadding(ctx, node as Element);

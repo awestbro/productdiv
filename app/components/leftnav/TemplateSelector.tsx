@@ -59,8 +59,6 @@ export function TemplateSelector(props: TemplateSelectorProps) {
     lastHoverPosition,
   } = props;
 
-  const [selectedCategory, setSelectedCategory] =
-    React.useState<TemplateCategoryDefinition>(null);
   const dragMode = setTemplateEditorOpen && modifyingElement ? false : true;
   const [placementSelectorOpen, setPlacementSelectorOpen] =
     React.useState<boolean>(false);
