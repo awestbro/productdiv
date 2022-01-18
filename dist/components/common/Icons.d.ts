@@ -1,0 +1,11 @@
+/// <reference types="react" />
+export declare const ProductDivLogoLarge: () => JSX.Element;
+export declare const TextWrapIcon: () => JSX.Element;
+export declare const TextOverflowIcon: () => JSX.Element;
+export declare const EyePreviewIcon: (props: any) => JSX.Element;
+export declare const GripVerticalIcon: (props: any) => JSX.Element;
+export declare const ChevronRightIcon: (props: any) => JSX.Element;
+export declare const ChevronDownIcon: (props: any) => JSX.Element;
+export declare const ClipboardIcon: (props: any) => JSX.Element;
+export declare const CheckIcon: (props: any) => JSX.Element;
+export declare const AllIconDefinitions: () => JSX.Element;

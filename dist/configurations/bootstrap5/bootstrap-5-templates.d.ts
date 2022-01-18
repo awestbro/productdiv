@@ -1,2 +1,2 @@
-import { TemplateCategoryDefinition } from '../../lib/configuration/configuration-importer';
+import { TemplateCategoryDefinition } from "../../utilities/configuration/configuration-importer";
 export declare const templateCategories: TemplateCategoryDefinition[];
