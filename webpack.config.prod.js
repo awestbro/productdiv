@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const dist = path.resolve(__dirname, "dist");
 
-module.exports = (env, options) => ({
+module.exports = () => ({
   optimization: {
     minimizer: [
       new TerserPlugin({ cache: true, parallel: true, sourceMap: false }),
