@@ -1,7 +1,7 @@
 import * as React from "react";
-import { DropdownList, Multiselect } from "react-widgets";
-// @ts-ignore
-import * as ListOption from "react-widgets/lib/ListOption";
+import DropdownList from "react-widgets/DropdownList";
+import Multiselect from "react-widgets/Multiselect";
+import ListOption from "react-widgets/ListOption";
 import { UtilityClassControl } from "../../utilities/configuration/configuration-importer";
 import { domTokenListToArray } from "../../utilities/selector";
 
@@ -106,7 +106,7 @@ function SelectControl(props: {
         filter="contains"
         defaultValue={value}
         value={value}
-        onChange={(v) => setValue(v)}
+        onChange={(v: string) => setValue(v)}
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         optionComponent={(props: any) => (
@@ -184,7 +184,7 @@ function MultiSelectControl(props: {
         defaultValue={value}
         value={value}
         filter="contains"
-        onChange={(v) => {
+        onChange={(v: string[]) => {
           setHoverEnabled(false);
           classOptions.forEach((c) => {
             if (c !== "") {

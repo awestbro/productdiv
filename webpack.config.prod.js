@@ -13,7 +13,7 @@ module.exports = () => ({
   optimization: {
     minimize: true,
     minimizer: [
-      new TerserPlugin({ cache: true, parallel: true, sourceMap: false }),
+      new TerserPlugin({ parallel: true }),
       new CssMinimizerPlugin({}),
     ],
   },
@@ -95,10 +95,10 @@ module.exports = () => ({
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
-      {
-        test: /\.(gif|ttf|eot|svg|woff2?)$/,
-        use: "url-loader?name=[name].[ext]",
-      },
+      // {
+      //   test: /\.(gif|ttf|eot|svg|woff2?)$/,
+      //   use: "url-loader?name=[name].[ext]",
+      // },
     ],
   },
   plugins: [

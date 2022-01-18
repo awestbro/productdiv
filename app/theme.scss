@@ -9,9 +9,7 @@ $text-light: #c3c3c3;
 @import "~bootstrap/scss/bootstrap.scss";
 
 $input-height: 2.429em;
-$font-path: "~react-widgets/lib/fonts";
-$img-path: "~react-widgets/lib/img";
-@import "~react-widgets/lib/scss/react-widgets";
+@import "~react-widgets/scss/components";
 
 .btn-primary {
   color: $light;
@@ -55,98 +53,64 @@ $img-path: "~react-widgets/lib/img";
 .productdiv-treeitem-component {
   color: #67a7ff;
 }
+// React Widgets Overrides
 
-// dropdown overrides
-.rw-widget-input {
-  background-color: $input-bg;
-  border-color: $input-border-color;
-}
+.rw-select,
+.rw-multiselect,
+.rw-dropdown-list {
+  .rw-widget-input {
+    background-color: $input-bg;
+    border-color: $input-border-color;
+  }
 
-.rw-widget-container.rw-state-focus,
-.rw-widget-container.rw-state-focus:hover,
-.rw-state-focus > .rw-widget-container,
-.rw-state-focus > .rw-widget-container:hover {
-  background-color: lighten($color: $input-bg, $amount: 10%);
-  border-color: lighten($color: $input-border-color, $amount: 10%);
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
+  .rw-multiselect-input {
+    color: $text-light;
+  }
 
-.rw-popup {
-  background-color: lighten($color: $input-bg, $amount: 10%);
-}
+  .rw-picker-caret.rw-btn {
+    color: $text-light;
+    width: 14px;
+    height: 100%;
+  }
 
-.rw-widget-picker {
-  height: 28px;
-}
+  .rw-widget-picker.rw-widget-container {
+    grid-template: 1fr/1fr 18px;
+  }
 
-// dropdown caret
-.rw-select > * {
-  color: $text-light;
-  width: 14px;
-  height: 100%;
-}
-
-.rw-input {
-  color: $text-light;
-  padding-left: 4px;
-  padding-right: 0;
-  font-size: 12px;
-  text-overflow: clip;
-}
-
-.rw-list-option {
-  background-color: $input-border-color;
-  color: $text-light;
-  padding-left: 4px;
-  font-size: 12px;
-  min-height: 23px;
-  word-break: break-all;
-}
-
-.rw-list {
-  border: 1px solid $input-border-color;
-}
-
-.rw-list-option:not(:last-child) {
-  border-bottom: 1px solid $input-border-color;
-}
-
-.rw-multiselect-tag {
-  display: flex;
-  font-size: 12px;
-  background-color: $secondary;
-  border: 1px solid darken($secondary, 5%);
-  text-align: left;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  color: $text-light;
-
-  span {
-    word-break: break-all;
+  .rw-dropdown-list-value {
+    color: $text-light;
+    font-size: 12px;
     white-space: normal;
-    display: block;
   }
 
-  div {
-    display: flex;
-    align-self: center;
+  .rw-multiselect-tag {
+    font-size: 12px;
+    background-color: $secondary;
+    color: $text-light;
+    border: 1px solid darken($secondary, 5%);
   }
-}
 
-.rw-multiselect .rw-input-reset {
-  height: 28px;
-}
+  .rw-list-option {
+    color: $text-light;
+    padding-left: 4px;
+    font-size: 12px;
+    min-height: 23px;
+    // word-break: break-all;
 
-.rw-popup-container {
-  right: -40px;
-  z-index: 1000001;
-  position: absolute;
-  width: 150px;
-}
+    &:hover {
+      background-color: darken($secondary, 5%);
+      border: none;
+    }
+  }
 
-.rw-state-focus .rw-popup-container {
-  z-index: 1000001 !important;
+  .rw-list {
+    border: 1px solid $input-border-color;
+    background-color: $secondary;
+  }
+
+  .rw-list-option:not(:last-child) {
+    border-bottom: 1px solid $input-border-color;
+  }
 }
 
 .element-editor-select-control {

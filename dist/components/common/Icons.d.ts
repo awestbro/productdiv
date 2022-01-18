@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const ProductDivLogoLarge: () => JSX.Element;
 export declare const TextWrapIcon: () => JSX.Element;
 export declare const TextOverflowIcon: () => JSX.Element;
