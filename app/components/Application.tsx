@@ -17,6 +17,7 @@ import classnames from "classnames";
 // @ts-ignore
 import * as throttle from "lodash/throttle";
 import { ParsedLibraryConfigurationDefinition } from "../utilities/configuration/configuration-importer";
+import { AllIconDefinitions } from "./common/Icons";
 
 export type ElementEditorState = {
   match?: NodeTreeMatch;
@@ -309,6 +310,7 @@ export function Application(props: {
 
   return (
     <React.Fragment>
+      <AllIconDefinitions />
       <LeftNav
         getComponentTree={getComponentTree}
         iframeDocument={iframeDocument}

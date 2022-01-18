@@ -263,3 +263,110 @@ export const TextOverflowIcon = () => (
     <path d="M24 32V44" stroke="black" strokeWidth="4" strokeLinecap="round" />
   </svg>
 );
+
+const GenericIcon = (props: { id: string } & any) => {
+  const { id, ...rest } = props;
+  return (
+    <svg version="2.0" {...rest}>
+      <use href={`#${id}`} />
+    </svg>
+  );
+};
+
+const GenericIconDefinition = (props: any) => {
+  const { id, children } = props;
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      style={{ display: "none" }}
+    >
+      <symbol
+        id={id}
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+        fill="currentColor"
+      >
+        {children}
+      </symbol>
+    </svg>
+  );
+};
+
+const EyePreviewIconDefinition = () => (
+  <GenericIconDefinition id="eye-fill">
+    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+  </GenericIconDefinition>
+);
+
+const GripVerticalIconDefinition = () => (
+  <GenericIconDefinition id="grip-vertical">
+    <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+  </GenericIconDefinition>
+);
+
+const ChevronRightIconDefinition = () => (
+  <GenericIconDefinition id="chevron-right">
+    <path
+      fillRule="evenodd"
+      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+    />
+  </GenericIconDefinition>
+);
+
+const ChevronDownIconDefinition = () => (
+  <GenericIconDefinition id="chevron-down">
+    <path
+      fillRule="evenodd"
+      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+    />
+  </GenericIconDefinition>
+);
+
+const ClipboardIconDefinition = () => (
+  <GenericIconDefinition id="clipboard">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+  </GenericIconDefinition>
+);
+
+const CheckIconDefinition = () => (
+  <GenericIconDefinition id="check">
+    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+  </GenericIconDefinition>
+);
+
+export const EyePreviewIcon = (props: any) => (
+  <GenericIcon id="eye-fill" {...props} />
+);
+
+export const GripVerticalIcon = (props: any) => (
+  <GenericIcon id="grip-vertical" {...props} />
+);
+
+export const ChevronRightIcon = (props: any) => (
+  <GenericIcon id="chevron-right" {...props} />
+);
+
+export const ChevronDownIcon = (props: any) => (
+  <GenericIcon id="chevron-down" {...props} />
+);
+
+export const ClipboardIcon = (props: any) => (
+  <GenericIcon id="clipboard" {...props} />
+);
+
+export const CheckIcon = (props: any) => <GenericIcon id="check" {...props} />;
+
+export const AllIconDefinitions = () => (
+  <React.Fragment>
+    <EyePreviewIconDefinition />
+    <GripVerticalIconDefinition />
+    <ChevronDownIconDefinition />
+    <ChevronRightIconDefinition />
+    <ClipboardIconDefinition />
+    <CheckIconDefinition />
+  </React.Fragment>
+);

@@ -1,6 +1,7 @@
 $primary: #6976ce !default;
 $secondary: rgb(80, 84, 91) !default;
 $dark: #303841 !default;
+$success: rgb(158, 232, 158);
 
 $input-bg: #304148;
 $input-border-color: #343638;
@@ -11,9 +12,6 @@ $input-height: 2.429em;
 $font-path: "~react-widgets/lib/fonts";
 $img-path: "~react-widgets/lib/img";
 @import "~react-widgets/lib/scss/react-widgets";
-
-// @import "codemirror/lib/codemirror.css";
-// @import "codemirror/theme/oceanic-next.css";
 
 .btn-primary {
   color: $light;
@@ -486,4 +484,32 @@ body {
   left: 15;
   z-index: 999;
   font-weight: bold;
+}
+
+.btn-icon {
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  padding: 0px 0px;
+}
+
+.template-category-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0px;
+  border-bottom: 1px solid darken($secondary, 5%);
+  align-items: center;
+}
+
+.template-definition-row {
+  display: flex;
+  background-color: darken($secondary, 5%);
+  justify-content: space-between;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-bottom: 1px solid darken($secondary, 10%);
+  padding-bottom: 6px;
+  padding-top: 6px;
 }

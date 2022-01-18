@@ -43,14 +43,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "All",
-        type: "selectMany",
-        classes: [
-          "m-(0|1|2|3|4|5|auto)",
-          `m-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
-        ],
-      },
-      {
         name: "Vertical",
         type: "selectMany",
         classes: [
@@ -64,6 +56,14 @@ export const utilityClasses: UtilityClassDefinition[] = [
         classes: [
           "mx-(0|1|2|3|4|5|auto)",
           `mx-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
+        ],
+      },
+      {
+        name: "All",
+        type: "selectMany",
+        classes: [
+          "m-(0|1|2|3|4|5|auto)",
+          `m-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
         ],
       },
     ],
@@ -107,14 +107,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "All",
-        type: "selectMany",
-        classes: [
-          "p-(0|1|2|3|4|5|auto)",
-          `p-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
-        ],
-      },
-      {
         name: "Vertical",
         type: "selectMany",
         classes: [
@@ -128,6 +120,14 @@ export const utilityClasses: UtilityClassDefinition[] = [
         classes: [
           "px-(0|1|2|3|4|5|auto)",
           `px-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
+        ],
+      },
+      {
+        name: "All",
+        type: "selectMany",
+        classes: [
+          "p-(0|1|2|3|4|5|auto)",
+          `p-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
         ],
       },
     ],
@@ -215,13 +215,13 @@ export const utilityClasses: UtilityClassDefinition[] = [
     ],
   },
   {
-    section: "Color",
+    section: "Background",
     documentationLink:
       "https://getbootstrap.com/docs/5.0/utilities/background/",
     showDefault: true,
     controls: [
       {
-        name: "Background",
+        name: "Color",
         type: "selectOne",
         classes: [`bg-(${themeColors}|white|body|transparent)`],
       },
@@ -229,11 +229,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
         name: "Gradient",
         type: "selectOne",
         classes: ["bg-gradient"],
-      },
-      {
-        name: "Font",
-        type: "selectOne",
-        classes: [`text-(${themeColors}|muted|white|black-50|white-50)`],
       },
       {
         name: "Opacity",

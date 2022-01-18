@@ -94,7 +94,7 @@ export function LeftNav(props: LeftNavProps) {
   return (
     <div
       style={{
-        width: "23%",
+        width: "25%",
         resize: "horizontal",
         overflow: "auto",
         flexShrink: 0,
@@ -102,7 +102,8 @@ export function LeftNav(props: LeftNavProps) {
       className="d-flex flex-column justify-content-between h-100 bg-dark text-light border-end border-dark"
     >
       <div
-        className="h-100 bg-dark text-light overflow-auto"
+        className="h-100 bg-dark text-light"
+        style={{ overflowX: "hidden", overflowY: "scroll" }}
         data-productdiv-ignore="true"
       >
         {selectedComponent}

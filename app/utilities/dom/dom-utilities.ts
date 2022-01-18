@@ -40,10 +40,15 @@ export function scrollIntoView(node: Node) {
 
 export function addTemplateToElement(
   template: TemplateDefinition,
-  element: Element,
+  _element: Element,
   _placement: PlacementType
 ): Node {
   let placement = _placement;
+  let element = _element;
+  if (element.classList.contains("productdiv-drop-container")) {
+    element = element.parentElement;
+    _element.remove();
+  }
   if (element.nodeName === "BODY") {
     placement = PlacementType.INNER_APPEND;
   }
