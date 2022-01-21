@@ -374,7 +374,8 @@ export function Application(props: {
                                     width: calc(100vw - 10%) !important;
                                     background-color: inherit;
                                     z-index: 2000;
-                                    box-shadow: #a7a7a7 2px 2px 5px 0px;
+                                    box-shadow: #a7a7a7 2px 2px 20px 3px;
+                                    border-radius: 10px;
                                 }
                                 .productdiv-drop-container::after {
                                     content: "+";

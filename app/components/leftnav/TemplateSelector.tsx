@@ -69,11 +69,20 @@ export function TemplateSelector(props: TemplateSelectorProps) {
     React.useState<TemplateDefinition[]>(null);
 
   React.useEffect(() => {
-    const templates = flatten(templateCategories.map((t) => t.templates));
-    const s = new Fuse(templates, { keys: ["name"] });
+    const templates = flatten(
+      templateCategories.map((c) =>
+        c.templates.map((t) => ({
+          searchText: `${c.name} ${t.name}`,
+          template: t,
+        }))
+      )
+    );
+    const s = new Fuse(templates, {
+      keys: ["searchText"],
+    });
     if (filterText) {
       const res = s.search(filterText);
-      setFilteredTemplates(res.map((r) => r.item));
+      setFilteredTemplates(res.map((res) => res.item.template));
     } else {
       setFilteredTemplates([]);
     }

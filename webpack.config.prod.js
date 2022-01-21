@@ -2,11 +2,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const glob = require("glob");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
 const dist = path.resolve(__dirname, "dist");
 
 module.exports = () => ({
@@ -67,8 +65,9 @@ module.exports = () => ({
           //   // translates CSS into CommonJS modules
           //   loader: 'css-loader'
           // },
-          MiniCssExtractPlugin.loader,
+
           // "style-loader",
+          "to-string-loader",
           "css-loader",
           {
             // Run postcss actions
@@ -91,10 +90,10 @@ module.exports = () => ({
           // }
         ],
       },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+      // },
       // {
       //   test: /\.(gif|ttf|eot|svg|woff2?)$/,
       //   use: "url-loader?name=[name].[ext]",
@@ -102,7 +101,6 @@ module.exports = () => ({
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: "app.css" }),
     new CopyWebpackPlugin({
       patterns: [{ from: "static/", to: dist }],
     }),

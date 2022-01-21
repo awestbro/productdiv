@@ -9,7 +9,9 @@ import {
   parseLibraryConfiguration,
 } from "./utilities/configuration/configuration-importer";
 
-import "./theme.scss";
+// eslint-disable-next-line
+const theme = require("./theme.scss");
+
 import { sanitizeHtmlToString } from "./utilities/clipboard";
 import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 
@@ -23,10 +25,7 @@ function inIframe() {
 
 let htmlSnapshot = "";
 
-function mountApplication(
-  configuration: ParsedLibraryConfigurationDefinition,
-  cssPath: string
-) {
+function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
   let mount = getEditorMountPoint();
   if (!mount) {
     const node = htmlStringToNodeList('<div id="productdiv"></div>')[0];
@@ -48,7 +47,7 @@ function mountApplication(
         onClick={() => {
           unmountComponentAtNode(mount);
           htmlSnapshot = document.documentElement.innerHTML;
-          mountProductDiv(configuration, cssPath, htmlSnapshot);
+          mountProductDiv(configuration, htmlSnapshot);
         }}
       >
         PD
@@ -60,7 +59,6 @@ function mountApplication(
 
 async function mountProductDiv(
   configuration: ParsedLibraryConfigurationDefinition,
-  cssPath = "/app.css",
   html: string
 ) {
   document.open();
@@ -68,7 +66,9 @@ async function mountProductDiv(
         <html>
             <head></head>
              <body>
-                <link rel="stylesheet" href="${cssPath}">
+                <style>
+                ${theme}
+                </style>
                 <div id="productdiv" class="d-flex flex-row w-100 h-100"></div>
             </body>
         </html>
@@ -87,7 +87,7 @@ async function mountProductDiv(
           document.write(str);
           document.close();
           document.addEventListener("DOMContentLoaded", () => {
-            mountApplication(configuration, cssPath);
+            mountApplication(configuration);
           });
         }}
       />,
@@ -97,10 +97,9 @@ async function mountProductDiv(
 }
 
 export default function ProductDiv(
-  configuration: LibraryConfigurationDefinition,
-  cssPath = "/app.css"
+  configuration: LibraryConfigurationDefinition
 ) {
   if (!inIframe()) {
-    mountApplication(parseLibraryConfiguration(configuration), cssPath);
+    mountApplication(parseLibraryConfiguration(configuration));
   }
 }

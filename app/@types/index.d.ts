@@ -1,3 +1,2 @@
-// declare module ListOption {
-//     [key: any]: any;
-// }
+// Declare global vars here if needed
+declare const require: (path: string) => any;

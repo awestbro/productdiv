@@ -121,9 +121,9 @@ export const templateCategories: TemplateCategoryDefinition[] = [
       {
         name: "Code Block",
         htmlTemplate: `
-                <pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
-                &lt;p&gt;And another line of sample text here...&lt;/p&gt;
-                </code></pre>
+<pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
+&lt;p&gt;And another line of sample text here...&lt;/p&gt;
+</code></pre>
                 `,
       },
       {
@@ -270,6 +270,7 @@ export const templateCategories: TemplateCategoryDefinition[] = [
         name: "Form Element",
         htmlTemplate: `
                 <form class="py-3">
+                  <div class="productdiv-drop-container"></div>
                 </form>
                 `,
       },

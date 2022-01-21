@@ -1,4 +1,6 @@
-# ProductDiv
+[![npm version](https://badge.fury.io/js/productdiv.svg)](https://badge.fury.io/js/productdiv)
+
+![Alt text](/static/productdiv_logo_white_transparent.png?raw=true "Optional Title")
 
 An open-source visual user-interface builder using your own css!
 
