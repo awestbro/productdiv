@@ -5,6 +5,26 @@ export const templateCategories: TemplateCategoryDefinition[] = [
     name: "Content",
     templates: [
       {
+        name: "Title",
+        htmlTemplate: `
+                <h2 class="text-bold">Title</h2>
+                `,
+      },
+      {
+        name: "Subtitle",
+        htmlTemplate: `
+                <h3 class="text-muted">Subtitle</h3>
+                `,
+      },
+      {
+        name: "Page Header",
+        htmlTemplate: `
+                <h2 class="text-bold">Title</h2>
+                <h3 class="text-muted">Subtitle</h3>
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consectetur commodo consequat.</p>
+                `,
+      },
+      {
         name: "Paragraph",
         htmlTemplate: `
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consectetur commodo consequat. In condimentum fermentum augue, sit amet iaculis ante sagittis non. Fusce fringilla lacus id condimentum hendrerit. Cras posuere mi et tellus cursus mattis. Suspendisse pellentesque iaculis lectus a sagittis. Phasellus egestas orci lorem, eu vulputate nisi tempus sed. Fusce aliquet odio quis efficitur feugiat. Donec in nisl tincidunt erat euismod blandit. In semper, tortor non commodo sagittis, orci diam placerat lacus, at sodales diam metus tempor mauris.</p>

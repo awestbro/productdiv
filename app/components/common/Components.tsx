@@ -13,3 +13,12 @@ export const IconButton = (props: { children: any } & any) => {
     </button>
   );
 };
+
+export const IconAnchor = (props: { children: any; href: string } & any) => {
+  const { children, className, ...rest } = props;
+  return (
+    <a className={classNames("btn btn-icon", className)} {...rest}>
+      {children}
+    </a>
+  );
+};

@@ -86,6 +86,9 @@ export function TemplateSelector(props: TemplateSelectorProps) {
     } else {
       setFilteredTemplates([]);
     }
+    if (iframeDocuemnt) {
+      hideTemplatePreview();
+    }
   }, [filterText]);
 
   const wrapperclasses = dragMode
@@ -156,6 +159,9 @@ export function TemplateSelector(props: TemplateSelectorProps) {
   return (
     <div className={wrapperclasses}>
       <h4 className="text-light fw-bold h4">Templates</h4>
+      <p className="text-muted">
+        Open a template category to click and drag templates onto your page!
+      </p>
       <div className="container">
         <div className="row">
           <div className="col px-2 pb-3">
@@ -187,35 +193,6 @@ export function TemplateSelector(props: TemplateSelectorProps) {
       </div>
     </div>
   );
-  // }
-  // return (
-  //   <div className={wrapperclasses}>
-  //     <div className="d-flex justify-content-between align-items-center">
-  //       <h2 className="text-light fw-light">{selectedCategory.name}</h2>
-  //       <button
-  //         onClick={() => setSelectedCategory(null)}
-  //         className="btn btn-sm btn-secondary"
-  //       >
-  //         x
-  //       </button>
-  //     </div>
-  //     <div className="container">
-  //       <div className="row overflow-auto">
-  //         {selectedCategory.templates.map((template, i) => (
-  //           <TemplateButton
-  //             {...props}
-  //             template={template}
-  //             onTemplateSelect={(t: TemplateDefinition) => {
-  //               setPlacementSelectorOpen(true);
-  //               setSelectedTemplate(t);
-  //             }}
-  //             key={i}
-  //           />
-  //         ))}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }
 
 type TemplateActionProps = {
@@ -320,7 +297,7 @@ function TemplateListItem(props: TemplateListItemProps) {
         <GripVerticalIcon width="16" height="16" />
         {template.name}
       </div>
-      <div>
+      <div className="d-flex flex-nowrap">
         <IconButton
           onClick={() => {
             copyToClipboard(template.htmlTemplate);
@@ -344,13 +321,6 @@ function TemplateListItem(props: TemplateListItemProps) {
         >
           <EyePreviewIcon width="16" height="16" />
         </IconButton>
-        {/* <IconButton
-          draggable
-          onDragStart={() => onDragStart()}
-          onDragEnd={() => onDragEnd(template)}
-        >
-          <GripVerticalIcon width="16" height="16" />
-        </IconButton> */}
       </div>
     </div>
   );

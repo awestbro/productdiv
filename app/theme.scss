@@ -54,12 +54,13 @@ $input-height: 2.429em;
   color: #67a7ff;
 }
 // React Widgets Overrides
+$react-widget-input-bg: #282c34;
 
 .rw-select,
 .rw-multiselect,
 .rw-dropdown-list {
   .rw-widget-input {
-    background-color: $input-bg;
+    background-color: $react-widget-input-bg;
     border-color: $input-border-color;
   }
 
@@ -85,7 +86,7 @@ $input-height: 2.429em;
 
   .rw-multiselect-tag {
     font-size: 12px;
-    background-color: $secondary;
+    background-color: darken($secondary, 5%);
     color: $text-light;
     border: 1px solid darken($secondary, 5%);
   }
@@ -455,6 +456,9 @@ body {
   width: 32px;
   height: 32px;
   padding: 0px 0px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .template-category-row {
@@ -468,6 +472,7 @@ body {
 .template-definition-row {
   display: flex;
   background-color: darken($secondary, 5%);
+  // background-color: darken($dark, 2.5%);
   justify-content: space-between;
   margin-left: -24px;
   margin-right: -24px;
@@ -476,4 +481,34 @@ body {
   border-bottom: 1px solid darken($secondary, 10%);
   padding-bottom: 6px;
   padding-top: 6px;
+}
+
+.utility-class-body {
+  display: flex;
+  background-color: darken($dark, 2.5%);
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  // border-bottom: 1px solid darken($secondary, 10%);
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.utility-class-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0px;
+}
+
+.tree-view-toggle-indicator {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  border-radius: 100px;
 }

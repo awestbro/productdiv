@@ -66,6 +66,8 @@ export function LeftNav(props: LeftNavProps) {
 
   let selectedComponent;
 
+  const [dropupShow, setDropupShow] = React.useState(false);
+
   if (templateEditorOpen) {
     selectedComponent = (
       <TemplateSelector
@@ -129,35 +131,62 @@ export function LeftNav(props: LeftNavProps) {
         >
           PD
         </button>
-        <a
-          href="https://github.com/awestbro/productdiv"
-          className="btn btn-sm btn-secondary me-2"
-          target="__blank"
-        >
-          ?
-        </a>
-        <button
-          title="Toggle Tree"
-          className={classNames("btn btn-sm", {
-            "btn-secondary": !treeViewOpen,
-            "btn-primary": treeViewOpen,
-          })}
-          onClick={() => {
-            setTreeViewOpen(!treeViewOpen);
-            redrawHighlightedNode();
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            className="bi bi-filter-right"
-            viewBox="0 0 20 20"
+
+        <div className={classNames("btn-group dropup", { show: dropupShow })}>
+          <button
+            type="button"
+            data-bs-display="static"
+            className="btn btn-secondary btn-sm dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            onClick={() => setDropupShow(!dropupShow)}
           >
-            <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z" />
-          </svg>
-        </button>
+            Actions
+          </button>
+          <div
+            style={{ top: "auto", bottom: "100%", marginTop: "0", right: "0" }}
+            className={classNames("dropdown-menu dropdown-menu-right", {
+              show: dropupShow,
+            })}
+          >
+            <a
+              className="dropdown-item"
+              href="https://github.com/awestbro/productdiv"
+              target="__blank"
+            >
+              📖 Documentation
+            </a>
+            <button
+              className="dropdown-item"
+              type="button"
+              onClick={() => {
+                copyElementToClipboard(iframeDocument.documentElement);
+                setDropupShow(false);
+              }}
+            >
+              📋 Copy Page HTML
+            </button>
+            <button
+              onClick={() => {
+                setTreeViewOpen(!treeViewOpen);
+                redrawHighlightedNode();
+                setDropupShow(false);
+              }}
+              title="Toggle Tree"
+              className="dropdown-item d-flex align-items-center"
+              type="button"
+            >
+              <span
+                className={classNames("tree-view-toggle-indicator me-1", {
+                  "bg-primary": treeViewOpen,
+                  "bg-secondary": !treeViewOpen,
+                })}
+              ></span>
+              Toggle Tree
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -182,17 +211,6 @@ export function LeftNavMenu(props: LeftNavProps) {
       <div className="h-100 d-flex flex-column container">
         <div className="d-flex justify-content-between align-items-center my-3">
           <ProductDivLogoLarge />
-        </div>
-        <div className="my-3">
-          <h4 className="text-light fw-bold h4">Actions</h4>
-          <button
-            className="btn btn-secondary"
-            onClick={() => {
-              copyElementToClipboard(iframeDocument.documentElement);
-            }}
-          >
-            Copy All HTML
-          </button>
         </div>
         <TemplateSelector
           iframeDocuemnt={iframeDocument}

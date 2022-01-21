@@ -6,6 +6,12 @@ import {
   UtilityClassDefinition,
 } from "../../utilities/configuration/configuration-importer";
 import { domTokenListToArray } from "../../utilities/selector";
+import { IconAnchor, IconButton } from "../common/Components";
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  QuestionIcon,
+} from "../common/Icons";
 import { LeftNavProps } from "./LeftNav";
 import { UtilityClassFormControl } from "./UtilityClassFormControls";
 
@@ -77,7 +83,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
 
   return (
     <React.Fragment>
-      <hr />
+      <hr className="mb-0" />
       {activeControl !== null && (
         <React.Fragment>
           <UtilityClassSectionList
@@ -86,7 +92,6 @@ export function UtilityClassEditor(props: LeftNavProps) {
             keyPrefix="active-"
             {...props}
           />
-          <hr />
         </React.Fragment>
       )}
       {queryMatchControls.length > 0 && (
@@ -97,7 +102,6 @@ export function UtilityClassEditor(props: LeftNavProps) {
             keyPrefix="match-"
             {...props}
           />
-          <hr />
         </React.Fragment>
       )}
       <UtilityClassSectionList
@@ -109,25 +113,32 @@ export function UtilityClassEditor(props: LeftNavProps) {
         <React.Fragment>
           <div className="d-flex justify-content-between align-items-center my-3">
             <p className="mb-0 fs-4 fw-bold">More...</p>
-            <button
-              className="btn btn-sm btn-secondary"
+            <IconButton
               type="button"
               onClick={() => {
                 setNonDefaultOpen(!nonDefaultOpen);
               }}
+              data-toggle="collapse"
+              data-target="#nondefault-controls"
+              aria-expanded={open ? "true" : "false"}
+              aria-controls="nondefault-controls"
+              className="btn-secondary"
             >
-              {nonDefaultOpen ? "v" : ">"}
-            </button>
+              {nonDefaultOpen ? (
+                <ChevronDownIcon width="16" height="16" />
+              ) : (
+                <ChevronRightIcon width="16" height="16" />
+              )}
+            </IconButton>
           </div>
           {nonDefaultOpen && (
-            <React.Fragment>
-              <hr />
+            <div id="nondefault-controls">
               <UtilityClassSectionList
                 keyPrefix="nondefault-"
                 controls={nonDefaultControls}
                 {...props}
               />
-            </React.Fragment>
+            </div>
           )}
         </React.Fragment>
       )}
@@ -166,70 +177,73 @@ function UtilityClassListItem(
   const { utilityClassDefinition, elementEditorState, openDefault, keyPrefix } =
     props;
   const [open, setOpenState] = React.useState(openDefault || false);
+  const key = `${keyPrefix}-${utilityClassDefinition.section}`;
   return (
-    <div
-      className="mb-3"
-      key={`${keyPrefix}-${utilityClassDefinition.section}`}
-    >
+    <React.Fragment key={key}>
       <UtilityClassHeader
+        collapseId={key}
         open={open}
         toggleOpen={() => setOpenState(!open)}
         utilityClassDefinition={utilityClassDefinition}
       />
-      {open ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-            alignItems: "flex-end",
-          }}
-        >
-          {utilityClassDefinition.controls.map((control) => (
-            <UtilityClassFormControl
-              key={control.name}
-              element={elementEditorState.match.node as Element}
-              control={control}
-              redrawComponentTree={props.redrawComponentTree}
-              redrawHighlightedNode={props.redrawHighlightedNode}
-            />
-          ))}
-        </div>
-      ) : null}
-    </div>
+      <div
+        id={key}
+        style={{
+          display: open ? "flex" : "none",
+        }}
+        className="utility-class-body"
+      >
+        {utilityClassDefinition.controls.map((control) => (
+          <UtilityClassFormControl
+            key={control.name}
+            element={elementEditorState.match.node as Element}
+            control={control}
+            redrawComponentTree={props.redrawComponentTree}
+            redrawHighlightedNode={props.redrawHighlightedNode}
+          />
+        ))}
+      </div>
+    </React.Fragment>
   );
 }
 
 function UtilityClassHeader(props: {
   utilityClassDefinition: UtilityClassDefinition;
   open: boolean;
+  collapseId: string;
   toggleOpen: () => void;
 }) {
-  const u = props.utilityClassDefinition;
-  const { open, toggleOpen } = props;
+  const { open, toggleOpen, utilityClassDefinition, collapseId } = props;
   return (
-    <div className="d-flex justify-content-between align-items-center mb-1 mt-2">
-      <h4 className="text-decoration-underline mb-0">{u.section}</h4>
+    <div className="utility-class-section-header">
+      <p className="mb-0 fw-bold">{utilityClassDefinition.section}</p>
       <div>
-        {u.documentationLink ? (
-          <a
-            href={u.documentationLink}
+        {utilityClassDefinition.documentationLink ? (
+          <IconAnchor
+            href={utilityClassDefinition.documentationLink}
             target="__blank"
-            className="btn btn-secondary btn-sm me-2"
+            className="btn btn-icon btn-secondary me-2"
           >
-            ?
-          </a>
+            <QuestionIcon width="16" height="16" />
+          </IconAnchor>
         ) : (
-          <div />
+          <React.Fragment />
         )}
-        <button
+        <IconButton
           type="button"
           onClick={toggleOpen}
-          className="btn btn-secondary btn-sm"
+          data-toggle="collapse"
+          data-target={`#${collapseId}`}
+          aria-expanded={open ? "true" : "false"}
+          aria-controls={collapseId}
+          className="btn-secondary"
         >
-          {open ? "v" : ">"}
-        </button>
+          {open ? (
+            <ChevronDownIcon width="16" height="16" />
+          ) : (
+            <ChevronRightIcon width="16" height="16" />
+          )}
+        </IconButton>
       </div>
     </div>
   );
