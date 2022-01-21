@@ -6,5 +6,6 @@ export declare const GripVerticalIcon: (props: any) => JSX.Element;
 export declare const ChevronRightIcon: (props: any) => JSX.Element;
 export declare const ChevronDownIcon: (props: any) => JSX.Element;
 export declare const ClipboardIcon: (props: any) => JSX.Element;
+export declare const QuestionIcon: (props: any) => JSX.Element;
 export declare const CheckIcon: (props: any) => JSX.Element;
 export declare const AllIconDefinitions: () => JSX.Element;

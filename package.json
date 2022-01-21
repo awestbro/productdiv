@@ -1,11 +1,11 @@
 {
   "name": "productdiv",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack serve",
-    "build": "NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build": "rm -rf ./dist && NODE_ENV=production webpack --config webpack.config.prod.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier --write . ",
     "analyze": "webpack --json | webpack-bundle-size-analyzer"
