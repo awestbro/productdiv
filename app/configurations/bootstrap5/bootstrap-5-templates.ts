@@ -172,8 +172,10 @@ export const templateCategories: TemplateCategoryDefinition[] = [
       {
         name: "Section Container",
         htmlTemplate: `
-                <section class="container">
-                    <div class="productdiv-drop-container"></div>
+                <section>
+                    <div class="container">
+                      <div class="productdiv-drop-container"></div>
+                    </div>
                 </section>
                 `,
       },

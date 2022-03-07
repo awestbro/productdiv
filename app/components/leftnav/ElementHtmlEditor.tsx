@@ -26,7 +26,7 @@ import {
   htmlStringToNodeList,
 } from "../../utilities/dom/dom-utilities";
 
-export function ElementHtmlEditor(props: ElementEditorProps) {
+export function ElementEditorActions(props: ElementEditorProps) {
   const {
     elementEditorState,
     redrawComponentTree,
@@ -40,8 +40,7 @@ export function ElementHtmlEditor(props: ElementEditorProps) {
   const element: Element = elementEditorState.match.node as Element;
 
   return (
-    <div className="mt-2">
-      <InnerHTMLEditor {...props} />
+    <React.Fragment>
       <div className="my-2 d-flex justify-content-between">
         <button
           type="button"
@@ -121,6 +120,15 @@ export function ElementHtmlEditor(props: ElementEditorProps) {
           Copy Classes
         </button>
       </div>
+    </React.Fragment>
+  );
+}
+
+export function ElementHtmlEditor(props: ElementEditorProps) {
+  return (
+    <div className="mt-2">
+      <InnerHTMLEditor {...props} />
+      <ElementEditorActions {...props} />
       <UtilityClassEditor {...props} />
     </div>
   );

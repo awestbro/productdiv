@@ -32,9 +32,14 @@ export const components: ComponentDefinition[] = [
     utilityClassMatches: ["Flex Container", "Row"],
   },
   {
-    name: "Column",
+    name: "Columns",
     selectors: [".col", '*[class^="col-"]'],
-    utilityClassMatches: ["Column", "Flex Self"],
+    utilityClassMatches: ["Column"],
+  },
+  {
+    name: "Flex Container",
+    selectors: [".d-flex"],
+    utilityClassMatches: ["Flex Container"],
   },
   {
     name: "List",

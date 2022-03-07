@@ -18,6 +18,7 @@ import classnames from "classnames";
 import * as throttle from "lodash/throttle";
 import { ParsedLibraryConfigurationDefinition } from "../utilities/configuration/configuration-importer";
 import { AllIconDefinitions } from "./common/Icons";
+import { getOffsetTop, saveOffsetTop } from "..";
 
 export type ElementEditorState = {
   match?: NodeTreeMatch;
@@ -34,7 +35,7 @@ export function getIframeDocument(): Document {
   return iframeDocument;
 }
 
-export function getIframeWindow() {
+export function getIframeWindow(): Window {
   const iframe: any = getIframeElement();
   return iframe.contentWindow;
 }
@@ -215,6 +216,9 @@ export function Application(props: {
   let scrollTimer: any = null;
 
   function onScroll() {
+    const doc = iframeDocument.documentElement;
+    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+    saveOffsetTop(top);
     highlightElements([]);
     if (scrollTimer != null) {
       clearTimeout(scrollTimer);
@@ -359,6 +363,12 @@ export function Application(props: {
           if (!hasIframeMounted) {
             createCanvas(iframe);
             setIframeDocument(iframe);
+            const scrollOffset = getOffsetTop();
+            if (scrollOffset) {
+              const w = getIframeWindow();
+              console.log("scroll offset", scrollOffset);
+              w.scrollTo(0, scrollOffset);
+            }
             iframe.body.insertAdjacentHTML(
               "beforeend",
               `

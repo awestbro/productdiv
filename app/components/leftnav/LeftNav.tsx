@@ -122,6 +122,7 @@ export function LeftNav(props: LeftNavProps) {
         <button
           type="button"
           className="btn btn-sm btn-secondary me-2"
+          title="Toggle ProductDiv"
           onClick={() => {
             setElementEditorState({ match: null });
             setElementEditorOpen(false);
@@ -141,6 +142,7 @@ export function LeftNav(props: LeftNavProps) {
             aria-haspopup="true"
             aria-expanded="false"
             onClick={() => setDropupShow(!dropupShow)}
+            title="Toggle Action Menu"
           >
             Actions
           </button>
@@ -160,6 +162,7 @@ export function LeftNav(props: LeftNavProps) {
             <button
               className="dropdown-item"
               type="button"
+              title="Copy HTML to Clipboard"
               onClick={() => {
                 copyElementToClipboard(iframeDocument.documentElement);
                 setDropupShow(false);

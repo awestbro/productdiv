@@ -123,6 +123,7 @@ export function UtilityClassEditor(props: LeftNavProps) {
               aria-expanded={open ? "true" : "false"}
               aria-controls="nondefault-controls"
               className="btn-secondary"
+              title="Toggle Control Visibility"
             >
               {nonDefaultOpen ? (
                 <ChevronDownIcon width="16" height="16" />
@@ -237,6 +238,7 @@ function UtilityClassHeader(props: {
           aria-expanded={open ? "true" : "false"}
           aria-controls={collapseId}
           className="btn-secondary"
+          title="Toggle Control Visibility"
         >
           {open ? (
             <ChevronDownIcon width="16" height="16" />

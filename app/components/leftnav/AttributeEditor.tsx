@@ -4,6 +4,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { css } from "@codemirror/lang-css";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView } from "@codemirror/view";
+import { ElementEditorActions } from "./ElementHtmlEditor";
 
 function attributeMapToStringMap(m: NamedNodeMap): { [key: string]: string } {
   let i = 0;
@@ -160,6 +161,7 @@ export function AttributeEditor(props: LeftNavProps) {
             />
           </div>
         </div>
+        <ElementEditorActions {...props} />
       </div>
     </React.Fragment>
   );

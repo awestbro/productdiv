@@ -15,6 +15,18 @@ const theme = require("./theme.scss");
 import { sanitizeHtmlToString } from "./utilities/clipboard";
 import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 
+export function saveOffsetTop(top: number) {
+  localStorage.setItem("productdiv-offset-top", JSON.stringify(top));
+}
+
+export function getOffsetTop() {
+  const top = localStorage.getItem("productdiv-offset-top");
+  if (top) {
+    return JSON.parse(top);
+  }
+  return 0;
+}
+
 function inIframe() {
   try {
     return window.self !== window.top;
@@ -31,6 +43,11 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
     const node = htmlStringToNodeList('<div id="productdiv"></div>')[0];
     mount = document.body.appendChild(node) as HTMLElement;
   }
+  document.addEventListener("scroll", function () {
+    const doc = document.documentElement;
+    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+    saveOffsetTop(top);
+  });
   render(
     <div style={{ position: "fixed", bottom: 10, left: 10 }}>
       <button
@@ -38,8 +55,7 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
         style={{
           color: "#f8f9fa",
           backgroundColor: "#6976ce",
-          borderColor: "#6976ce",
-          border: "1px solid transparent",
+          border: "1px solid white",
           padding: "0.375rem 0.75rem",
           fontSize: "1rem",
           borderRadius: "0.25rem",
@@ -88,6 +104,7 @@ async function mountProductDiv(
           document.close();
           document.addEventListener("DOMContentLoaded", () => {
             mountApplication(configuration);
+            window.scrollTo(0, getOffsetTop());
           });
         }}
       />,
@@ -100,6 +117,7 @@ export default function ProductDiv(
   configuration: LibraryConfigurationDefinition
 ) {
   if (!inIframe()) {
+    saveOffsetTop(0);
     mountApplication(parseLibraryConfiguration(configuration));
   }
 }

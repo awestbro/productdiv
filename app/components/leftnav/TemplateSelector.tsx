@@ -238,6 +238,7 @@ function TemplateCategory(props: TemplateCategoryProps) {
           aria-expanded={open ? "true" : "false"}
           aria-controls={collapseId}
           className="btn-secondary"
+          title="Toggle Template Category Visibility"
         >
           {open ? (
             <ChevronDownIcon width="16" height="16" />
@@ -299,6 +300,7 @@ function TemplateListItem(props: TemplateListItemProps) {
       </div>
       <div className="d-flex flex-nowrap">
         <IconButton
+          title="Copy HTML to Clipboard"
           onClick={() => {
             copyToClipboard(template.htmlTemplate);
             setCopied(true);
@@ -318,6 +320,7 @@ function TemplateListItem(props: TemplateListItemProps) {
           onMouseEnter={() => onPreviewMouseEnter(template)}
           onMouseLeave={() => onPreviewMouseLeave()}
           className="btn-secondary"
+          title="Preview Component"
         >
           <EyePreviewIcon width="16" height="16" />
         </IconButton>
