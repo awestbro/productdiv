@@ -366,7 +366,6 @@ export function Application(props: {
             const scrollOffset = getOffsetTop();
             if (scrollOffset) {
               const w = getIframeWindow();
-              console.log("scroll offset", scrollOffset);
               w.scrollTo(0, scrollOffset);
             }
             iframe.body.insertAdjacentHTML(

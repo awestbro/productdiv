@@ -44,11 +44,7 @@ export function addTemplateToElement(
   _placement: PlacementType
 ): Node {
   let placement = _placement;
-  let element = _element;
-  if (element.classList.contains("productdiv-drop-container")) {
-    element = element.parentElement;
-    _element.remove();
-  }
+  const element = _element;
   if (element.nodeName === "BODY") {
     placement = PlacementType.INNER_APPEND;
   }

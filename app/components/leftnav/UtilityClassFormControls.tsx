@@ -87,7 +87,7 @@ function SelectControl(props: {
 
   return (
     <div className="element-editor-select-control">
-      <div>{control.name}</div>
+      <div className="element-editor-label">{control.name}</div>
       <DropdownList
         onSelect={(v: string) => {
           classOptions.forEach((c) => {
@@ -178,7 +178,7 @@ function MultiSelectControl(props: {
 
   return (
     <div className="element-editor-select-control">
-      <div>{control.name}</div>
+      <div className="element-editor-label">{control.name}</div>
       <Multiselect
         data={classOptions}
         defaultValue={value}

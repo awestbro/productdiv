@@ -14,17 +14,24 @@ import { ElementEditorProps } from "./ElementEditor";
 import { LeftNavProps } from "./LeftNav";
 import { nodeListToArray } from "../../utilities/selector";
 import { ChildNodeType } from "../../utilities/child-node-type";
-import { TextOverflowIcon, TextWrapIcon } from "../common/Icons";
+import {
+  GripVerticalIcon,
+  TextOverflowIcon,
+  TextWrapIcon,
+} from "../common/Icons";
 import {
   copyElementToClipboard,
   copyToClipboard,
   html_beautify_opts,
+  sanitizeHtmlToString,
 } from "../../utilities/clipboard";
 import { UtilityClassEditor } from "./UtilityClassEditor";
 import {
+  addTemplateToElement,
   findPositionRelativeToParent,
   htmlStringToNodeList,
 } from "../../utilities/dom/dom-utilities";
+import { TemplateDefinition } from "../../utilities/configuration/configuration-importer";
 
 export function ElementEditorActions(props: ElementEditorProps) {
   const {
@@ -35,7 +42,40 @@ export function ElementEditorActions(props: ElementEditorProps) {
     componentTree,
     redrawHighlightedNode,
     setTemplateEditorOpen,
+    hideTemplatePreview,
+    iframeDocument,
+    lastHoverPosition,
+    drawHoverElement,
   } = props;
+
+  const onDragStart = () => {
+    hideTemplatePreview();
+    iframeDocument.body.classList.add("productdiv-dragging");
+  };
+
+  const onDragEnd = (template: TemplateDefinition, removeElement: Element) => {
+    if (lastHoverPosition.x === 0 && lastHoverPosition.y === 0) {
+      iframeDocument.body.classList.remove("productdiv-dragging");
+      return;
+    }
+
+    const { placement, element } = drawHoverElement(
+      lastHoverPosition.x,
+      lastHoverPosition.y,
+      ".productdiv-drop-container"
+    );
+    const placedElement = addTemplateToElement(template, element, placement);
+    iframeDocument.body.classList.remove("productdiv-dragging");
+    if (removeElement.nodeName !== "BODY") {
+      removeElement.remove();
+    }
+    redrawComponentTree();
+    const tree = redrawComponentTree();
+    setElementEditorState({
+      match: getTreeMatchFromElement(tree, placedElement),
+    });
+    setElementEditorOpen(true);
+  };
 
   const element: Element = elementEditorState.match.node as Element;
 
@@ -119,6 +159,23 @@ export function ElementEditorActions(props: ElementEditorProps) {
         >
           Copy Classes
         </button>
+        {element.nodeName !== "BODY" ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            draggable
+            onDragStart={() => onDragStart()}
+            onDragEnd={() =>
+              onDragEnd(
+                { name: "", htmlTemplate: sanitizeHtmlToString(element) },
+                element
+              )
+            }
+          >
+            <GripVerticalIcon width="16" height="16" />
+            Move
+          </button>
+        ) : null}
       </div>
     </React.Fragment>
   );

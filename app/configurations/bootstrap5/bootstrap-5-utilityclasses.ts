@@ -5,13 +5,13 @@ const themeBreakpoints = "sm|md|lg|xl|xxl";
 
 export const utilityClasses: UtilityClassDefinition[] = [
   {
-    section: "Margin",
+    section: "Spacing",
     documentationLink:
       "https://getbootstrap.com/docs/5.0/utilities/spacing/#margin-and-padding",
     showDefault: true,
     controls: [
       {
-        name: "Start",
+        name: "Margin Start",
         type: "selectMany",
         classes: [
           "ms-(0|1|2|3|4|5|auto)",
@@ -19,7 +19,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "End",
+        name: "Margin End",
         type: "selectMany",
         classes: [
           "me-(0|1|2|3|4|5|auto)",
@@ -27,7 +27,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Top",
+        name: "Margin Top",
         type: "selectMany",
         classes: [
           "mt-(0|1|2|3|4|5|auto)",
@@ -35,7 +35,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Bottom",
+        name: "Margin Bottom",
         type: "selectMany",
         classes: [
           "mb-(0|1|2|3|4|5|auto)",
@@ -43,7 +43,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Vertical",
+        name: "Margin Vertical",
         type: "selectMany",
         classes: [
           "my-(0|1|2|3|4|5|auto)",
@@ -51,7 +51,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Horizontal",
+        name: "Margin Horizontal",
         type: "selectMany",
         classes: [
           "mx-(0|1|2|3|4|5|auto)",
@@ -59,23 +59,15 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "All",
+        name: "Margin All",
         type: "selectMany",
         classes: [
           "m-(0|1|2|3|4|5|auto)",
           `m-(${themeBreakpoints})-(0|1|2|3|4|5|auto)`,
         ],
       },
-    ],
-  },
-  {
-    section: "Padding",
-    documentationLink:
-      "https://getbootstrap.com/docs/5.0/utilities/spacing/#margin-and-padding",
-    showDefault: true,
-    controls: [
       {
-        name: "Start",
+        name: "Padding Start",
         type: "selectMany",
         classes: [
           "ps-(0|1|2|3|4|5|auto)",
@@ -83,7 +75,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "End",
+        name: "Padding End",
         type: "selectMany",
         classes: [
           "pe-(0|1|2|3|4|5|auto)",
@@ -91,7 +83,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Top",
+        name: "Padding Top",
         type: "selectMany",
         classes: [
           "pt-(0|1|2|3|4|5|auto)",
@@ -99,7 +91,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Bottom",
+        name: "Padding Bottom",
         type: "selectMany",
         classes: [
           "pb-(0|1|2|3|4|5|auto)",
@@ -107,7 +99,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Vertical",
+        name: "Padding Vertical",
         type: "selectMany",
         classes: [
           "py-(0|1|2|3|4|5|auto)",
@@ -115,7 +107,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "Horizontal",
+        name: "Padding Horizontal",
         type: "selectMany",
         classes: [
           "px-(0|1|2|3|4|5|auto)",
@@ -123,7 +115,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         ],
       },
       {
-        name: "All",
+        name: "Padding All",
         type: "selectMany",
         classes: [
           "p-(0|1|2|3|4|5|auto)",
@@ -157,7 +149,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         classes: ["text-break"],
       },
       {
-        name: "Color",
+        name: "Text Color",
         type: "selectOne",
         classes: [`text-(${themeColors}|muted|white|body|white-50|black-50)`],
       },
@@ -212,6 +204,16 @@ export const utilityClasses: UtilityClassDefinition[] = [
           "font-monospace",
         ],
       },
+      {
+        name: "Text Selection",
+        type: "selectOne",
+        classes: ["user-select-(all|auto|none)"],
+      },
+      {
+        name: "Pointer Events",
+        type: "selectOne",
+        classes: ["pe-(none|auto)"],
+      },
     ],
   },
   {
@@ -221,7 +223,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
     showDefault: true,
     controls: [
       {
-        name: "Color",
+        name: "BG Color",
         type: "selectOne",
         classes: [`bg-(${themeColors}|white|body|transparent)`],
       },
@@ -239,6 +241,38 @@ export const utilityClasses: UtilityClassDefinition[] = [
         name: "Box Shadow",
         type: "selectOne",
         classes: ["shadow", "shadow-(none|sm|lg)"],
+      },
+    ],
+  },
+  {
+    section: "Sizing",
+    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/sizing/",
+    showDefault: true,
+    controls: [
+      {
+        name: "Width",
+        type: "selectOne",
+        classes: ["w-(25|50|75|100|auto)"],
+      },
+      {
+        name: "Max Width",
+        type: "selectOne",
+        classes: ["mw-100"],
+      },
+      {
+        name: "Height",
+        type: "selectOne",
+        classes: ["h-(25|50|75|100|auto)"],
+      },
+      {
+        name: "Max Height",
+        type: "selectOne",
+        classes: ["mh-100"],
+      },
+      {
+        name: "Viewport Size",
+        type: "selectMany",
+        classes: ["min-(vw|vh)-100", "(vw|vh)-100"],
       },
     ],
   },
@@ -284,49 +318,11 @@ export const utilityClasses: UtilityClassDefinition[] = [
         type: "selectOne",
         classes: ["align-(baseline|top|middle|bottom|text-top|text-bottom)"],
       },
-    ],
-  },
-  {
-    section: "Border",
-    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/borders/",
-    showDefault: true,
-    controls: [
       {
-        name: "Border",
-        type: "selectMany",
-        classes: ["border", "border-(top|end|bottom|start)"],
-      },
-      {
-        name: "Border Subtractive",
-        type: "selectMany",
-        classes: ["border-0", "border-(top|end|bottom|start)-0"],
-      },
-      {
-        name: "Color",
+        name: "Overflow",
         type: "selectOne",
-        classes: [`border-(${themeColors}|white)`],
+        classes: ["overflow-(all|hidden|visible|scroll)"],
       },
-      {
-        name: "Width",
-        type: "selectOne",
-        classes: ["border-(1|2|3|4|5)"],
-      },
-      {
-        name: "Rounded",
-        type: "selectMany",
-        classes: [
-          "rounded",
-          "rounded-(0|1|2|3)",
-          "rounded-(top|end|bottom|start|circle|pill)",
-        ],
-      },
-    ],
-  },
-  {
-    section: "Float",
-    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/float/",
-    showDefault: true,
-    controls: [
       {
         name: "Clearfix",
         type: "selectOne",
@@ -345,14 +341,38 @@ export const utilityClasses: UtilityClassDefinition[] = [
     ],
   },
   {
-    section: "Overflow",
-    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/overflow/",
+    section: "Border",
+    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/borders/",
     showDefault: true,
     controls: [
       {
-        name: "Style",
+        name: "Border",
+        type: "selectMany",
+        classes: ["border", "border-(top|end|bottom|start)"],
+      },
+      {
+        name: "Border Subtractive",
+        type: "selectMany",
+        classes: ["border-0", "border-(top|end|bottom|start)-0"],
+      },
+      {
+        name: "Border Color",
         type: "selectOne",
-        classes: ["overflow-(all|hidden|visible|scroll)"],
+        classes: [`border-(${themeColors}|white)`],
+      },
+      {
+        name: "Width",
+        type: "selectOne",
+        classes: ["border-(1|2|3|4|5)"],
+      },
+      {
+        name: "Rounded",
+        type: "selectMany",
+        classes: [
+          "rounded",
+          "rounded-(0|1|2|3)",
+          "rounded-(top|end|bottom|start|circle|pill)",
+        ],
       },
     ],
   },
@@ -375,56 +395,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
         name: "Translate",
         type: "selectOne",
         classes: ["translate-middle", "translate-middle-(x|y)"],
-      },
-    ],
-  },
-  {
-    section: "Sizing",
-    documentationLink: "https://getbootstrap.com/docs/5.0/utilities/sizing/",
-    showDefault: true,
-    controls: [
-      {
-        name: "Width",
-        type: "selectOne",
-        classes: ["w-(25|50|75|100|auto)"],
-      },
-      {
-        name: "Max Width",
-        type: "selectOne",
-        classes: ["mw-100"],
-      },
-      {
-        name: "Height",
-        type: "selectOne",
-        classes: ["h-(25|50|75|100|auto)"],
-      },
-      {
-        name: "Max Height",
-        type: "selectOne",
-        classes: ["mh-100"],
-      },
-      {
-        name: "Viewport Size",
-        type: "selectMany",
-        classes: ["min-(vw|vh)-100", "(vw|vh)-100"],
-      },
-    ],
-  },
-  {
-    section: "Interaction",
-    documentationLink:
-      "https://getbootstrap.com/docs/5.0/utilities/interactions/",
-    showDefault: true,
-    controls: [
-      {
-        name: "Text Selection",
-        type: "selectOne",
-        classes: ["user-select-(all|auto|none)"],
-      },
-      {
-        name: "Pointer Events",
-        type: "selectOne",
-        classes: ["pe-(none|auto)"],
       },
     ],
   },
@@ -489,7 +459,6 @@ export const utilityClasses: UtilityClassDefinition[] = [
     section: "Flex Self",
     documentationLink:
       "https://getbootstrap.com/docs/5.0/utilities/flex/#align-self",
-    showDefault: true,
     controls: [
       {
         name: "Align",
@@ -552,7 +521,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
     section: "Link",
     controls: [
       {
-        name: "Color",
+        name: "Link Color",
         type: "selectOne",
         classes: [`link-(${themeColors})`],
       },
@@ -703,7 +672,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
         classes: ["table"],
       },
       {
-        name: "Color",
+        name: "Table Color",
         type: "selectOne",
         classes: [`table-(active|${themeColors})`],
       },
@@ -841,7 +810,7 @@ export const utilityClasses: UtilityClassDefinition[] = [
       "https://getbootstrap.com/docs/5.0/components/list-group/",
     controls: [
       {
-        name: "Color",
+        name: "Item Color",
         type: "selectOne",
         classes: [`list-group-item-(${themeColors})`],
       },

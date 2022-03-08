@@ -137,7 +137,8 @@ export function TemplateSelector(props: TemplateSelectorProps) {
 
     const { placement, element } = drawHoverElement(
       lastHoverPosition.x,
-      lastHoverPosition.y
+      lastHoverPosition.y,
+      ".productdiv-drop-container"
     );
     const placedElement = addTemplateToElement(template, element, placement);
     iframeDocuemnt.body.classList.remove("productdiv-dragging");
