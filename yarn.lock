@@ -900,7 +900,7 @@
     "@codemirror/view" "^0.19.0"
     "@lezer/common" "^0.15.0"
 
-"@codemirror/basic-setup@^0.19.0":
+"@codemirror/basic-setup@^0.19.1":
   "integrity" "sha512-gLjD7YgZU/we6BzS/ecCmD3viw83dsgv5ZUaSydYbYx9X4w4w9RqYnckcJ+0GDyHfNr5Jtfv2Z5ZtFQnBj0UDA=="
   "resolved" "https://registry.npmjs.org/@codemirror/basic-setup/-/basic-setup-0.19.1.tgz"
   "version" "0.19.1"
@@ -1101,10 +1101,10 @@
     "@codemirror/view" "^0.19.0"
     "crelt" "^1.0.5"
 
-"@codemirror/state@^0.19.0", "@codemirror/state@^0.19.2", "@codemirror/state@^0.19.3", "@codemirror/state@^0.19.4", "@codemirror/state@^0.19.5":
-  "integrity" "sha512-sqIQZE9VqwQj7D4c2oz9mfLhlT1ElAzGB5lO1lE33BPyrdNy1cJyCIOecT4cn4VeJOFrnjOeu+IftZ3zqdFETw=="
-  "resolved" "https://registry.npmjs.org/@codemirror/state/-/state-0.19.6.tgz"
-  "version" "0.19.6"
+"@codemirror/state@^0.19.0", "@codemirror/state@^0.19.2", "@codemirror/state@^0.19.3", "@codemirror/state@^0.19.4", "@codemirror/state@^0.19.9":
+  "integrity" "sha512-psOzDolKTZkx4CgUqhBQ8T8gBc0xN5z4gzed109aF6x7D7umpDRoimacI/O6d9UGuyl4eYuDCZmDFr2Rq7aGOw=="
+  "resolved" "https://registry.npmjs.org/@codemirror/state/-/state-0.19.9.tgz"
+  "version" "0.19.9"
   dependencies:
     "@codemirror/text" "^0.19.0"
 
@@ -1130,10 +1130,10 @@
     "@codemirror/state" "^0.19.0"
     "@codemirror/view" "^0.19.0"
 
-"@codemirror/view@^0.19.0", "@codemirror/view@^0.19.15", "@codemirror/view@^0.19.22", "@codemirror/view@^0.19.23", "@codemirror/view@^0.19.31", "@codemirror/view@^0.19.39":
-  "integrity" "sha512-ol4smHAwhWkW8p1diPZiZkLZVmKybKhQigwyrgdF7k1UFNY+/KDH4w2xic8JQXxX+v0ppMsoNf11C+afKJze5g=="
-  "resolved" "https://registry.npmjs.org/@codemirror/view/-/view-0.19.39.tgz"
-  "version" "0.19.39"
+"@codemirror/view@^0.19.0", "@codemirror/view@^0.19.22", "@codemirror/view@^0.19.23", "@codemirror/view@^0.19.31", "@codemirror/view@^0.19.39", "@codemirror/view@^0.19.45":
+  "integrity" "sha512-SfbagKvJQl5dtt+9wYpo9sa3ZkMgUxTq+/hXDf0KVwIx+zu3cJIqfEm9xSx6yXkq7it7RsPGHaPasApNffF/8g=="
+  "resolved" "https://registry.npmjs.org/@codemirror/view/-/view-0.19.47.tgz"
+  "version" "0.19.47"
   dependencies:
     "@codemirror/rangeset" "^0.19.5"
     "@codemirror/state" "^0.19.3"
@@ -1553,16 +1553,16 @@
     "@typescript-eslint/types" "5.10.0"
     "eslint-visitor-keys" "^3.0.0"
 
-"@uiw/react-codemirror@^4.3.2":
-  "integrity" "sha512-lh0Wpg+YZi9/jGnHcdZuTM3i1UfqdmQzyNtWSziH0N7D/uZIP375r7I22qd3/h/st0jQXN6HiuCG3HZ/pLQriQ=="
-  "resolved" "https://registry.npmjs.org/@uiw/react-codemirror/-/react-codemirror-4.3.3.tgz"
-  "version" "4.3.3"
+"@uiw/react-codemirror@^4.5.1":
+  "integrity" "sha512-90SNE89uJOQgcZwV0fuZjCgDeH7pjagCqwOcYHvDG5Qedp2nKmb4/2mgDCtLBxTGKxb73ktUOkbdu3L05ck1Yg=="
+  "resolved" "https://registry.npmjs.org/@uiw/react-codemirror/-/react-codemirror-4.5.1.tgz"
+  "version" "4.5.1"
   dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@codemirror/basic-setup" "^0.19.0"
-    "@codemirror/state" "^0.19.5"
+    "@babel/runtime" "^7.17.2"
+    "@codemirror/basic-setup" "^0.19.1"
+    "@codemirror/state" "^0.19.9"
     "@codemirror/theme-one-dark" "^0.19.1"
-    "@codemirror/view" "^0.19.15"
+    "@codemirror/view" "^0.19.45"
 
 "@webassemblyjs/ast@1.11.1":
   "integrity" "sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw=="
@@ -2102,6 +2102,11 @@
     "is-plain-object" "^2.0.4"
     "kind-of" "^6.0.2"
     "shallow-clone" "^3.0.0"
+
+"codemirror@^5.65.2":
+  "integrity" "sha512-SZM4Zq7XEC8Fhroqe3LxbEEX1zUPWH1wMr5zxiBuiUF64iYOUH/JI88v4tBag8MiBS8B8gRv8O1pPXGYXQ4ErA=="
+  "resolved" "https://registry.npmjs.org/codemirror/-/codemirror-5.65.2.tgz"
+  "version" "5.65.2"
 
 "color-convert@^1.9.0":
   "integrity" "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg=="

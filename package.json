@@ -1,6 +1,6 @@
 {
   "name": "productdiv",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -56,8 +56,9 @@
     "@codemirror/lang-html": "^0.19.4",
     "@codemirror/theme-one-dark": "^0.19.1",
     "@codemirror/view": "^0.19.39",
-    "@uiw/react-codemirror": "^4.3.2",
+    "@uiw/react-codemirror": "^4.5.1",
     "classnames": "^2.2.6",
+    "codemirror": "^5.65.2",
     "fuse.js": "^6.4.6",
     "js-beautify": "^1.13.5",
     "js-yaml": "^4.0.0",

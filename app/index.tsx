@@ -91,26 +91,24 @@ async function mountProductDiv(
     `);
   document.close();
 
-  document.addEventListener("DOMContentLoaded", () => {
-    render(
-      <Application
-        pageSource={html}
-        configuration={configuration}
-        onLeftNavClose={(iframeDocument: Document) => {
-          const str = sanitizeHtmlToString(iframeDocument.documentElement);
-          unmountComponentAtNode(getEditorMountPoint());
-          document.open();
-          document.write(str);
-          document.close();
-          document.addEventListener("DOMContentLoaded", () => {
-            mountApplication(configuration);
-            window.scrollTo(0, getOffsetTop());
-          });
-        }}
-      />,
-      getEditorMountPoint()
-    );
-  });
+  render(
+    <Application
+      pageSource={html}
+      configuration={configuration}
+      onLeftNavClose={(iframeDocument: Document) => {
+        const str = sanitizeHtmlToString(iframeDocument.documentElement);
+        unmountComponentAtNode(getEditorMountPoint());
+        document.open();
+        document.write(str);
+        document.close();
+        document.addEventListener("DOMContentLoaded", () => {
+          mountApplication(configuration);
+          window.scrollTo(0, getOffsetTop());
+        });
+      }}
+    />,
+    getEditorMountPoint()
+  );
 }
 
 export default function ProductDiv(
