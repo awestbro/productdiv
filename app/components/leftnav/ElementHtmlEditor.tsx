@@ -247,9 +247,14 @@ function InnerHTMLEditor(props: LeftNavProps) {
    */
   React.useEffect(() => {
     if (document.head.children.length > 0) {
-      const style = document.head.children[0];
-      const save = `<style>${style.textContent}\n.cm-scroller { max-height: 200px; height: 200px; } </style>`;
-      window.sessionStorage.setItem("productdiv-html-editor-style", save);
+      const saved = window.sessionStorage.getItem(
+        "productdiv-html-editor-style"
+      );
+      if (!saved) {
+        const style = document.head.children[0];
+        const save = `<style>${style.textContent}\n.cm-scroller { max-height: 200px; height: 200px; } </style>`;
+        window.sessionStorage.setItem("productdiv-html-editor-style", save);
+      }
     } else {
       const saved = window.sessionStorage.getItem(
         "productdiv-html-editor-style"
