@@ -14,6 +14,18 @@ export function copyElementToClipboard(element: Element) {
   copyToClipboard(sanitizeHtmlToString(element));
 }
 
+export function copyElementTemplateToClipboard(element: Element) {
+  const templateString = sanitizeHtmlToString(element);
+  const toExport = `
+{
+  name: "",
+  htmlTemplate: \`${templateString}
+  \`
+}
+  `;
+  copyToClipboard(toExport.trim());
+}
+
 export function copyToClipboard(val: string) {
   const dummy = document.createElement("textarea");
   // to avoid breaking page when copying more words

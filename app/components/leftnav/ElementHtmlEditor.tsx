@@ -20,6 +20,7 @@ import {
   TextWrapIcon,
 } from "../common/Icons";
 import {
+  copyElementTemplateToClipboard,
   copyElementToClipboard,
   copyToClipboard,
   html_beautify_opts,
@@ -42,7 +43,6 @@ export function ElementEditorActions(props: ElementEditorProps) {
     setElementEditorState,
     componentTree,
     redrawHighlightedNode,
-    setTemplateEditorOpen,
     hideTemplatePreview,
     iframeDocument,
     lastHoverPosition,
@@ -135,10 +135,10 @@ export function ElementEditorActions(props: ElementEditorProps) {
           type="button"
           className="btn btn-sm btn-secondary"
           onClick={() => {
-            setTemplateEditorOpen(true);
+            copyElementTemplateToClipboard(element);
           }}
         >
-          Add Element
+          Copy As Template
         </button>
         <button
           type="button"

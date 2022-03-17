@@ -5,9 +5,24 @@ import { getEditorMountPoint } from "./utilities/selector";
 import { Application } from "./components/Application";
 import {
   LibraryConfigurationDefinition,
+  ComponentDefinition,
+  UtilityClassDefinition,
+  UtilityClassControl,
+  TemplateCategoryDefinition,
+  TemplateDefinition,
   ParsedLibraryConfigurationDefinition,
   parseLibraryConfiguration,
 } from "./utilities/configuration/configuration-importer";
+
+export {
+  LibraryConfigurationDefinition,
+  ComponentDefinition,
+  UtilityClassDefinition,
+  UtilityClassControl,
+  TemplateCategoryDefinition,
+  TemplateDefinition,
+  ParsedLibraryConfigurationDefinition,
+};
 
 // eslint-disable-next-line
 const theme = require("./theme.scss");
