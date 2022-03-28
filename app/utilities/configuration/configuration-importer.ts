@@ -20,7 +20,7 @@ export type UtilityClassDefinition = {
 
 export type UtilityClassControl = {
   name: string;
-  type: string;
+  type: "selectOne" | "selectMany";
   classes?: string[];
 };
 

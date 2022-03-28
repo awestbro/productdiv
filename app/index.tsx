@@ -14,6 +14,8 @@ import {
   parseLibraryConfiguration,
 } from "./utilities/configuration/configuration-importer";
 
+import { ConfigurationModifier } from "./utilities/configuration/configuration-modifier";
+
 export {
   LibraryConfigurationDefinition,
   ComponentDefinition,
@@ -22,6 +24,7 @@ export {
   TemplateCategoryDefinition,
   TemplateDefinition,
   ParsedLibraryConfigurationDefinition,
+  ConfigurationModifier,
 };
 
 // eslint-disable-next-line

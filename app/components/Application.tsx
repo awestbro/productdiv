@@ -200,9 +200,6 @@ export function Application(props: {
 
     if (!elementEditorState.match) {
       setElementEditorState({ match: currentHoveredMatch });
-      if ((currentHoveredMatch.node as Element).matches(dropZoneSelector)) {
-        setTemplateEditorOpen(true);
-      }
       setElementEditorOpen(true);
       highlightElements([currentHoveredMatch.node]);
     } else {

@@ -17,7 +17,7 @@ export declare type UtilityClassDefinition = {
 };
 export declare type UtilityClassControl = {
     name: string;
-    type: string;
+    type: "selectOne" | "selectMany";
     classes?: string[];
 };
 export declare type ParsedLibraryConfigurationDefinition = LibraryConfigurationDefinition & {
