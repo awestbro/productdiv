@@ -65,3 +65,22 @@ Example Configuration:
     ],
 }
 ```
+
+## Editor Configuration
+
+```ts
+export type ProductDivConfig = {
+  htmlFormatter?(s: string): string;
+};
+```
+
+An example usage with BASIC JSX formatting
+
+```ts
+import ProductDiv, { jsxFormatter } from "productdiv";
+import BootstrapComponents from "productdiv/dist/bootstrap-5-config";
+
+document.addEventListener("DOMContentLoaded", () => {
+  ProductDiv(BootstrapComponents, { htmlFormatter: jsxFormatter });
+});
+```

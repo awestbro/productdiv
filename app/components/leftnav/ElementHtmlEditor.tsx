@@ -4,7 +4,6 @@ import CodeMirror, { Extension } from "@uiw/react-codemirror";
 import { html } from "@codemirror/lang-html";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView, ViewUpdate } from "@codemirror/view";
-import { html_beautify } from "js-beautify";
 
 import {
   getParentMatch,
@@ -23,7 +22,6 @@ import {
   copyElementTemplateToClipboard,
   copyElementToClipboard,
   copyToClipboard,
-  html_beautify_opts,
   sanitizeHtmlToString,
 } from "../../utilities/clipboard";
 import { UtilityClassEditor } from "./UtilityClassEditor";
@@ -47,6 +45,7 @@ export function ElementEditorActions(props: ElementEditorProps) {
     iframeDocument,
     lastHoverPosition,
     drawHoverElement,
+    editorConfig,
   } = props;
 
   const onDragStart = () => {
@@ -144,7 +143,7 @@ export function ElementEditorActions(props: ElementEditorProps) {
           type="button"
           className="btn btn-sm btn-secondary"
           onClick={() => {
-            copyElementToClipboard(element);
+            copyElementToClipboard(element, editorConfig.htmlFormatter);
           }}
         >
           Copy HTML
@@ -227,7 +226,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
     element.current = elementEditorState.match.node as Element;
     parentElementRef.current = element.current.parentElement;
     parentPositionRef.current = findPositionRelativeToParent(element.current);
-    setHTML(html_beautify(element.current.outerHTML, html_beautify_opts));
+    setHTML(sanitizeHtmlToString(element.current));
     return () => {
       parentPositionRef.current = 0;
     };

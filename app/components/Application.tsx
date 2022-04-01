@@ -18,7 +18,7 @@ import classnames from "classnames";
 import * as throttle from "lodash/throttle";
 import { ParsedLibraryConfigurationDefinition } from "../utilities/configuration/configuration-importer";
 import { AllIconDefinitions } from "./common/Icons";
-import { getOffsetTop, saveOffsetTop } from "..";
+import { getOffsetTop, ProductDivConfig, saveOffsetTop } from "..";
 
 export type ElementEditorState = {
   match?: NodeTreeMatch;
@@ -106,12 +106,15 @@ const dropZoneSelector = ".productdiv-drop-container";
 
 let hasIframeMounted = false;
 
-export function Application(props: {
+type ApplicationProps = {
   pageSource: string;
   configuration: ParsedLibraryConfigurationDefinition;
+  editorConfig: ProductDivConfig;
   onLeftNavClose: (d: Document) => any;
-}) {
-  const { pageSource, configuration, onLeftNavClose } = props;
+};
+
+export function Application(props: ApplicationProps) {
+  const { pageSource, configuration, onLeftNavClose, editorConfig } = props;
   const [componentTree, setComponentTree] =
     React.useState<NodeTreeMatch[]>(null);
   const [treeViewOpen, setTreeViewStateOpen] = React.useState(
@@ -313,6 +316,7 @@ export function Application(props: {
     <React.Fragment>
       <AllIconDefinitions />
       <LeftNav
+        editorConfig={editorConfig}
         getComponentTree={getComponentTree}
         iframeDocument={iframeDocument}
         showTemplatePreview={showTemplatePreview}

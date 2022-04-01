@@ -15,6 +15,9 @@ import {
 } from "./utilities/configuration/configuration-importer";
 
 import { ConfigurationModifier } from "./utilities/configuration/configuration-modifier";
+import { sanitizeHtmlToString } from "./utilities/clipboard";
+import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
+import { jsxFormatter } from "./utilities/jsx-formatter";
 
 export {
   LibraryConfigurationDefinition,
@@ -25,13 +28,11 @@ export {
   TemplateDefinition,
   ParsedLibraryConfigurationDefinition,
   ConfigurationModifier,
+  jsxFormatter,
 };
 
 // eslint-disable-next-line
 const theme = require("./theme.scss");
-
-import { sanitizeHtmlToString } from "./utilities/clipboard";
-import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 
 export function saveOffsetTop(top: number) {
   localStorage.setItem("productdiv-offset-top", JSON.stringify(top));
@@ -55,7 +56,10 @@ function inIframe() {
 
 let htmlSnapshot = "";
 
-function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
+function mountApplication(
+  configuration: ParsedLibraryConfigurationDefinition,
+  editorConfig: ProductDivConfig
+) {
   let mount = getEditorMountPoint();
   if (!mount) {
     const node = htmlStringToNodeList('<div id="productdiv"></div>')[0];
@@ -81,7 +85,7 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
         onClick={() => {
           unmountComponentAtNode(mount);
           htmlSnapshot = document.documentElement.innerHTML;
-          mountProductDiv(configuration, htmlSnapshot);
+          mountProductDiv(configuration, editorConfig, htmlSnapshot);
         }}
       >
         PD
@@ -91,8 +95,13 @@ function mountApplication(configuration: ParsedLibraryConfigurationDefinition) {
   );
 }
 
+export type ProductDivConfig = {
+  htmlFormatter?(s: string): string;
+};
+
 async function mountProductDiv(
   configuration: ParsedLibraryConfigurationDefinition,
+  editorConfig: ProductDivConfig,
   html: string
 ) {
   document.open();
@@ -111,6 +120,7 @@ async function mountProductDiv(
 
   render(
     <Application
+      editorConfig={editorConfig}
       pageSource={html}
       configuration={configuration}
       onLeftNavClose={(iframeDocument: Document) => {
@@ -120,7 +130,7 @@ async function mountProductDiv(
         document.write(str);
         document.close();
         document.addEventListener("DOMContentLoaded", () => {
-          mountApplication(configuration);
+          mountApplication(configuration, editorConfig);
           window.scrollTo(0, getOffsetTop());
         });
       }}
@@ -130,10 +140,11 @@ async function mountProductDiv(
 }
 
 export default function ProductDiv(
-  configuration: LibraryConfigurationDefinition
+  config: LibraryConfigurationDefinition,
+  editorConfig: ProductDivConfig = {}
 ) {
   if (!inIframe()) {
     saveOffsetTop(0);
-    mountApplication(parseLibraryConfiguration(configuration));
+    mountApplication(parseLibraryConfiguration(config), editorConfig);
   }
 }

@@ -11,8 +11,10 @@ import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
 import { TemplateSelector } from "./TemplateSelector";
 import { ProductDivLogoLarge } from "../common/Icons";
 import { copyElementToClipboard } from "../../utilities/clipboard";
+import { ProductDivConfig } from "../..";
 
 export type LeftNavProps = {
+  editorConfig: ProductDivConfig;
   getComponentTree(
     doc: Document,
     treeViewIgnoreQuerySelectors: string[]
@@ -62,6 +64,7 @@ export function LeftNav(props: LeftNavProps) {
     treeViewOpen,
     redrawHighlightedNode,
     onLeftNavClose,
+    editorConfig,
   } = props;
 
   let selectedComponent;
@@ -164,7 +167,10 @@ export function LeftNav(props: LeftNavProps) {
               type="button"
               title="Copy HTML to Clipboard"
               onClick={() => {
-                copyElementToClipboard(iframeDocument.documentElement);
+                copyElementToClipboard(
+                  iframeDocument.documentElement,
+                  editorConfig.htmlFormatter
+                );
                 setDropupShow(false);
               }}
             >
