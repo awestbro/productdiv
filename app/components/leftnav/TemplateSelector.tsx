@@ -1,12 +1,10 @@
 import * as React from "react";
 import Fuse from "fuse.js";
 import classNames from "classnames";
-// @ts-ignore
-import * as flatten from "lodash/flatten";
 
 import { addTemplateToElement } from "../../utilities/dom/dom-utilities";
 import {
-  TemplateCategoryDefinition,
+  tagsToSearchableString,
   TemplateDefinition,
 } from "../../utilities/configuration/configuration-importer";
 import {
@@ -17,8 +15,6 @@ import { drawHoverElement, ElementEditorState } from "../Application";
 import { PlacementType } from "../../utilities/dom/canvas";
 import {
   CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
   ClipboardIcon,
   EyePreviewIcon,
   GripVerticalIcon,
@@ -31,7 +27,7 @@ type TemplateSelectorProps = {
   modifyingElement?: Node;
   setTemplateEditorOpen?: (b: boolean) => any;
   redrawComponentTree(): NodeTreeMatch[];
-  templateCategories: TemplateCategoryDefinition[];
+  templates: TemplateDefinition[];
   setElementEditorState(s: ElementEditorState): any;
   setElementEditorOpen(b: boolean): any;
   drawHoverElement: typeof drawHoverElement;
@@ -46,7 +42,7 @@ type TemplateSelectorProps = {
 
 export function TemplateSelector(props: TemplateSelectorProps) {
   const {
-    templateCategories,
+    templates,
     setTemplateEditorOpen,
     modifyingElement,
     redrawComponentTree,
@@ -69,15 +65,19 @@ export function TemplateSelector(props: TemplateSelectorProps) {
     React.useState<TemplateDefinition[]>(null);
 
   React.useEffect(() => {
-    const templates = flatten(
-      templateCategories.map((c) =>
-        c.templates.map((t) => ({
-          searchText: `${c.name} ${t.name}`,
-          template: t,
-        }))
-      )
-    );
-    const s = new Fuse(templates, {
+    const templateSearch = templates.map((template) => ({
+      searchText: `${template.name} ${tagsToSearchableString(template.tags)}`,
+      template,
+    }));
+    // flatten(
+    //   templateCategories.map((c) =>
+    //     c.templates.map((t) => ({
+    //       searchText: `${c.name} ${t.name}`,
+    //       template: t,
+    //     }))
+    //   )
+    // );
+    const s = new Fuse(templateSearch, {
       keys: ["searchText"],
     });
     if (filterText) {
@@ -186,10 +186,15 @@ export function TemplateSelector(props: TemplateSelectorProps) {
             ))}
           </React.Fragment>
         ) : (
-          <TemplateCategoryList
-            templateCategories={templateCategories}
-            {...templateActions}
-          />
+          <React.Fragment>
+            {templates.map((template, i) => (
+              <TemplateListItem
+                key={`${template.name}-${i}`}
+                template={template}
+                {...templateActions}
+              />
+            ))}
+          </React.Fragment>
         )}
       </div>
     </div>
@@ -202,64 +207,6 @@ type TemplateActionProps = {
   onDragStart: () => void;
   onDragEnd: (t: TemplateDefinition) => void;
 };
-
-type TemplateCategoryListProps = TemplateActionProps & {
-  templateCategories: TemplateCategoryDefinition[];
-};
-
-function TemplateCategoryList(props: TemplateCategoryListProps) {
-  const { templateCategories, ...restProps } = props;
-  return (
-    <React.Fragment>
-      {templateCategories.map((t, i) => (
-        <TemplateCategory key={i} category={t} {...restProps} />
-      ))}
-    </React.Fragment>
-  );
-}
-
-type TemplateCategoryProps = TemplateActionProps & {
-  category: TemplateCategoryDefinition;
-};
-
-function TemplateCategory(props: TemplateCategoryProps) {
-  const { category } = props;
-  const [open, setOpen] = React.useState(false);
-  const collapseId = `collapse-${category.name}`;
-  return (
-    <React.Fragment>
-      <div className="template-category-row">
-        <p className="mb-0 fw-bold">{category.name}</p>
-
-        <IconButton
-          type="button"
-          onClick={() => setOpen(!open)}
-          data-toggle="collapse"
-          data-target={`#${collapseId}`}
-          aria-expanded={open ? "true" : "false"}
-          aria-controls={collapseId}
-          className="btn-secondary"
-          title="Toggle Template Category Visibility"
-        >
-          {open ? (
-            <ChevronDownIcon width="16" height="16" />
-          ) : (
-            <ChevronRightIcon width="16" height="16" />
-          )}
-        </IconButton>
-      </div>
-      <div id={collapseId} className={classNames({ "d-none": !open })}>
-        {category.templates.map((template: TemplateDefinition, index) => (
-          <TemplateListItem
-            key={`${template.name}-${index}`}
-            template={template}
-            {...props}
-          />
-        ))}
-      </div>
-    </React.Fragment>
-  );
-}
 
 type TemplateListItemProps = TemplateActionProps & {
   template: TemplateDefinition;

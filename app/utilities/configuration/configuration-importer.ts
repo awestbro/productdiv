@@ -1,27 +1,16 @@
 export type LibraryConfigurationDefinition = {
-  components: ComponentDefinition[];
-  templateCategories: TemplateCategoryDefinition[];
+  templates: TemplateDefinition[];
   treeViewIgnoreQuerySelectors: string[];
   utilityClasses: UtilityClassDefinition[];
 };
 
-export type ComponentDefinition = {
-  name: string;
-  selectors: string[];
-  utilityClassMatches: string[];
-};
-
 export type UtilityClassDefinition = {
-  section: string;
-  documentationLink?: string;
-  controls: UtilityClassControl[];
-  showDefault?: boolean;
-};
-
-export type UtilityClassControl = {
   name: string;
   type: "selectOne" | "selectMany";
-  classes?: string[];
+  documentationLink?: string;
+  classes: string[];
+  tags: string[];
+  selectors?: string[];
 };
 
 export type ParsedLibraryConfigurationDefinition =
@@ -34,16 +23,16 @@ export type ClassDefinition = {
   classes: string[];
 };
 
-export type TemplateCategoryDefinition = {
-  name: string;
-  templates: TemplateDefinition[];
-};
-
 export type TemplateDefinition = {
   name: string;
+  tags: string[];
   htmlTemplate: string;
   previewWidth?: string;
 };
+
+export function tagsToSearchableString(tags: string[]) {
+  return tags.reduce((acc, t) => `${acc} ${t}`, "");
+}
 
 /**
  * Turns expandOptions(["border border-"], ["primary", "secondary"])
@@ -110,22 +99,13 @@ export function parseLibraryConfiguration(
   config: LibraryConfigurationDefinition
 ): LibraryConfigurationDefinition {
   const copy = { ...config };
-  // console.log('config', config);
   copy.utilityClasses = copy.utilityClasses.map((def) => {
     return {
       ...def,
-      controls: def.controls.map((c) => {
-        if (c.classes) {
-          return {
-            ...c,
-            classes: c.classes.reduce((acc, classes) => {
-              acc.push(...classDefinitionStringExpander(classes));
-              return acc;
-            }, []),
-          };
-        }
-        return c;
-      }),
+      classes: def.classes.reduce((acc, classes) => {
+        acc.push(...classDefinitionStringExpander(classes));
+        return acc;
+      }, []),
     };
   });
   return copy;

@@ -331,7 +331,6 @@ export function Application(props: ApplicationProps) {
         configuration={configuration}
         elementEditorOpen={elementEditorOpen}
         setElementEditorOpen={setElementEditorOpen}
-        templateCategories={configuration.templateCategories}
         elementEditorState={elementEditorState}
         setElementEditorState={(s: ElementEditorState) =>
           setElementEditorState(s)

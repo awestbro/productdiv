@@ -3,10 +3,7 @@ import classNames from "classnames";
 
 import { drawHoverElement, ElementEditorState } from "../Application";
 import { ElementEditor } from "./ElementEditor";
-import {
-  ParsedLibraryConfigurationDefinition,
-  TemplateCategoryDefinition,
-} from "../../utilities/configuration/configuration-importer";
+import { ParsedLibraryConfigurationDefinition } from "../../utilities/configuration/configuration-importer";
 import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
 import { TemplateSelector } from "./TemplateSelector";
 import { ProductDivLogoLarge } from "../common/Icons";
@@ -20,7 +17,7 @@ export type LeftNavProps = {
     treeViewIgnoreQuerySelectors: string[]
   ): NodeTreeMatch[];
   configuration: ParsedLibraryConfigurationDefinition;
-  templateCategories: TemplateCategoryDefinition[];
+  // templateCategories: TemplateCategoryDefinition[];
   elementEditorState: ElementEditorState;
   setElementEditorState(s: ElementEditorState): void;
   treeViewOpen: boolean;
@@ -46,13 +43,13 @@ export type LeftNavProps = {
 
 export function LeftNav(props: LeftNavProps) {
   const {
+    configuration,
     elementEditorOpen,
     drawHoverElement,
     elementEditorState,
     setElementEditorOpen,
     setElementEditorState,
     dropZoneSelector,
-    templateCategories,
     redrawComponentTree,
     lastHoverPosition,
     templateEditorOpen,
@@ -83,7 +80,7 @@ export function LeftNav(props: LeftNavProps) {
         drawHoverElement={drawHoverElement}
         setElementEditorState={setElementEditorState}
         setElementEditorOpen={setElementEditorOpen}
-        templateCategories={templateCategories}
+        templates={configuration.templates}
         redrawComponentTree={redrawComponentTree}
         lastHoverPosition={lastHoverPosition}
       />
@@ -203,7 +200,7 @@ export function LeftNav(props: LeftNavProps) {
 
 export function LeftNavMenu(props: LeftNavProps) {
   const {
-    templateCategories,
+    configuration,
     redrawComponentTree,
     lastHoverPosition,
     dropZoneSelector,
@@ -229,7 +226,7 @@ export function LeftNavMenu(props: LeftNavProps) {
           drawHoverElement={drawHoverElement}
           setElementEditorState={setElementEditorState}
           setElementEditorOpen={setElementEditorOpen}
-          templateCategories={templateCategories}
+          templates={configuration.templates}
           redrawComponentTree={redrawComponentTree}
           lastHoverPosition={lastHoverPosition}
         />
