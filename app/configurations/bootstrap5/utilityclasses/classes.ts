@@ -158,7 +158,7 @@ export const PaddingAll: UtilityClassDefinition = {
     "https://getbootstrap.com/docs/5.0/utilities/spacing/#margin-and-padding",
 };
 export const Alignment: UtilityClassDefinition = {
-  name: "Alignment",
+  name: "Text Alignment",
   type: "selectMany",
   classes: [
     "text-justify",
@@ -170,7 +170,7 @@ export const Alignment: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Wrap: UtilityClassDefinition = {
-  name: "Wrap",
+  name: "Text Wrap",
   type: "selectOne",
   classes: ["text-(wrap|nowrap|truncate)"],
   tags: ["Text"],
@@ -178,7 +178,7 @@ export const Wrap: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Break: UtilityClassDefinition = {
-  name: "Break",
+  name: "Text Break",
   type: "selectOne",
   classes: ["text-break"],
   tags: ["Text"],
@@ -194,7 +194,7 @@ export const TextColor: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Transform: UtilityClassDefinition = {
-  name: "Transform",
+  name: "Text Transform",
   type: "selectOne",
   classes: ["text-(lowercase|uppercase|capitalize)"],
   tags: ["Text"],
@@ -202,7 +202,7 @@ export const Transform: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Weight: UtilityClassDefinition = {
-  name: "Weight",
+  name: "Text Weight",
   type: "selectOne",
   classes: ["fw-(lighter|light|normal|bold|bolder)"],
   tags: ["Text"],
@@ -210,7 +210,7 @@ export const Weight: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Style: UtilityClassDefinition = {
-  name: "Style",
+  name: "Text Style",
   type: "selectOne",
   classes: ["fst-italic", "fst-normal"],
   tags: ["Text"],
@@ -218,7 +218,7 @@ export const Style: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Heading: UtilityClassDefinition = {
-  name: "Heading",
+  name: "Text Heading",
   type: "selectOne",
   classes: ["h(1|2|3|4|5|6)"],
   tags: ["Text"],
@@ -234,7 +234,7 @@ export const TextDisplay: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Size: UtilityClassDefinition = {
-  name: "Size",
+  name: "Text Size",
   type: "selectOne",
   classes: ["fs-(1|2|3|4|5|6)"],
   tags: ["Text"],
@@ -242,7 +242,7 @@ export const Size: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const LineHeight: UtilityClassDefinition = {
-  name: "Line Height",
+  name: "Text Line Height",
   type: "selectOne",
   classes: ["lh-(1|sm|base|lg)"],
   tags: ["Text"],
@@ -250,7 +250,7 @@ export const LineHeight: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const Helpers: UtilityClassDefinition = {
-  name: "Helpers",
+  name: "Text Helpers",
   type: "selectMany",
   classes: [
     "lead",
@@ -277,7 +277,7 @@ export const TextSelection: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const PointerEvents: UtilityClassDefinition = {
-  name: "Pointer Events",
+  name: "Text Pointer Events",
   type: "selectOne",
   classes: ["pe-(none|auto)"],
   tags: ["Text"],
@@ -285,28 +285,28 @@ export const PointerEvents: UtilityClassDefinition = {
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/text/",
 };
 export const BGColor: UtilityClassDefinition = {
-  name: "BG Color",
+  name: "Background Color",
   type: "selectOne",
   classes: [`bg-(${themeColors}|white|body|transparent)`],
   tags: ["Background"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/background/",
 };
 export const Gradient: UtilityClassDefinition = {
-  name: "Gradient",
+  name: "Background Gradient",
   type: "selectOne",
   classes: ["bg-gradient"],
   tags: ["Background"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/background/",
 };
 export const Opacity: UtilityClassDefinition = {
-  name: "Opacity",
+  name: "Background Opacity",
   type: "selectMany",
   classes: ["opacity-(0|25|50|75|100)"],
   tags: ["Background"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/background/",
 };
 export const BoxShadow: UtilityClassDefinition = {
-  name: "Box Shadow",
+  name: "Background Box Shadow",
   type: "selectOne",
   classes: ["shadow", "shadow-(none|sm|lg)"],
   tags: ["Background"],
@@ -492,51 +492,51 @@ export const FlexType: UtilityClassDefinition = {
     `d-(${themeBreakpoints})-inline-flex`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const Direction: UtilityClassDefinition = {
-  name: "Direction",
+  name: "Flex Direction",
   type: "selectMany",
   classes: [
     "flex-(row|row-reverse|column|column-reverse)",
     `flex-(${themeBreakpoints})-(row|row-reverse|column|column-reverse)`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const Justify: UtilityClassDefinition = {
-  name: "Justify",
+  name: "Flex Justify",
   type: "selectMany",
   classes: [
     "justify-content-(start|end|center|between|around)",
     `justify-content-(${themeBreakpoints})-(start|end|center|between|around)`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const AlignItems: UtilityClassDefinition = {
-  name: "Align Items",
+  name: "Flex Align Items",
   type: "selectMany",
   classes: [
     "align-items-(start|end|center|baseline|stretch)",
     `align-items-(${themeBreakpoints})-(start|end|center|baseline|stretch)`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const AlignContent: UtilityClassDefinition = {
-  name: "Align Content",
+  name: "Flex Align Content",
   type: "selectMany",
   classes: [
     "align-content-(start|end|center|around|stretch)",
     `align-content-(${themeBreakpoints})-(start|end|center|around|stretch)`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const FlexWrap: UtilityClassDefinition = {
@@ -547,11 +547,11 @@ export const FlexWrap: UtilityClassDefinition = {
     `flex-(${themeBreakpoints})-(nowrap|wrap|wrap-reverse)`,
   ],
   tags: ["Flex Container"],
-  selectors: [".d-flex"],
+  selectors: [".d-flex", ".row"],
   documentationLink: "https://getbootstrap.com/docs/5.0/utilities/flex/",
 };
 export const Align: UtilityClassDefinition = {
-  name: "Align",
+  name: "Flex Self Align",
   type: "selectMany",
   classes: [
     "align-self-(start|end|center|baseline|stretch)",
@@ -562,7 +562,7 @@ export const Align: UtilityClassDefinition = {
     "https://getbootstrap.com/docs/5.0/utilities/flex/#align-self",
 };
 export const Order: UtilityClassDefinition = {
-  name: "Order",
+  name: "Flex Self Order",
   type: "selectMany",
   classes: [
     "order-(0|1|2|3|4|5|6|7|8|9|10|11)",
@@ -573,7 +573,7 @@ export const Order: UtilityClassDefinition = {
     "https://getbootstrap.com/docs/5.0/utilities/flex/#align-self",
 };
 export const Fill: UtilityClassDefinition = {
-  name: "Fill",
+  name: "Flex Self Fill",
   type: "selectMany",
   classes: ["flex-fill", `flex-fill-(${themeBreakpoints})`],
   tags: ["Flex Self"],
@@ -581,7 +581,7 @@ export const Fill: UtilityClassDefinition = {
     "https://getbootstrap.com/docs/5.0/utilities/flex/#align-self",
 };
 export const Grow: UtilityClassDefinition = {
-  name: "Grow",
+  name: "Flex Self Grow",
   type: "selectMany",
   classes: [
     "flex-(grow|shrink)-(0|1)",

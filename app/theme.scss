@@ -115,9 +115,18 @@ $react-widget-input-bg: #282c34;
 }
 
 .element-editor-select-control {
-  flex-basis: 33%;
-  padding-left: 3px;
-  padding-right: 3px;
+  display: flex;
+
+  .element-editor-label {
+    width: 50%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 50%;
+  }
+
+  .rw-widget {
+    width: 50%;
+  }
 }
 
 .template-selection-button {

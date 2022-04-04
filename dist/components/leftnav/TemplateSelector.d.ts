@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { TemplateCategoryDefinition, TemplateDefinition } from "../../utilities/configuration/configuration-importer";
+import { TemplateDefinition } from "../../utilities/configuration/configuration-importer";
 import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
 import { drawHoverElement, ElementEditorState } from "../Application";
 import { PlacementType } from "../../utilities/dom/canvas";
@@ -8,7 +8,7 @@ declare type TemplateSelectorProps = {
     modifyingElement?: Node;
     setTemplateEditorOpen?: (b: boolean) => any;
     redrawComponentTree(): NodeTreeMatch[];
-    templateCategories: TemplateCategoryDefinition[];
+    templates: TemplateDefinition[];
     setElementEditorState(s: ElementEditorState): any;
     setElementEditorOpen(b: boolean): any;
     drawHoverElement: typeof drawHoverElement;

@@ -1,13 +1,12 @@
 /// <reference types="react" />
 import { drawHoverElement, ElementEditorState } from "../Application";
-import { ParsedLibraryConfigurationDefinition, TemplateCategoryDefinition } from "../../utilities/configuration/configuration-importer";
+import { ParsedLibraryConfigurationDefinition } from "../../utilities/configuration/configuration-importer";
 import { NodeTreeMatch } from "../../utilities/tree/tree-utils";
 import { ProductDivConfig } from "../..";
 export declare type LeftNavProps = {
     editorConfig: ProductDivConfig;
     getComponentTree(doc: Document, treeViewIgnoreQuerySelectors: string[]): NodeTreeMatch[];
     configuration: ParsedLibraryConfigurationDefinition;
-    templateCategories: TemplateCategoryDefinition[];
     elementEditorState: ElementEditorState;
     setElementEditorState(s: ElementEditorState): void;
     treeViewOpen: boolean;

@@ -1,46 +1,43 @@
 // @ts-ignore
 import * as differenceBy from "lodash/differenceBy";
 import * as React from "react";
+import Fuse from "fuse.js";
 import { UtilityClassDefinition } from "../../utilities/configuration/configuration-importer";
 import { domTokenListToArray } from "../../utilities/selector";
-import { IconAnchor, IconButton } from "../common/Components";
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  QuestionIcon,
-} from "../common/Icons";
 import { LeftNavProps } from "./LeftNav";
 import { UtilityClassFormControl } from "./UtilityClassFormControls";
 
 export function UtilityClassEditor(props: LeftNavProps) {
-  const { configuration, elementEditorState } = props;
+  const {
+    configuration,
+    elementEditorState,
+    redrawComponentTree,
+    redrawHighlightedNode,
+  } = props;
   const allUtilityClasses = configuration.utilityClasses;
-  const components = configuration.components;
+  const [remainingControls, setRemainingControls] = React.useState<
+    UtilityClassDefinition[]
+  >([]);
   const [filteredControls, setFilteredControls] = React.useState<
     UtilityClassDefinition[]
   >([]);
   const [queryMatchControls, setQueryMatchControls] = React.useState<
     UtilityClassDefinition[]
   >([]);
-  const [activeControl, setActiveControl] =
-    React.useState<UtilityClassDefinition>(null);
-  // const [nonDefaultControls, setNonDefaultControls] = React.useState<
-  //   UtilityClassDefinition[]
-  // >([]);
-  // const [nonDefaultOpen, setNonDefaultOpen] = React.useState<boolean>(false);
+  const [activeControls, setActiveControls] = React.useState<
+    UtilityClassDefinition[]
+  >([]);
+  const [filterText, setFilterText] = React.useState<string>("");
 
   React.useEffect(() => {
     const selectedElement = elementEditorState.match.node as Element;
     const queryMatch: UtilityClassDefinition[] = [];
-    components.forEach((c) => {
-      if (c.selectors.find((s) => selectedElement.matches(s))) {
-        c.utilityClassTags.forEach((tag) => {
-          allUtilityClasses.forEach((def) => {
-            if (def.tags.includes(tag)) {
-              queryMatch.push(def);
-            }
-          });
-        });
+    allUtilityClasses.forEach((utilityClass) => {
+      const match = utilityClass.selectors?.find((selector) =>
+        selectedElement.matches(selector)
+      );
+      if (match) {
+        queryMatch.push(utilityClass);
       }
     });
     const filtered: UtilityClassDefinition[] = differenceBy(
@@ -48,200 +45,116 @@ export function UtilityClassEditor(props: LeftNavProps) {
       queryMatch,
       "name"
     );
-    // const filteredDefault = filtered.filter((uc) => uc.showDefault);
-    // const nonDefault = filtered.filter((uc) => !uc.showDefault);
-    // Active controls
-    // const activeControl: UtilityClassControl[] = [];
-    // const activeClasses = domTokenListToArray(selectedElement.classList);
-    // allUtilityClasses.forEach((utilityClassDefinition) => {
-    //   const controls = utilityClassDefinition.controls;
-    //   controls.forEach((control) => {
-    //     const classes = control.classes || [];
-    //     if (classes.some((r) => activeClasses.includes(r))) {
-    //       activeControl.push(control);
-    //     }
-    //   });
-    // });
-    // if (activeControl.length > 0) {
-    //   setActiveControl({
-    //     section: "Active",
-    //     controls: activeControl,
-    //   });
-    // } else {
-    //   setActiveControl(null);
-    // }
-
-    // setFilteredControls(filteredDefault);
+    const activeClasses = domTokenListToArray(selectedElement.classList);
+    const controlsMatchingActiveClasses = allUtilityClasses.filter(
+      (utlityClass) => {
+        return utlityClass.classes.some((r) => activeClasses.includes(r));
+      }
+    );
+    setActiveControls(controlsMatchingActiveClasses);
+    setRemainingControls(filtered);
     setQueryMatchControls(queryMatch);
-    // setNonDefaultControls(nonDefault);
   }, [elementEditorState.match]);
+
+  React.useEffect(() => {
+    const s = new Fuse(allUtilityClasses, {
+      keys: ["name", "tags"],
+    });
+    if (filterText) {
+      const res = s.search(filterText);
+      setFilteredControls(res.map((res) => res.item));
+    } else {
+      setFilteredControls([]);
+    }
+  }, [filterText]);
 
   return (
     <React.Fragment>
       <hr className="mb-0" />
-      {/* {activeControl !== null && (
+
+      <div className="row mt-3">
+        <div className="col px-2 pb-3">
+          <input
+            className="form-control"
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            type="text"
+            placeholder="Filter classes"
+          />
+        </div>
+      </div>
+
+      {filteredControls.length > 0 ? (
+        <UtilityClassSection
+          title="Filtered Utility Classes"
+          utilityClassDefinitions={filteredControls}
+          element={elementEditorState.match.node as Element}
+          redrawComponentTree={redrawComponentTree}
+          redrawHighlightedNode={redrawHighlightedNode}
+        />
+      ) : (
         <React.Fragment>
-          <UtilityClassSectionList
-            controls={[activeControl]}
-            openDefault={true}
-            keyPrefix="active-"
-            {...props}
+          <UtilityClassSection
+            title="Active Utility Classes"
+            utilityClassDefinitions={activeControls}
+            element={elementEditorState.match.node as Element}
+            redrawComponentTree={redrawComponentTree}
+            redrawHighlightedNode={redrawHighlightedNode}
+          />
+
+          <UtilityClassSection
+            title="Matched Utility Classes"
+            utilityClassDefinitions={queryMatchControls}
+            element={elementEditorState.match.node as Element}
+            redrawComponentTree={redrawComponentTree}
+            redrawHighlightedNode={redrawHighlightedNode}
+          />
+
+          <UtilityClassSection
+            title="Utility Classes"
+            utilityClassDefinitions={remainingControls}
+            element={elementEditorState.match.node as Element}
+            redrawComponentTree={redrawComponentTree}
+            redrawHighlightedNode={redrawHighlightedNode}
           />
         </React.Fragment>
       )}
-      {queryMatchControls.length > 0 && (
-        <React.Fragment>
-          <UtilityClassSectionList
-            controls={queryMatchControls}
-            openDefault={true}
-            keyPrefix="match-"
-            {...props}
-          />
-        </React.Fragment>
-      )}
-      <UtilityClassSectionList
-        keyPrefix="filtered-"
-        controls={filteredControls}
-        {...props}
-      />
-      {nonDefaultControls.length > 0 && (
-        <React.Fragment>
-          <div className="d-flex justify-content-between align-items-center my-3">
-            <p className="mb-0 fs-4 fw-bold">More...</p>
-            <IconButton
-              type="button"
-              onClick={() => {
-                setNonDefaultOpen(!nonDefaultOpen);
-              }}
-              data-toggle="collapse"
-              data-target="#nondefault-controls"
-              aria-expanded={open ? "true" : "false"}
-              aria-controls="nondefault-controls"
-              className="btn-secondary"
-              title="Toggle Control Visibility"
-            >
-              {nonDefaultOpen ? (
-                <ChevronDownIcon width="16" height="16" />
-              ) : (
-                <ChevronRightIcon width="16" height="16" />
-              )}
-            </IconButton>
-          </div>
-          {nonDefaultOpen && (
-            <div id="nondefault-controls">
-              <UtilityClassSectionList
-                keyPrefix="nondefault-"
-                controls={nonDefaultControls}
-                {...props}
-              />
-            </div>
-          )}
-        </React.Fragment>
-      )} */}
     </React.Fragment>
   );
 }
 
-// function UtilityClassSectionList(
-//   props: {
-//     controls: UtilityClassDefinition[];
-//     openDefault?: boolean;
-//     keyPrefix?: string;
-//   } & LeftNavProps
-// ) {
-//   const { controls, keyPrefix = "" } = props;
-//   return (
-//     <React.Fragment>
-//       {controls.map((u) => (
-//         <UtilityClassListItem
-//           key={keyPrefix + u.section}
-//           utilityClassDefinition={u}
-//           {...props}
-//         />
-//       ))}
-//     </React.Fragment>
-//   );
-// }
+type UtilityClassSectionProps = Pick<
+  LeftNavProps,
+  "redrawComponentTree" | "redrawHighlightedNode"
+> & {
+  title: string;
+  utilityClassDefinitions: UtilityClassDefinition[];
+  element: Element;
+};
 
-// function UtilityClassListItem(
-//   props: {
-//     utilityClassDefinition: UtilityClassDefinition;
-//     openDefault?: boolean;
-//     keyPrefix?: string;
-//   } & LeftNavProps
-// ) {
-//   const { utilityClassDefinition, elementEditorState, openDefault, keyPrefix } =
-//     props;
-//   const [open, setOpenState] = React.useState(openDefault || false);
-//   const key = `${utilityClassDefinition.name}`;
-//   return (
-//     <React.Fragment key={key}>
-//       <UtilityClassHeader
-//         collapseId={key}
-//         open={open}
-//         toggleOpen={() => setOpenState(!open)}
-//         utilityClassDefinition={utilityClassDefinition}
-//       />
-//       <div
-//         id={key}
-//         style={{
-//           display: open ? "flex" : "none",
-//         }}
-//         className="utility-class-body"
-//       >
-//         {utilityClassDefinition.controls.map((control) => (
-//           <UtilityClassFormControl
-//             key={control.name}
-//             element={elementEditorState.match.node as Element}
-//             control={control}
-//             redrawComponentTree={props.redrawComponentTree}
-//             redrawHighlightedNode={props.redrawHighlightedNode}
-//           />
-//         ))}
-//       </div>
-//     </React.Fragment>
-//   );
-// }
-
-// function UtilityClassHeader(props: {
-//   utilityClassDefinition: UtilityClassDefinition;
-//   open: boolean;
-//   collapseId: string;
-//   toggleOpen: () => void;
-// }) {
-//   const { open, toggleOpen, utilityClassDefinition, collapseId } = props;
-//   return (
-//     <div className="utility-class-section-header">
-//       <p className="mb-0 fw-bold">{utilityClassDefinition.section}</p>
-//       <div>
-//         {utilityClassDefinition.documentationLink ? (
-//           <IconAnchor
-//             href={utilityClassDefinition.documentationLink}
-//             target="__blank"
-//             className="btn btn-icon btn-secondary me-2"
-//           >
-//             <QuestionIcon width="16" height="16" />
-//           </IconAnchor>
-//         ) : (
-//           <React.Fragment />
-//         )}
-//         <IconButton
-//           type="button"
-//           onClick={toggleOpen}
-//           data-toggle="collapse"
-//           data-target={`#${collapseId}`}
-//           aria-expanded={open ? "true" : "false"}
-//           aria-controls={collapseId}
-//           className="btn-secondary"
-//           title="Toggle Control Visibility"
-//         >
-//           {open ? (
-//             <ChevronDownIcon width="16" height="16" />
-//           ) : (
-//             <ChevronRightIcon width="16" height="16" />
-//           )}
-//         </IconButton>
-//       </div>
-//     </div>
-//   );
-// }
+function UtilityClassSection(props: UtilityClassSectionProps) {
+  const {
+    title,
+    utilityClassDefinitions,
+    element,
+    redrawComponentTree,
+    redrawHighlightedNode,
+  } = props;
+  if (utilityClassDefinitions.length === 0) {
+    return null;
+  }
+  return (
+    <React.Fragment>
+      <p className="text-bold mt-3">{title}</p>
+      {utilityClassDefinitions.map((definition) => (
+        <UtilityClassFormControl
+          key={definition.name}
+          element={element}
+          control={definition}
+          redrawComponentTree={redrawComponentTree}
+          redrawHighlightedNode={redrawHighlightedNode}
+        />
+      ))}
+    </React.Fragment>
+  );
+}

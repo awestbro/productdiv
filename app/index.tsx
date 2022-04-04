@@ -5,29 +5,21 @@ import { getEditorMountPoint } from "./utilities/selector";
 import { Application } from "./components/Application";
 import {
   LibraryConfigurationDefinition,
-  ComponentDefinition,
   UtilityClassDefinition,
-  UtilityClassControl,
-  TemplateCategoryDefinition,
   TemplateDefinition,
   ParsedLibraryConfigurationDefinition,
   parseLibraryConfiguration,
 } from "./utilities/configuration/configuration-importer";
 
-import { ConfigurationModifier } from "./utilities/configuration/configuration-modifier";
 import { sanitizeHtmlToString } from "./utilities/clipboard";
 import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 import { jsxFormatter } from "./utilities/jsx-formatter";
 
 export {
   LibraryConfigurationDefinition,
-  ComponentDefinition,
   UtilityClassDefinition,
-  UtilityClassControl,
-  TemplateCategoryDefinition,
   TemplateDefinition,
   ParsedLibraryConfigurationDefinition,
-  ConfigurationModifier,
   jsxFormatter,
 };
 

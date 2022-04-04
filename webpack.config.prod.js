@@ -18,8 +18,7 @@ module.exports = () => ({
   mode: "production",
   entry: {
     "index.js": glob.sync("./vendor/**/*.js").concat(["./app/index.tsx"]),
-    "bootstrap5-config.js":
-      "./app/configurations/bootstrap5/bootstrap-5-configuration.ts",
+    "bootstrap5-config.js": "./app/configurations/bootstrap5/configuration.ts",
   },
   output: {
     filename: "[name]",

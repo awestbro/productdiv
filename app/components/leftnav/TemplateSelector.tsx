@@ -69,14 +69,6 @@ export function TemplateSelector(props: TemplateSelectorProps) {
       searchText: `${template.name} ${tagsToSearchableString(template.tags)}`,
       template,
     }));
-    // flatten(
-    //   templateCategories.map((c) =>
-    //     c.templates.map((t) => ({
-    //       searchText: `${c.name} ${t.name}`,
-    //       template: t,
-    //     }))
-    //   )
-    // );
     const s = new Fuse(templateSearch, {
       keys: ["searchText"],
     });
@@ -160,9 +152,7 @@ export function TemplateSelector(props: TemplateSelectorProps) {
   return (
     <div className={wrapperclasses}>
       <h4 className="text-light fw-bold h4">Templates</h4>
-      <p className="text-muted">
-        Open a template category to click and drag templates onto your page!
-      </p>
+      <p className="text-muted">Click and drag templates onto your page!</p>
       <div className="container">
         <div className="row">
           <div className="col px-2 pb-3">

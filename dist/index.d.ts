@@ -1,7 +1,6 @@
-import { LibraryConfigurationDefinition, ComponentDefinition, UtilityClassDefinition, UtilityClassControl, TemplateCategoryDefinition, TemplateDefinition, ParsedLibraryConfigurationDefinition } from "./utilities/configuration/configuration-importer";
-import { ConfigurationModifier } from "./utilities/configuration/configuration-modifier";
+import { LibraryConfigurationDefinition, UtilityClassDefinition, TemplateDefinition, ParsedLibraryConfigurationDefinition } from "./utilities/configuration/configuration-importer";
 import { jsxFormatter } from "./utilities/jsx-formatter";
-export { LibraryConfigurationDefinition, ComponentDefinition, UtilityClassDefinition, UtilityClassControl, TemplateCategoryDefinition, TemplateDefinition, ParsedLibraryConfigurationDefinition, ConfigurationModifier, jsxFormatter, };
+export { LibraryConfigurationDefinition, UtilityClassDefinition, TemplateDefinition, ParsedLibraryConfigurationDefinition, jsxFormatter, };
 export declare function saveOffsetTop(top: number): void;
 export declare function getOffsetTop(): any;
 export declare type ProductDivConfig = {

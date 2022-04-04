@@ -167,7 +167,11 @@ export function ElementEditorActions(props: ElementEditorProps) {
             onDragStart={() => onDragStart()}
             onDragEnd={() =>
               onDragEnd(
-                { name: "", htmlTemplate: sanitizeHtmlToString(element) },
+                {
+                  name: "",
+                  htmlTemplate: sanitizeHtmlToString(element),
+                  tags: [],
+                },
                 element
               )
             }
@@ -183,7 +187,7 @@ export function ElementEditorActions(props: ElementEditorProps) {
 
 export function ElementHtmlEditor(props: ElementEditorProps) {
   return (
-    <div className="mt-2">
+    <div className="mt-2" style={{ marginBottom: "50vh" }}>
       <InnerHTMLEditor {...props} />
       <ElementEditorActions {...props} />
       <UtilityClassEditor {...props} />
@@ -260,7 +264,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
       );
       if (saved) {
         addTemplateToElement(
-          { name: "", htmlTemplate: saved },
+          { name: "", htmlTemplate: saved, tags: [] },
           document.head,
           PlacementType.INNER_APPEND
         );

@@ -17,7 +17,6 @@ export type LeftNavProps = {
     treeViewIgnoreQuerySelectors: string[]
   ): NodeTreeMatch[];
   configuration: ParsedLibraryConfigurationDefinition;
-  // templateCategories: TemplateCategoryDefinition[];
   elementEditorState: ElementEditorState;
   setElementEditorState(s: ElementEditorState): void;
   treeViewOpen: boolean;

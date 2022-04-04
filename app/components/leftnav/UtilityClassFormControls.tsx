@@ -2,8 +2,8 @@ import * as React from "react";
 import DropdownList from "react-widgets/DropdownList";
 import Multiselect from "react-widgets/Multiselect";
 import ListOption from "react-widgets/ListOption";
-import { UtilityClassControl } from "../../utilities/configuration/configuration-importer";
 import { domTokenListToArray } from "../../utilities/selector";
+import { UtilityClassDefinition } from "../../utilities/configuration/configuration-importer";
 
 export function addClassDefinition(element: Element, classString: string) {
   if (!classString) {
@@ -20,7 +20,7 @@ export function removeClassDefinition(element: Element, classString: string) {
 
 export function UtilityClassFormControl(props: {
   element: Element;
-  control: UtilityClassControl;
+  control: UtilityClassDefinition;
   redrawComponentTree: () => void;
   redrawHighlightedNode: () => void;
 }) {
@@ -34,7 +34,7 @@ export function UtilityClassFormControl(props: {
 }
 
 function SelectControl(props: {
-  control: UtilityClassControl;
+  control: UtilityClassDefinition;
   element: Element;
   redrawComponentTree: () => void;
   redrawHighlightedNode: () => void;
@@ -122,7 +122,7 @@ function SelectControl(props: {
 }
 
 function MultiSelectControl(props: {
-  control: UtilityClassControl;
+  control: UtilityClassDefinition;
   element: Element;
   redrawComponentTree: () => void;
   redrawHighlightedNode: () => void;
