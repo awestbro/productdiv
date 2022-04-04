@@ -46,7 +46,11 @@ export function addTemplateToElement(
   let placement = _placement;
   const element = _element;
   if (element.nodeName === "BODY") {
-    placement = PlacementType.INNER_APPEND;
+    if (placement === PlacementType.OUTER_APPEND) {
+      placement = PlacementType.INNER_APPEND;
+    } else if (placement === PlacementType.OUTER_PREPEND) {
+      placement = PlacementType.INNER_PREPEND;
+    }
   }
   if (placement === PlacementType.REPLACE) {
     const html = template.htmlTemplate.trim(); // Never return a text node of whitespace as the result

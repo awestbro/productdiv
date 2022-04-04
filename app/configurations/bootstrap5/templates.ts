@@ -2,9 +2,9 @@ import { TemplateDefinition } from "../../utilities/configuration/configuration-
 
 import * as Components from "./templates/component";
 import * as Content from "./templates/content";
-import * as Form from "./templates/content";
-import * as Layout from "./templates/content";
-import * as Navigation from "./templates/content";
+import * as Form from "./templates/form";
+import * as Layout from "./templates/layout";
+import * as Navigation from "./templates/navigation";
 
 export const templates: TemplateDefinition[] = [
   ...Object.values(Components),
