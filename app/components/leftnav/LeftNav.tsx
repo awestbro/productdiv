@@ -98,9 +98,10 @@ export function LeftNav(props: LeftNavProps) {
         width: "25%",
         resize: "horizontal",
         overflow: "auto",
+        height: "100vh",
         flexShrink: 0,
       }}
-      className="d-flex flex-column justify-content-between h-100 bg-dark text-light border-end border-dark"
+      className="d-flex flex-column justify-content-between bg-dark text-light border-end border-dark"
     >
       <div
         className="h-100 bg-dark text-light"

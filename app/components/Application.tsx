@@ -417,7 +417,7 @@ export function Application(props: ApplicationProps) {
           }
         }}
         id={iframeDocumentId}
-        style={{ width: "100%", height: "100%", border: "none" }}
+        style={{ width: "100vw", height: "100vh", border: "none" }}
         srcDoc={pageSource.replace('"', '"')}
       />
       <div
