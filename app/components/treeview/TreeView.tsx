@@ -21,8 +21,8 @@ export function TreeView(props: TreeViewProps) {
   const { componentTree, setTreeViewOpen } = props;
   return (
     <div
-      style={{ width: "280px" }}
-      className="fixed-sidebar h-100 bg-dark text-light border-start border-dark"
+      style={{ width: "280px", height: "100vh" }}
+      className="fixed-sidebar bg-dark text-light border-start border-dark"
       data-productdiv-ignore="true"
     >
       <div className="h-100 d-flex flex-column container">
