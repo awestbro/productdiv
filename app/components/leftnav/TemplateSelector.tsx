@@ -1,6 +1,7 @@
 import * as React from "react";
 import Fuse from "fuse.js";
 import classNames from "classnames";
+import DropdownList from "react-widgets/DropdownList";
 
 import { addTemplateToElement } from "../../utilities/dom/dom-utilities";
 import {
@@ -21,6 +22,7 @@ import {
 } from "../common/Icons";
 import { IconButton } from "../common/Components";
 import { copyToClipboard } from "../../utilities/clipboard";
+import { sortBy, uniq } from "lodash";
 
 type TemplateSelectorProps = {
   iframeDocuemnt: Document;
@@ -55,17 +57,30 @@ export function TemplateSelector(props: TemplateSelectorProps) {
     lastHoverPosition,
   } = props;
 
+  const sortedTemplates = sortBy(templates, ["name"]);
+  const tags: string[] = uniq(
+    templates.reduce((acc, t) => acc.concat(t.tags), [])
+  ).sort();
+
   const dragMode = setTemplateEditorOpen && modifyingElement ? false : true;
   const [placementSelectorOpen, setPlacementSelectorOpen] =
     React.useState<boolean>(false);
   const [selectedTemplate, setSelectedTemplate] =
     React.useState<TemplateDefinition>(null);
   const [filterText, setFilterText] = React.useState<string>("");
-  const [filteredTemplates, setFilteredTemplates] =
-    React.useState<TemplateDefinition[]>(null);
+  const [selectedTag, setSelectedTag] = React.useState<string>("");
+  const [filteredTemplates, setFilteredTemplates] = React.useState<
+    TemplateDefinition[]
+  >([]);
 
   React.useEffect(() => {
-    const templateSearch = templates.map((template) => ({
+    let templatesToFilter = sortedTemplates;
+    if (selectedTag) {
+      templatesToFilter = sortedTemplates.filter((t) =>
+        t.tags.includes(selectedTag)
+      );
+    }
+    const templateSearch = templatesToFilter.map((template) => ({
       searchText: `${template.name} ${tagsToSearchableString(template.tags)}`,
       template,
     }));
@@ -76,12 +91,12 @@ export function TemplateSelector(props: TemplateSelectorProps) {
       const res = s.search(filterText);
       setFilteredTemplates(res.map((res) => res.item.template));
     } else {
-      setFilteredTemplates([]);
+      setFilteredTemplates(templatesToFilter);
     }
     if (iframeDocuemnt) {
       hideTemplatePreview();
     }
-  }, [filterText]);
+  }, [filterText, selectedTag]);
 
   const wrapperclasses = dragMode
     ? ""
@@ -154,18 +169,25 @@ export function TemplateSelector(props: TemplateSelectorProps) {
       <h4 className="text-light fw-bold h4">Templates</h4>
       <p className="text-muted">Click and drag templates onto your page!</p>
       <div className="container">
-        <div className="row">
-          <div className="col px-2 pb-3">
-            <input
-              className="form-control"
-              value={filterText}
-              onChange={(e) => setFilterText(e.target.value)}
-              type="text"
-              placeholder="Filter templates"
-            />
-          </div>
+        <div className="px-2 pb-3">
+          <input
+            className="form-control"
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            type="text"
+            placeholder="Filter templates"
+          />
         </div>
-        {filterText ? (
+        <div className="px-2 pb-3">
+          <DropdownList
+            defaultValue=""
+            value={selectedTag}
+            data={["", ...tags]}
+            onChange={setSelectedTag}
+            placeholder="Filter by Tag"
+          />
+        </div>
+        {filteredTemplates.length > 0 ? (
           <React.Fragment>
             {filteredTemplates.map((template, i) => (
               <TemplateListItem
@@ -177,7 +199,7 @@ export function TemplateSelector(props: TemplateSelectorProps) {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {templates.map((template, i) => (
+            {sortedTemplates.map((template, i) => (
               <TemplateListItem
                 key={`${template.name}-${i}`}
                 template={template}

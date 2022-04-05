@@ -6,6 +6,8 @@ import { UtilityClassDefinition } from "../../utilities/configuration/configurat
 import { domTokenListToArray } from "../../utilities/selector";
 import { LeftNavProps } from "./LeftNav";
 import { UtilityClassFormControl } from "./UtilityClassFormControls";
+import DropdownList from "react-widgets/DropdownList";
+import { uniq } from "lodash";
 
 export function UtilityClassEditor(props: LeftNavProps) {
   const {
@@ -28,6 +30,12 @@ export function UtilityClassEditor(props: LeftNavProps) {
     UtilityClassDefinition[]
   >([]);
   const [filterText, setFilterText] = React.useState<string>("");
+
+  const tags: string[] = uniq(
+    allUtilityClasses.reduce((acc, t) => acc.concat(t.tags), [])
+  ).sort();
+
+  const [selectedTag, setSelectedTag] = React.useState<string>("");
 
   React.useEffect(() => {
     const selectedElement = elementEditorState.match.node as Element;
@@ -57,16 +65,24 @@ export function UtilityClassEditor(props: LeftNavProps) {
   }, [elementEditorState.match]);
 
   React.useEffect(() => {
-    const s = new Fuse(allUtilityClasses, {
+    let classesToSearch = allUtilityClasses;
+    if (selectedTag) {
+      classesToSearch = classesToSearch.filter((utilityClassDefinition) =>
+        utilityClassDefinition.tags.includes(selectedTag)
+      );
+    }
+    const s = new Fuse(classesToSearch, {
       keys: ["name", "tags"],
     });
     if (filterText) {
       const res = s.search(filterText);
       setFilteredControls(res.map((res) => res.item));
+    } else if (selectedTag) {
+      setFilteredControls(classesToSearch);
     } else {
       setFilteredControls([]);
     }
-  }, [filterText]);
+  }, [filterText, selectedTag]);
 
   return (
     <React.Fragment>
@@ -80,6 +96,13 @@ export function UtilityClassEditor(props: LeftNavProps) {
             onChange={(e) => setFilterText(e.target.value)}
             type="text"
             placeholder="Filter classes"
+          />
+          <DropdownList
+            defaultValue=""
+            value={selectedTag}
+            data={["", ...tags]}
+            onChange={setSelectedTag}
+            placeholder="Filter by Tag"
           />
         </div>
       </div>
@@ -145,7 +168,7 @@ function UtilityClassSection(props: UtilityClassSectionProps) {
   }
   return (
     <React.Fragment>
-      <p className="text-bold mt-3">{title}</p>
+      <p className="fw-bold mt-3">{title}</p>
       {utilityClassDefinitions.map((definition) => (
         <UtilityClassFormControl
           key={definition.name}
