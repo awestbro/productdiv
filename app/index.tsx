@@ -98,6 +98,7 @@ async function mountProductDiv(
 ) {
   document.open();
   document.write(`
+        <!DOCTYPE html>
         <html>
             <head></head>
              <body>
