@@ -22,6 +22,7 @@ import {
   copyElementTemplateToClipboard,
   copyElementToClipboard,
   copyToClipboard,
+  elementToString,
   sanitizeHtmlToString,
 } from "../../utilities/clipboard";
 import { UtilityClassEditor } from "./UtilityClassEditor";
@@ -230,7 +231,7 @@ function InnerHTMLEditor(props: LeftNavProps) {
     element.current = elementEditorState.match.node as Element;
     parentElementRef.current = element.current.parentElement;
     parentPositionRef.current = findPositionRelativeToParent(element.current);
-    setHTML(sanitizeHtmlToString(element.current));
+    setHTML(elementToString(element.current));
     return () => {
       parentPositionRef.current = 0;
     };

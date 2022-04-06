@@ -12,6 +12,11 @@ export function copyElementHtml(
   return formatter(html);
 }
 
+export function elementToString(element: Element) {
+  const copy = element.cloneNode(true) as Element;
+  return html_beautify(copy.outerHTML, html_beautify_opts);
+}
+
 export function sanitizeHtmlToString(element: Element) {
   const copy = element.cloneNode(true) as Element;
   copy.querySelectorAll('[data-productdiv="true"]').forEach((e) => e.remove());
