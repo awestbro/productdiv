@@ -81,20 +81,16 @@ export function drawHoverElement(
   };
 }
 
-function getLocalStateBoolean(name: string) {
-  const s = window.localStorage.getItem(name);
-  if (s === "false") {
-    return false;
-  }
-  return true;
-}
-
 function setLocalStateBoolean(name: string, value: boolean) {
   window.localStorage.setItem(name, `${value}`);
 }
 
 function getTreeOpenState() {
-  return getLocalStateBoolean("productdiv-tree-state");
+  const s = window.localStorage.getItem("productdiv-tree-state");
+  if (s === "true") {
+    return true;
+  }
+  return false;
 }
 
 function setTreeOpenState(state: boolean) {
