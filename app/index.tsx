@@ -77,6 +77,14 @@ function mountApplication(
         onClick={() => {
           unmountComponentAtNode(mount);
           htmlSnapshot = document.documentElement.innerHTML;
+          htmlSnapshot = htmlSnapshot.replace(
+            "<head>",
+            `<head>\n<script>
+          window.history.replaceState = (a,b,c) => {
+            console.log("Call to window.history.replaceState overwritten by ProductDiv");
+          }
+          </script>`
+          );
           mountProductDiv(configuration, editorConfig, htmlSnapshot);
         }}
       >
