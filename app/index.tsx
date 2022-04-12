@@ -38,12 +38,18 @@ export function getOffsetTop() {
   return 0;
 }
 
-function inIframe() {
+export function inIframe() {
   try {
     return window.self !== window.top;
   } catch (e) {
     return true;
   }
+}
+
+export function overwriteHistoryHandlers() {
+  window.history.replaceState = (a: any, b: any, c: any) => {
+    console.log("window.replaceState overwritten by ProductDiv", { a, b, c });
+  };
 }
 
 let htmlSnapshot = "";
@@ -77,14 +83,6 @@ function mountApplication(
         onClick={() => {
           unmountComponentAtNode(mount);
           htmlSnapshot = document.documentElement.innerHTML;
-          htmlSnapshot = htmlSnapshot.replace(
-            "<head>",
-            `<head>\n<script>
-          window.history.replaceState = (a,b,c) => {
-            console.log("Call to window.history.replaceState overwritten by ProductDiv");
-          }
-          </script>`
-          );
           mountProductDiv(configuration, editorConfig, htmlSnapshot);
         }}
       >
