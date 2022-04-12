@@ -11,9 +11,9 @@ import {
   parseLibraryConfiguration,
 } from "./utilities/configuration/configuration-importer";
 
-import { sanitizeHtmlToString } from "./utilities/clipboard";
 import { htmlStringToNodeList } from "./utilities/dom/dom-utilities";
 import { jsxFormatter } from "./utilities/jsx-formatter";
+import { EditorToggle } from "./components/common/EditorToggle";
 
 export {
   LibraryConfigurationDefinition,
@@ -38,21 +38,13 @@ export function getOffsetTop() {
   return 0;
 }
 
-export function inIframe() {
+function inIframe() {
   try {
     return window.self !== window.top;
   } catch (e) {
     return true;
   }
 }
-
-export function overwriteHistoryHandlers() {
-  window.history.replaceState = (a: any, b: any, c: any) => {
-    console.log("window.replaceState overwritten by ProductDiv", { a, b, c });
-  };
-}
-
-let htmlSnapshot = "";
 
 function mountApplication(
   configuration: ParsedLibraryConfigurationDefinition,
@@ -69,26 +61,12 @@ function mountApplication(
     saveOffsetTop(top);
   });
   render(
-    <div style={{ position: "fixed", bottom: 10, left: 10 }}>
-      <button
-        type="button"
-        style={{
-          color: "#f8f9fa",
-          backgroundColor: "#6976ce",
-          border: "1px solid white",
-          padding: "0.375rem 0.75rem",
-          fontSize: "1rem",
-          borderRadius: "0.25rem",
-        }}
-        onClick={() => {
-          unmountComponentAtNode(mount);
-          htmlSnapshot = document.documentElement.innerHTML;
-          mountProductDiv(configuration, editorConfig, htmlSnapshot);
-        }}
-      >
-        PD
-      </button>
-    </div>,
+    <EditorToggle
+      onClick={() => {
+        unmountComponentAtNode(mount);
+        mountProductDiv(configuration, editorConfig);
+      }}
+    />,
     mount
   );
 }
@@ -99,8 +77,7 @@ export type ProductDivConfig = {
 
 async function mountProductDiv(
   configuration: ParsedLibraryConfigurationDefinition,
-  editorConfig: ProductDivConfig,
-  html: string
+  editorConfig: ProductDivConfig
 ) {
   document.open();
   document.write(`
@@ -118,22 +95,7 @@ async function mountProductDiv(
   document.close();
 
   render(
-    <Application
-      editorConfig={editorConfig}
-      pageSource={html}
-      configuration={configuration}
-      onLeftNavClose={(iframeDocument: Document) => {
-        const str = sanitizeHtmlToString(iframeDocument.documentElement);
-        unmountComponentAtNode(getEditorMountPoint());
-        document.open();
-        document.write(str);
-        document.close();
-        document.addEventListener("DOMContentLoaded", () => {
-          mountApplication(configuration, editorConfig);
-          window.scrollTo(0, getOffsetTop());
-        });
-      }}
-    />,
+    <Application editorConfig={editorConfig} configuration={configuration} />,
     getEditorMountPoint()
   );
 }

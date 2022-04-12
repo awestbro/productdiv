@@ -19,6 +19,7 @@ import * as throttle from "lodash/throttle";
 import { ParsedLibraryConfigurationDefinition } from "../utilities/configuration/configuration-importer";
 import { AllIconDefinitions } from "./common/Icons";
 import { getOffsetTop, ProductDivConfig, saveOffsetTop } from "..";
+import { EditorToggle } from "./common/EditorToggle";
 
 export type ElementEditorState = {
   match?: NodeTreeMatch;
@@ -103,19 +104,26 @@ const dropZoneSelector = ".productdiv-drop-container";
 let hasIframeMounted = false;
 
 type ApplicationProps = {
-  pageSource: string;
   configuration: ParsedLibraryConfigurationDefinition;
   editorConfig: ProductDivConfig;
-  onLeftNavClose: (d: Document) => any;
 };
 
+function alertPageLeave() {
+  alert(preventPageLeave());
+}
+
+function preventPageLeave() {
+  return "ProductDiv prevented page navigation. If you would like to continue, please save your changes and refresh the page!";
+}
+
 export function Application(props: ApplicationProps) {
-  const { pageSource, configuration, onLeftNavClose, editorConfig } = props;
+  const { configuration, editorConfig } = props;
   const [componentTree, setComponentTree] =
     React.useState<NodeTreeMatch[]>(null);
   const [treeViewOpen, setTreeViewStateOpen] = React.useState(
     getTreeOpenState()
   );
+  const [leftNavOpen, setLeftNavOpen] = React.useState(true);
   const [elementEditorOpen, setElementEditorOpen] = React.useState(false);
   const [templateEditorOpen, setTemplateEditorOpen] =
     React.useState<boolean>(false);
@@ -287,7 +295,7 @@ export function Application(props: ApplicationProps) {
   };
 
   React.useEffect(() => {
-    if (iframeDocument) {
+    if (iframeDocument && leftNavOpen) {
       const iframeWindow = getIframeWindow();
       iframeDocument.addEventListener("click", documentOnClick);
       iframeDocument.addEventListener("scroll", onScroll);
@@ -296,6 +304,7 @@ export function Application(props: ApplicationProps) {
       iframeDocument.addEventListener("mousemove", onMouseMove);
       iframeDocument.addEventListener("mouseleave", onMouseLeave);
       iframeWindow.addEventListener("resize", onResize);
+      iframeWindow.history.pushState = () => null;
       return () => {
         iframeDocument.removeEventListener("click", documentOnClick);
         iframeDocument.removeEventListener("scroll", onScroll);
@@ -306,53 +315,74 @@ export function Application(props: ApplicationProps) {
         iframeWindow.removeEventListener("resize", onResize);
       };
     }
-  }, [currentHoveredMatch, elementEditorState, componentTree, iframeDocument]);
+    if (iframeDocument && !leftNavOpen) {
+      const iframeWindow = getIframeWindow();
+      iframeWindow.history.pushState = alertPageLeave;
+      iframeWindow.onbeforeunload = preventPageLeave;
+    }
+  }, [
+    currentHoveredMatch,
+    elementEditorState,
+    componentTree,
+    iframeDocument,
+    leftNavOpen,
+  ]);
 
   return (
     <React.Fragment>
       <AllIconDefinitions />
-      <LeftNav
-        editorConfig={editorConfig}
-        getComponentTree={getComponentTree}
-        iframeDocument={iframeDocument}
-        showTemplatePreview={showTemplatePreview}
-        hideTemplatePreview={hideTemplatePreview}
-        templateEditorOpen={templateEditorOpen}
-        setTemplateEditorOpen={setTemplateEditorOpen}
-        dropZoneSelector={dropZoneSelector}
-        drawHoverElement={(x: number, y: number, s?: string) =>
-          drawHoverElement(x, y, s || dropZoneSelector)
-        }
-        lastHoverPosition={lastHoverPosition}
-        configuration={configuration}
-        elementEditorOpen={elementEditorOpen}
-        setElementEditorOpen={setElementEditorOpen}
-        elementEditorState={elementEditorState}
-        setElementEditorState={(s: ElementEditorState) =>
-          setElementEditorState(s)
-        }
-        treeViewOpen={treeViewOpen}
-        setTreeViewOpen={setTreeViewOpen}
-        componentTree={componentTree}
-        redrawComponentTree={() => {
-          return redrawComponentTree(
-            configuration.treeViewIgnoreQuerySelectors
-          );
-        }}
-        redrawHighlightedNode={(node?: Node | false) => {
-          if (node === false) {
-            return;
+      {leftNavOpen ? (
+        <LeftNav
+          editorConfig={editorConfig}
+          getComponentTree={getComponentTree}
+          iframeDocument={iframeDocument}
+          showTemplatePreview={showTemplatePreview}
+          hideTemplatePreview={hideTemplatePreview}
+          templateEditorOpen={templateEditorOpen}
+          setTemplateEditorOpen={setTemplateEditorOpen}
+          dropZoneSelector={dropZoneSelector}
+          drawHoverElement={(x: number, y: number, s?: string) =>
+            drawHoverElement(x, y, s || dropZoneSelector)
           }
-          if (node === null) {
-            highlightElements([]);
-            return;
+          lastHoverPosition={lastHoverPosition}
+          configuration={configuration}
+          elementEditorOpen={elementEditorOpen}
+          setElementEditorOpen={setElementEditorOpen}
+          elementEditorState={elementEditorState}
+          setElementEditorState={(s: ElementEditorState) =>
+            setElementEditorState(s)
           }
-          if (elementEditorState.match) {
-            highlightElements([node || elementEditorState.match.node]);
-          }
-        }}
-        onLeftNavClose={() => onLeftNavClose(iframeDocument)}
-      />
+          treeViewOpen={treeViewOpen}
+          setTreeViewOpen={setTreeViewOpen}
+          componentTree={componentTree}
+          redrawComponentTree={() => {
+            return redrawComponentTree(
+              configuration.treeViewIgnoreQuerySelectors
+            );
+          }}
+          redrawHighlightedNode={(node?: Node | false) => {
+            if (node === false) {
+              return;
+            }
+            if (node === null) {
+              highlightElements([]);
+              return;
+            }
+            if (elementEditorState.match) {
+              highlightElements([node || elementEditorState.match.node]);
+            }
+          }}
+          onLeftNavClose={() => {
+            setLeftNavOpen(false);
+          }}
+        />
+      ) : (
+        <EditorToggle
+          onClick={() => {
+            setLeftNavOpen(true);
+          }}
+        />
+      )}
       <iframe
         onLoad={() => {
           const iframe = getIframeDocument();
@@ -414,7 +444,7 @@ export function Application(props: ApplicationProps) {
         }}
         id={iframeDocumentId}
         style={{ width: "100vw", height: "100vh", border: "none" }}
-        srcDoc={pageSource.replace('"', '"')}
+        src={window.location.href}
       />
       <div
         style={{ flexShrink: 0 }}

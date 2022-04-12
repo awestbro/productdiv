@@ -3,8 +3,6 @@ import { jsxFormatter } from "./utilities/jsx-formatter";
 export { LibraryConfigurationDefinition, UtilityClassDefinition, TemplateDefinition, ParsedLibraryConfigurationDefinition, jsxFormatter, };
 export declare function saveOffsetTop(top: number): void;
 export declare function getOffsetTop(): any;
-export declare function inIframe(): boolean;
-export declare function overwriteHistoryHandlers(): void;
 export declare type ProductDivConfig = {
     htmlFormatter?(s: string): string;
 };

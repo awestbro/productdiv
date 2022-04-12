@@ -13,10 +13,8 @@ export declare function drawHoverElement(clientX: number, clientY: number, dropZ
     placement: import("../utilities/dom/canvas").PlacementType;
 };
 declare type ApplicationProps = {
-    pageSource: string;
     configuration: ParsedLibraryConfigurationDefinition;
     editorConfig: ProductDivConfig;
-    onLeftNavClose: (d: Document) => any;
 };
 export declare function Application(props: ApplicationProps): JSX.Element;
 export {};
