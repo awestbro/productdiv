@@ -332,10 +332,16 @@ export function drawPlacementType(
 
 export function highlightElements(nodes: Node[]) {
   const iframeDocument = getIframeDocument();
+  if (!iframeDocument) {
+    return;
+  }
   const { height, width } = getDocumentHeightAndWidth();
   const canvas: HTMLCanvasElement = iframeDocument.getElementById(
     "productdiv-canvas"
   ) as HTMLCanvasElement;
+  if (!canvas) {
+    return;
+  }
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, width, height);
   setCanvasWidthAndHeight(canvas);
