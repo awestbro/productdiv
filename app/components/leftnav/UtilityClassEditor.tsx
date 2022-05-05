@@ -8,6 +8,7 @@ import { LeftNavProps } from "./LeftNav";
 import { UtilityClassFormControl } from "./UtilityClassFormControls";
 import DropdownList from "react-widgets/DropdownList";
 import { uniq } from "lodash";
+import { TagListSelector } from "../common/TagListSelector";
 
 export function UtilityClassEditor(props: LeftNavProps) {
   const {
@@ -97,6 +98,13 @@ export function UtilityClassEditor(props: LeftNavProps) {
             type="text"
             placeholder="Filter classes"
           />
+          {/* <div className="px-2 pb-3">
+            <TagListSelector
+              tags={tags}
+              selectedTag={selectedTag}
+              onTagSelect={setSelectedTag}
+            />
+          </div> */}
           <DropdownList
             defaultValue=""
             value={selectedTag}

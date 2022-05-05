@@ -304,7 +304,9 @@ export function Application(props: ApplicationProps) {
       iframeDocument.addEventListener("mousemove", onMouseMove);
       iframeDocument.addEventListener("mouseleave", onMouseLeave);
       iframeWindow.addEventListener("resize", onResize);
-      iframeWindow.history.pushState = () => null;
+      if (editorConfig.preventHistoryLeave) {
+        iframeWindow.history.pushState = () => null;
+      }
       return () => {
         iframeDocument.removeEventListener("click", documentOnClick);
         iframeDocument.removeEventListener("scroll", onScroll);
@@ -317,8 +319,12 @@ export function Application(props: ApplicationProps) {
     }
     if (iframeDocument && !leftNavOpen) {
       const iframeWindow = getIframeWindow();
-      iframeWindow.history.pushState = alertPageLeave;
-      iframeWindow.onbeforeunload = preventPageLeave;
+      if (editorConfig.preventHistoryLeave) {
+        iframeWindow.history.pushState = alertPageLeave;
+      }
+      if (editorConfig.preventPageLeave) {
+        iframeWindow.onbeforeunload = preventPageLeave;
+      }
     }
   }, [
     currentHoveredMatch,

@@ -5,5 +5,7 @@ export declare function saveOffsetTop(top: number): void;
 export declare function getOffsetTop(): any;
 export declare type ProductDivConfig = {
     htmlFormatter?(s: string): string;
+    preventPageLeave?: boolean;
+    preventHistoryLeave?: boolean;
 };
 export default function ProductDiv(config: LibraryConfigurationDefinition, editorConfig?: ProductDivConfig): void;

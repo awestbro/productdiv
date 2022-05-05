@@ -73,6 +73,8 @@ function mountApplication(
 
 export type ProductDivConfig = {
   htmlFormatter?(s: string): string;
+  preventPageLeave?: boolean;
+  preventHistoryLeave?: boolean;
 };
 
 async function mountProductDiv(
@@ -104,8 +106,15 @@ export default function ProductDiv(
   config: LibraryConfigurationDefinition,
   editorConfig: ProductDivConfig = {}
 ) {
+  const defaultConfig: ProductDivConfig = {
+    preventPageLeave: true,
+    preventHistoryLeave: true,
+  };
   if (!inIframe()) {
     saveOffsetTop(0);
-    mountApplication(parseLibraryConfiguration(config), editorConfig);
+    mountApplication(parseLibraryConfiguration(config), {
+      ...defaultConfig,
+      ...editorConfig,
+    });
   }
 }

@@ -1,7 +1,6 @@
 import * as React from "react";
 import Fuse from "fuse.js";
 import classNames from "classnames";
-import DropdownList from "react-widgets/DropdownList";
 
 import { addTemplateToElement } from "../../utilities/dom/dom-utilities";
 import {
@@ -23,6 +22,7 @@ import {
 import { IconButton } from "../common/Components";
 import { copyToClipboard } from "../../utilities/clipboard";
 import { sortBy, uniq } from "lodash";
+import { TagListSelector } from "../common/TagListSelector";
 
 type TemplateSelectorProps = {
   iframeDocuemnt: Document;
@@ -179,12 +179,10 @@ export function TemplateSelector(props: TemplateSelectorProps) {
           />
         </div>
         <div className="px-2 pb-3">
-          <DropdownList
-            defaultValue=""
-            value={selectedTag}
-            data={["", ...tags]}
-            onChange={setSelectedTag}
-            placeholder="Filter by Tag"
+          <TagListSelector
+            tags={tags}
+            selectedTag={selectedTag}
+            onTagSelect={setSelectedTag}
           />
         </div>
         {filteredTemplates.length > 0 ? (
