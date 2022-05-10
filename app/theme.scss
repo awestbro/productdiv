@@ -58,6 +58,10 @@ $input-height: 2.429em;
 // React Widgets Overrides
 $react-widget-input-bg: $input-bg;
 
+input.rw-dropdownlist-search {
+  color: darken($text-light, 10%);
+}
+
 .rw-select,
 .rw-multiselect,
 .rw-dropdown-list {
